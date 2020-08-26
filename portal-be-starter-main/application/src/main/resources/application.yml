@@ -1,0 +1,54 @@
+server:
+  port: 8085
+  servlet:
+    session:
+      cookie:
+        name: JSESSIONID
+        path: /
+    context-path: /starter
+spring:
+  jackson:
+    default-property-inclusion: non_absent
+  application:
+    name: Portal Starter
+  servlet:
+    multipart:
+      max-file-size: 1GB
+      max-request-size: 10GB
+  session:
+    store-type: none
+  cache:
+    jcache:
+      config: classpath:ehcache.xml
+pru:
+  ap:
+    rest:
+      basePath: /api
+    translations:
+      ords:
+        url: ${TRANSLATIONS_URL}
+        log-level: basic
+  cas:
+    name: STARTER
+    routing:
+      session:
+        url: ${CAS_SESSION_URL}
+      pruuser:
+        url: ${PRUUSER_URL}
+    rest:
+      basePath: ${pru.ap.rest.basePath}
+logging:
+  level:
+    com:
+      pru:
+        ap:
+          translations:
+            provider:
+              TranslationsOrdsClient: DEBUG
+        cas:
+          sso:
+            provider:
+              session:
+                SessionManagerClient: DEBUG
+              pruuser:
+                PruUserClient: DEBUG

@@ -1,0 +1,3 @@
+dependencies {
+    implementation project(':portal-be-starter-main:model')
+}

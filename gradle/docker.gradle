@@ -1,0 +1,57 @@
+def dockerWorkDir = file(project.layout.buildDirectory.dir('docker'))
+
+task dockerCopyEntrypoint(type: Copy) {
+    from project.file('docker-entrypoint.sh').absolutePath
+    into dockerWorkDir
+}
+
+task dockerCopyJar(type: Copy) {
+    if (project.hasProperty('jar')) {
+        dependsOn assemble
+
+        def dest = dockerWorkDir
+        dest.mkdirs()
+
+        from file(jar.archivePath.absolutePath)
+        into dest
+    }
+}
+
+def imageName = {
+    "$localImagePrefix/${project.dockerImageName}"
+}
+
+task dockerBuildImage(type: Exec) {
+    if (project.hasProperty('jar')) {
+        dependsOn dockerCopyJar
+        dependsOn dockerCopyEntrypoint
+        workingDir dockerWorkDir
+        def dockerFile = project.layout.projectDirectory.file('Dockerfile').asFile.absolutePath
+        commandLine 'docker', 'build', '-t', imageName(), '-f', dockerFile, '--build-arg', "VERSION=${version}", '--build-arg', "JAR_NAME=${jar.archiveName}", '.'
+    }
+}
+
+task dockerLogin(type: Exec) {
+    commandLine 'docker', 'login', dockerNexusUrl, '-u', pruMavenUser, '-p', pruMavenPassword
+}
+
+def imageTag = {
+    if (project.hasProperty('imageTag')) {
+        "$dockerNexusUrl/${dockerImageName}:${imageTag}"
+    } else {
+        "$dockerNexusUrl/${dockerImageName}:latest"
+    }
+}
+
+task dockerTagImage(type: Exec) {
+    dependsOn dockerBuildImage
+    commandLine 'docker', 'tag', imageName(), imageTag()
+}
+
+task dockerPushImage(type: Exec) {
+    if (project.hasProperty('imageTag')) {
+        dependsOn dockerLogin
+        dependsOn dockerTagImage
+        commandLine 'docker', 'push', imageTag()
+    }
+}
