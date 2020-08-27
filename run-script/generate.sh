@@ -47,6 +47,7 @@ echo "TODO" > "$CURRENT_DIR/$RELATIVE_DIR/../README.md"
 
 GIT_PROJECT_PREFIX_URL=$(getProperty "GIT_PROJECT_PREFIX_URL")
 echo "Perform GIT changes"
+git checkout -b "$GIT_REPO_NAME-starter"
 git add . # stage all changed files
 git reset -- "$CURRENT_DIR/$RELATIVE_DIR/../run-script" # exclude unwanted files
 git commit -m "Initial $GIT_REPO_NAME commit" # initial commit for a new repo
