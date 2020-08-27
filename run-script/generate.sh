@@ -1,4 +1,4 @@
-#/bin/sh
+#!/bin/sh
 
 CURRENT_DIR=$(pwd)
 RELATIVE_DIR=$(dirname "$0")
@@ -45,6 +45,7 @@ mv portal-be-starter-main "$GIT_REPO_NAME-main"
 
 echo "TODO" > "$CURRENT_DIR/$RELATIVE_DIR/../README.md"
 
+GIT_PROJECT_PREFIX_URL=$(getProperty "GIT_PROJECT_PREFIX_URL")
 echo "Perform GIT changes"
 git checkout -b develop
 git add . # stage all changed files
