@@ -1,0 +1,21 @@
+subprojects {
+    buildscript {
+
+        repositories {
+            mavenLocal()
+            maven { url pruMavenUrl }
+        }
+        //--------------------------------------
+        // Define the build classpath
+        //--------------------------------------
+        dependencies {
+            classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+            classpath("io.spring.gradle:dependency-management-plugin:${springDependencyVersion}")
+        }
+    }
+
+    apply plugin: 'io.freefair.lombok'
+
+    sourceCompatibility = 11
+    targetCompatibility = 11
+}

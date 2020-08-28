@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <if condition='isDefined("LOGSTASH_URL")'>
+        <then>
+            <appender name="STASH" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
+                <keepAliveDuration>5 minutes</keepAliveDuration>
+                <reconnectionDelay>10 second</reconnectionDelay>
+                <waitStrategyType>blocking</waitStrategyType>
+                <ringBufferSize>16384</ringBufferSize>
+                <destination>${LOGSTASH_URL}</destination>
+                <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+                    <providers>
+                        <mdc/> <!-- MDC variables on the Thread will be written as JSON fields-->
+                        <context/> <!--Outputs entries from logback's context -->
+                        <logLevel/>
+                        <loggerName/>
+
+                        <pattern>
+                            <pattern>
+                                {
+                                "appName": "${APP_NAME}",
+                                "appVersion": "${APP_VERSION}"
+                                }
+                            </pattern>
+                        </pattern>
+
+                        <threadName/>
+                        <message/>
+
+                        <logstashMarkers/> <!-- Useful so we can add extra information for specific log lines as Markers-->
+                        <arguments/> <!--or through StructuredArguments-->
+
+                        <stackTrace>
+                            <fieldName>stackTrace</fieldName>
+                            <throwableConverter class="net.logstash.logback.stacktrace.ShortenedThrowableConverter">
+                                <exclude>net\.sf\.cglib\..*</exclude>
+                                <maxDepthPerThrowable>30</maxDepthPerThrowable>
+                                <rootCauseFirst>true</rootCauseFirst>
+                            </throwableConverter>
+                        </stackTrace>
+                    </providers>
+                </encoder>
+            </appender>
+        </then>
+    </if>
+
+    <appender name="STDOUT"  class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{dd-MM-yyyy HH:mm:ss.SSS} %magenta([%thread]) %highlight(%-5level) %logger{36}.%M - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <root level="info">
+        <if condition='isDefined("LOGSTASH_URL")'>
+            <then>
+                <appender-ref ref="STASH" />
+            </then>
+        </if>
+        <appender-ref ref="STDOUT" />
+    </root>
+    <logger name="org.springframework.security.web.session" level="debug"/>
+    <logger name="org.springframework.security.web.authentication" level="debug"/>
+
+</configuration>

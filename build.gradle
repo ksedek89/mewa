@@ -1,0 +1,85 @@
+allprojects {
+    repositories {
+        mavenLocal()
+        maven { url pruMavenUrl }
+    }
+
+    version = rootProject.file('version').text.trim()
+    group = 'com.pru.starter'
+
+    buildscript {
+        repositories {
+            mavenLocal()
+            maven { url pruMavenUrl }
+        }
+
+        dependencies {
+            classpath("io.freefair.gradle:lombok-plugin:${versionLombok}")
+        }
+    }
+
+    apply plugin: 'java'
+    apply plugin: 'java-library'
+    apply plugin: 'groovy'
+    apply plugin: 'idea'
+
+    idea {
+        module {
+            inheritOutputDirs = true
+        }
+    }
+
+    dependencies {
+        implementation('org.slf4j:log4j-over-slf4j:1.7.26')
+    }
+
+    configurations.all {
+        exclude group: "org.slf4j"                , module: "slf4j-log4j12"
+        exclude group: "log4j"                    , module: "log4j"
+        exclude group: "org.apache.logging.log4j" , module: "log4j-api"
+        exclude group: "org.jboss.logmanager"     , module: "jboss-logmanager"
+    }
+}
+
+buildscript {
+    ext {
+        pruSsoLibVersion = "34.0.1"
+        pruTranslationsLibVersion = "30.0.2"
+        ehCacheVersion = "3.6.1"
+        cacheApiVersion = "1.1.1"
+        versionJaxb = "2.3.1"
+        jacksonVersion = "2.9.8"
+        jacksonDatatypeJsr310 = "2.10.1"
+        jacksonAnnotationsVersion = "2.9.0"
+        junitJupiterVersion = "5.4.1"
+        springVersion = "5.1.6.RELEASE"
+        springBootVersion = "2.1.4.RELEASE"
+        springCloudVersion = '2.1.1.RELEASE'
+        feignHttpClientVersion = '10.1.0'
+        springSecurityVersion = '5.1.5.RELEASE'
+        springSessionVersion = '2.1.6.RELEASE'
+        groovyAllVersion = "2.5.6"
+        springDependencyVersion = "1.0.6.RELEASE"
+        springDataCommonsVersion = "2.1.6.RELEASE"
+        spockVersion = "1.2-groovy-2.5"
+        jvmTarget = JavaVersion.VERSION_11
+        gradlePluginDir = "${rootProject.projectDir}/gradle"
+        logstashEncoderVersion = '5.2'
+        janinoVersion = '3.0.11'
+        hibernateVersion = '5.3.7.Final'
+        hibernateValidatorVersion = '6.0.10.Final'
+        h2Version = '1.4.197'
+        apacheCommonsVersion = '2.5'
+        servlertApiVersion = '4.0.1'
+        javaxValidationApiVersion = '2.0.1.Final'
+        springfoxSwagger = '2.9.2'
+        versionLombok = '3.7.5'
+        versionGson = '2.8.5'
+        versionGuava = '27.1-jre'
+        versionCommonsIo = '2.6'
+        versionCommonsText = '1.6'
+        orikaVersion = "1.5.4"
+        versionDockerPlugin = '3.6.1'
+        localImagePrefix = 'starter'
+    }
+}
