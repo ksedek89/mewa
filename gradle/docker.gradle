@@ -1,11 +1,13 @@
 def dockerWorkDir = file(project.layout.buildDirectory.dir('docker'))
 
 task dockerCopyEntrypoint(type: Copy) {
+    group 'docker'
     from project.file('docker-entrypoint.sh').absolutePath
     into dockerWorkDir
 }
 
 task dockerCopyJar(type: Copy) {
+    group 'docker'
     if (project.hasProperty('jar')) {
         dependsOn assemble
 
@@ -17,43 +19,35 @@ task dockerCopyJar(type: Copy) {
     }
 }
 
-def imageName = {
-    "$localImagePrefix/${project.dockerImageName}"
+def imageTag = {
+    if (project.hasProperty('imageTag')) {
+        "$dockerNexusUrl/${dockerImageName}:${imageTag}"
+    } else {
+        "$dockerNexusUrl/${dockerImageName}:${version}"
+    }
 }
 
 task dockerBuildImage(type: Exec) {
+    group 'docker'
     if (project.hasProperty('jar')) {
         dependsOn dockerCopyJar
         dependsOn dockerCopyEntrypoint
         workingDir dockerWorkDir
         def dockerFile = project.layout.projectDirectory.file('Dockerfile').asFile.absolutePath
-        commandLine 'docker', 'build', '-t', imageName(), '-f', dockerFile, '--build-arg', "VERSION=${version}", '--build-arg', "JAR_NAME=${jar.archiveName}", '.'
+        commandLine 'docker', 'build', '-t', imageTag(), '-f', dockerFile, '--build-arg', "VERSION=${version}", '--build-arg', "JAR_NAME=${jar.archiveName}", '.'
     }
 }
 
 task dockerLogin(type: Exec) {
+    group 'docker'
     commandLine 'docker', 'login', dockerNexusUrl, '-u', pruMavenUser, '-p', pruMavenPassword
 }
 
-def imageTag = {
-    if (project.hasProperty('imageTag')) {
-        "$dockerNexusUrl/${dockerImageName}:${imageTag}"
-    } else {
-        "$dockerNexusUrl/${dockerImageName}:latest"
-    }
-}
-
-task dockerTagImage(type: Exec) {
-    dependsOn dockerBuildImage
-    commandLine 'docker', 'tag', imageName(), imageTag()
-}
-
 task dockerPushImage(type: Exec) {
-    if (project.hasProperty('imageTag')) {
-        dependsOn dockerLogin
-        dependsOn dockerTagImage
-        commandLine 'docker', 'push', imageTag()
-    }
+    group 'docker'
+    dependsOn dockerLogin
+    dependsOn dockerBuildImage
+    commandLine 'docker', 'push', imageTag()
 }
 
 task dockerBuildAndPushImage {
