@@ -82,8 +82,8 @@ pipeline {
             }
             steps {
               	withCredentials([usernamePassword(credentialsId: "${DOCKER_SECRET}", usernameVariable: 'login', passwordVariable: 'password')]) {
-                  sh "./gradlew dockerBuildAndPushImage -PimageVersion=${BRANCH_TYPE}-${NPM_VERSION} -PdockerNexusUrl='${ARTIFACTORY_URL}' -PpruMavenPassword='${password}' -PpruMavenUser='${login}'"
-                  sh "./gradlew dockerBuildAndPushImage -PimageVersion=${BRANCH_TYPE}-latest -PdockerNexusUrl='${ARTIFACTORY_URL}' -PpruMavenPassword='${password}' -PpruMavenUser='${login}'"
+                  sh "./gradlew dockerBuildAndPushImage -PimageTag=${BRANCH_TYPE}-${NPM_VERSION} -PdockerNexusUrl='${ARTIFACTORY_URL}' -PpruMavenPassword='${password}' -PpruMavenUser='${login}'"
+                  sh "./gradlew dockerBuildAndPushImage -PimageTag=${BRANCH_TYPE}-latest -PdockerNexusUrl='${ARTIFACTORY_URL}' -PpruMavenPassword='${password}' -PpruMavenUser='${login}'"
                 }
             }
         }
@@ -119,7 +119,7 @@ pipeline {
             }
             steps {
               	withCredentials([usernamePassword(credentialsId: "${DOCKER_SECRET}", usernameVariable: 'login', passwordVariable: 'password')]) {
-                	sh "./gradlew dockerBuildAndPushImage -PimageVersion=${BRANCH_TYPE} -PdockerNexusUrl='${ARTIFACTORY_URL}' -PpruMavenPassword='${password}' -PpruMavenUser='${login}'"
+                	sh "./gradlew dockerBuildAndPushImage -PimageTag=${BRANCH_TYPE} -PdockerNexusUrl='${ARTIFACTORY_URL}' -PpruMavenPassword='${password}' -PpruMavenUser='${login}'"
                 }
             }
         }

@@ -55,3 +55,8 @@ task dockerPushImage(type: Exec) {
         commandLine 'docker', 'push', imageTag()
     }
 }
+
+task dockerBuildAndPushImage {
+    group 'docker'
+    dependsOn 'dockerPushImage'
+}
