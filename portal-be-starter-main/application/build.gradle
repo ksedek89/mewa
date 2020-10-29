@@ -40,6 +40,7 @@ dependencies {
     runtime("org.springframework.boot:spring-boot-devtools:$springBootVersion")
 
     implementation("ma.glasnost.orika:orika-core:$orikaVersion")
+    implementation("org.springframework.boot:spring-boot-starter-actuator")
 
     testImplementation("com.h2database:h2:${h2Version}")
     testImplementation("org.codehaus.janino:janino:${janinoVersion}")

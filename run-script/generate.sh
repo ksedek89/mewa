@@ -16,7 +16,7 @@ sed -i "s/localImagePrefix = 'starter'/localImagePrefix = '$DOCKER_LOCAL_IMAGE_P
 
 CONTEXT_PATH=$(getProperty "CONTEXT_PATH")
 echo "CONTEXT_PATH=$CONTEXT_PATH"
-sed -i "s|context-path: /starter|context-path: $CONTEXT_PATH|g" "$CURRENT_DIR/$RELATIVE_DIR/../portal-be-starter-main/application/src/main/resources/application.yml"
+sed -i "s|pub-api-path: /starter/api|pub-api-path: /${CONTEXT_PATH}/api|g" "$CURRENT_DIR/$RELATIVE_DIR/../portal-be-starter-main/application/src/main/resources/application.yml"
 
 APPLICATION_DESC=$(getProperty "APPLICATION_DESC")
 echo "APPLICATION_DESC=$APPLICATION_DESC"
@@ -25,6 +25,11 @@ sed -i "s/name: Portal Starter/name: $APPLICATION_DESC/g" "$CURRENT_DIR/$RELATIV
 APPLICATION_NAME=$(getProperty "APPLICATION_NAME")
 echo "APPLICATION_NAME=$APPLICATION_NAME"
 sed -i "s/name: STARTER/name: $APPLICATION_NAME/g" "$CURRENT_DIR/$RELATIVE_DIR/../portal-be-starter-main/application/src/main/resources/application.yml"
+
+echo '${AnsiColor.BRIGHT_GREEN}' > ../portal-be-starter-main/application/src/main/resources/banner.txt
+curl "https://devops.datenkollektiv.de/renderBannerTxt?text=${APPLICATION_NAME}&font=standard" >> ../portal-be-starter-main/application/src/main/resources/banner.txt
+echo '${spring.application.name} v.${app.version}' >> ../portal-be-starter-main/application/src/main/resources/banner.txt
+echo '${AnsiColor.BLUE}.: Running Spring Boot ${spring-boot.version} :. ${AnsiColor.DEFAULT}' >> ../portal-be-starter-main/application/src/main/resources/banner.txt
 
 GIT_REPO_NAME=$(getProperty "GIT_REPO_NAME")
 echo "GIT_REPO_NAME=$GIT_REPO_NAME"

@@ -6,24 +6,40 @@ server:
         name: JSESSIONID
         path: /
     context-path: /starter
+management:
+  endpoints:
+    enabled-by-default: false
+  endpoint:
+    info:
+      enabled: true
+    health:
+      enabled: true
+app:
+  version: @version@
 spring:
+  output:
+    ansi:
+      enabled: ALWAYS
   jackson:
     default-property-inclusion: non_absent
   application:
     name: Portal Starter
   servlet:
     multipart:
-      max-file-size: 1GB
-      max-request-size: 10GB
+      max-file-size: 20MB
+      max-request-size: 20MB
   session:
     store-type: none
   cache:
     jcache:
       config: classpath:ehcache.xml
 pru:
+  servlet:
+    pub-api-path: /starter/api
+    prv-api-path: /api
   ap:
     rest:
-      basePath: /api
+      basePath: ${pru.servlet.pub-api-path}
     translations:
       ords:
         url: ${TRANSLATIONS_URL}
