@@ -5,7 +5,6 @@ server:
       cookie:
         name: JSESSIONID
         path: /
-    context-path: /starter
 management:
   endpoints:
     enabled-by-default: false
