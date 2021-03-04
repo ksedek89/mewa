@@ -8,12 +8,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
-@RestController
+@RestController("VersionControllerPub")
 @RequestMapping("${pru.servlet.pub-api-path}")
-public class VersionControllerPub {
+public class VersionController {
 
     @Value("${app.version}")
-    private String version = null;
+    private final String version = null;
 
     @GetMapping(value = "/version", produces = "application/json")
     public VersionResponse getVersion()  {

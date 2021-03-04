@@ -5,6 +5,7 @@ server:
       cookie:
         name: JSESSIONID
         path: /
+    context-path: /starter
 management:
   endpoints:
     enabled-by-default: false
@@ -13,6 +14,10 @@ management:
       enabled: true
     health:
       enabled: true
+  server:
+    port: 9085
+    servlet:
+      context-path: /
 app:
   version: @version@
 spring:
@@ -34,8 +39,8 @@ spring:
       config: classpath:ehcache.xml
 pru:
   servlet:
-    pub-api-path: /starter/api
-    prv-api-path: /api
+    pub-api-path: /api
+    prv-api-path: /
   ap:
     rest:
       basePath: ${pru.servlet.pub-api-path}

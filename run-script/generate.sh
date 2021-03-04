@@ -16,7 +16,7 @@ sed -i "s/localImagePrefix = 'starter'/localImagePrefix = '$DOCKER_LOCAL_IMAGE_P
 
 CONTEXT_PATH=$(getProperty "CONTEXT_PATH")
 echo "CONTEXT_PATH=$CONTEXT_PATH"
-sed -i "s|pub-api-path: /starter/api|pub-api-path: /${CONTEXT_PATH}/api|g" "$CURRENT_DIR/$RELATIVE_DIR/../portal-be-starter-main/application/src/main/resources/application.yml"
+sed -i "s|context-path: /starter|context-path: $CONTEXT_PATH|g" "$CURRENT_DIR/$RELATIVE_DIR/../portal-be-starter-main/application/src/main/resources/application.yml"
 
 APPLICATION_DESC=$(getProperty "APPLICATION_DESC")
 echo "APPLICATION_DESC=$APPLICATION_DESC"

@@ -4,5 +4,5 @@ import lombok.Value;
 
 @Value
 public class VersionResponse {
-    private String version;
+    String version;
 }
