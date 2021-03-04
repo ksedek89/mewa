@@ -24,8 +24,9 @@ public class WebSecurityConfig extends SsoWebSecurityConfig {
     private static final String[] AUTHORIZED_PATTERNS = Stream.of(
         "/api/version",
         "/api/translations/**",
-        "/ping",
-        "/api/log/**"
+        "/api/log/**",
+        "/version",
+        "/actuator/**"
     ).toArray(String[]::new);
 
     public WebSecurityConfig(
@@ -48,7 +49,14 @@ public class WebSecurityConfig extends SsoWebSecurityConfig {
 
     @Override
     public void configure(WebSecurity web) {
-        web.ignoring().antMatchers("/ping", "/version");
+        web.ignoring().antMatchers(
+            "/v2/api-docs",
+            "/configuration/ui",
+            "/swagger-resources/**",
+            "/configuration/**",
+            "/swagger-ui.html",
+            "/webjars/**"
+        );
     }
 
     @Override

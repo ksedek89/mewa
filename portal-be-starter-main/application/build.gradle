@@ -51,7 +51,6 @@ dependencies {
     testImplementation("org.spockframework:spock-core:${rootProject.ext.spockVersion}")
     testImplementation("org.spockframework:spock-spring:${rootProject.ext.spockVersion}")
 
-    testImplementation("com.fasterxml.jackson.module:jackson-module-kotlin:${jacksonVersion}")
     testImplementation("org.junit.jupiter:junit-jupiter-engine:${junitJupiterVersion}")
     testImplementation("org.springframework.security:spring-security-test:${springSecurityVersion}")
 }

@@ -63,7 +63,7 @@ allprojects {
 
 buildscript {
     ext {
-        pruSsoLibVersion = "34.0.1"
+        pruSsoLibVersion = "39.0.1"
         pruTranslationsLibVersion = "30.0.2"
         ehCacheVersion = "3.6.1"
         cacheApiVersion = "1.1.1"
