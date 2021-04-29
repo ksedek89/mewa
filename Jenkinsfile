@@ -10,7 +10,7 @@ pipeline {
                     env.DEPLOY_BUILD_DATE = sh(returnStdout: true, script: "date +'%Y-%m-%d %H:%M'").trim()
                     env.LAST_COMMIT_AUTHOR = sh(returnStdout: true, script: 'git log -1 --format=format:"%aN"').trim()
                     env.BRANCH_TYPE = sh(returnStdout: true, script: "echo ${BRANCH_NAME} | cut -d / -f 1").trim()
-                    env.GIT_URL_FOR_JENKINS = 'lwgit-01.production.local:7990/scm/yel/portal-be-starter.git'
+                    env.GIT_URL_FOR_JENKINS = 'lwgit-01.production.local:7990/scm/yel/mewa.git'
                     env.JENKINS_GIT_CREDENTIALS_ID = 'lwgit-01'
 
 //                  PROJECT SPECIFIC:

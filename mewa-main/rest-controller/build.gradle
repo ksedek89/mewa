@@ -1,0 +1,17 @@
+dependencies {
+    api project(':mewa-main:business-api')
+    implementation project(':mewa-main:model')
+    implementation project(':mewa-main:util')
+    implementation project(':mewa-main:security')
+
+    implementation("org.springframework.boot:spring-boot-starter-web:${springBootVersion}")
+    implementation("commons-io:commons-io:$apacheCommonsVersion")
+    implementation("com.pru.cas.sso:cas-library:${pruSsoLibVersion}")
+
+    implementation("ma.glasnost.orika:orika-core:$orikaVersion")
+
+    testCompile("org.springframework.boot:spring-boot-starter-test:${springBootVersion}")
+    testCompile("org.codehaus.groovy:groovy-all:${rootProject.ext.groovyAllVersion}")
+    testCompile("org.spockframework:spock-core:${rootProject.ext.spockVersion}")
+    testCompile("org.spockframework:spock-spring:${rootProject.ext.spockVersion}")
+}

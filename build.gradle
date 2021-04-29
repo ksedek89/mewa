@@ -15,7 +15,7 @@ allprojects {
     }
 
     version = rootProject.file('version').text.trim()
-    group = 'com.pru.starter'
+    group = 'com.pru.mewa'
 
     buildscript {
         repositories {
@@ -100,6 +100,6 @@ buildscript {
         versionCommonsText = '1.6'
         orikaVersion = "1.5.4"
         versionDockerPlugin = '3.6.1'
-        localImagePrefix = 'starter'
+        localImagePrefix = 'mewa'
     }
 }
