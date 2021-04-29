@@ -14,6 +14,7 @@ ext {
 }
 
 dependencies {
+    compile fileTree(dir: '../lib', include: '*.jar')
     compile project(':mewa-main:business-api')
     compile project(':mewa-main:business-impl')
     compile project(':mewa-main:rest-controller')
