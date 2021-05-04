@@ -1,0 +1,10 @@
+package com.mewa.dto;
+
+import lombok.Data;
+
+@Data
+public class DeviceDto {
+    private Integer moxaId;
+    private String deviceType;
+    private Integer thresholdPressure;
+}

@@ -1,74 +1,16 @@
 server:
   port: 8085
   servlet:
-    session:
-      cookie:
-        name: JSESSIONID
-        path: /
     context-path: /mewa
-management:
-  endpoints:
-    enabled-by-default: false
-  endpoint:
-    info:
-      enabled: true
-    health:
-      enabled: true
-  server:
-    port: 9085
-    servlet:
-      context-path: /
-app:
-  version: @version@
-spring:
-  output:
-    ansi:
-      enabled: ALWAYS
-  jackson:
-    default-property-inclusion: non_absent
-  application:
-    name: Mewa App
-  servlet:
-    multipart:
-      max-file-size: 20MB
-      max-request-size: 20MB
-  session:
-    store-type: none
-  cache:
-    jcache:
-      config: classpath:ehcache.xml
-pru:
-  servlet:
-    pub-api-path: /api
-    prv-api-path: /
-  ap:
-    rest:
-      basePath: ${pru.servlet.pub-api-path}
-    translations:
-      ords:
-        url: ${TRANSLATIONS_URL}
-        log-level: basic
-  cas:
-    name: MEWA
-    routing:
-      session:
-        url: ${CAS_SESSION_URL}
-      pruuser:
-        url: ${PRUUSER_URL}
-    rest:
-      basePath: ${pru.ap.rest.basePath}
-logging:
-  level:
-    com:
-      pru:
-        ap:
-          translations:
-            provider:
-              TranslationsOrdsClient: DEBUG
-        cas:
-          sso:
-            provider:
-              session:
-                SessionManagerClient: DEBUG
-              pruuser:
-                PruUserClient: DEBUG
+moxa:
+  ip: 192.168.40.120
+  port: 80
+  script-path: /home/ksedek/test/test.sh
+  config-file-path: npreal2d.cf
+  devices:
+      - moxa-id: 1
+        device-type: PRESS
+        threshold-pressure: 1000
+siu:
+  ip: 192.168.24.243
+  port: 80

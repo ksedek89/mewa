@@ -12,7 +12,7 @@
         </expiry>
         <listeners>
             <listener>
-                <class>com.pru.mewa.config.log.CacheEventLogger</class>
+                <class>com.mewa.config.log.CacheEventLogger</class>
                 <event-firing-mode>ASYNCHRONOUS</event-firing-mode>
                 <event-ordering-mode>UNORDERED</event-ordering-mode>
                 <events-to-fire-on>CREATED</events-to-fire-on>

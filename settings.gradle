@@ -4,7 +4,4 @@ include ':mewa-main',
         ':mewa-main:application',
         ':mewa-main:model',
         ':mewa-main:util',
-        ':mewa-main:business-api',
-        ':mewa-main:business-impl',
-        ':mewa-main:rest-controller',
-        ':mewa-main:security'
+        ':mewa-main:rest-controller'

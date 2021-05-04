@@ -15,17 +15,13 @@ ext {
 
 dependencies {
     compile fileTree(dir: '../lib', include: '*.jar')
-    compile project(':mewa-main:business-api')
-    compile project(':mewa-main:business-impl')
     compile project(':mewa-main:rest-controller')
     compile project(':mewa-main:model')
     compile project(':mewa-main:util')
-    compile project(':mewa-main:security')
-
+    
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-logging")
 
-    implementation("com.pru.ap.translations:ap-translations-library:${pruTranslationsLibVersion}")
     implementation("org.springframework.boot:spring-boot-starter-cache")
     implementation("org.ehcache:ehcache:${ehCacheVersion}")
     implementation("javax.cache:cache-api:${cacheApiVersion}")
@@ -53,7 +49,6 @@ dependencies {
     testImplementation("org.spockframework:spock-spring:${rootProject.ext.spockVersion}")
 
     testImplementation("org.junit.jupiter:junit-jupiter-engine:${junitJupiterVersion}")
-    testImplementation("org.springframework.security:spring-security-test:${springSecurityVersion}")
 }
 
 testClasses.dependsOn compileGroovy
@@ -71,7 +66,7 @@ processResources {
         }.each {
             filter(ReplaceTokens, tokens: [(it.key): it.value])
             filter(ReplaceTokens, tokens: [("project.${it.key}".toString()): it.value])
-        }
+        }   
     }
 }
 

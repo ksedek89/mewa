@@ -15,7 +15,7 @@ allprojects {
     }
 
     version = rootProject.file('version').text.trim()
-    group = 'com.pru.mewa'
+    group = 'com.mewa'
 
     buildscript {
         repositories {
@@ -76,7 +76,6 @@ buildscript {
         springBootVersion = "2.1.4.RELEASE"
         springCloudVersion = '2.1.1.RELEASE'
         feignHttpClientVersion = '10.1.0'
-        springSecurityVersion = '5.1.5.RELEASE'
         springSessionVersion = '2.1.6.RELEASE'
         groovyAllVersion = "2.5.6"
         springDependencyVersion = "1.0.6.RELEASE"

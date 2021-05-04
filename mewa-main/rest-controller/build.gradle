@@ -1,12 +1,9 @@
 dependencies {
-    api project(':mewa-main:business-api')
     implementation project(':mewa-main:model')
     implementation project(':mewa-main:util')
-    implementation project(':mewa-main:security')
 
     implementation("org.springframework.boot:spring-boot-starter-web:${springBootVersion}")
     implementation("commons-io:commons-io:$apacheCommonsVersion")
-    implementation("com.pru.cas.sso:cas-library:${pruSsoLibVersion}")
 
     implementation("ma.glasnost.orika:orika-core:$orikaVersion")
 
