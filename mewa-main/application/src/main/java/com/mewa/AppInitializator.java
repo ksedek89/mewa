@@ -19,6 +19,6 @@ class AppInitializator {
     @PostConstruct
     private void init() throws Exception {
         log.info("Starting init services");
-//        initService.init();
+        initService.init();
     }
 }

@@ -7,20 +7,23 @@ import lombok.extern.slf4j.Slf4j;
 
 @Data
 @Slf4j
-public class PressureDevice implements Device{
-    private int id;
-    private int pressure;
-    private int alarm;
-    private int errorCode;
-    private int threshold;
+public class DirectionDevice implements Device{
 
-    private boolean readError;
+    private int id;
+    private int directionAngle;
+    private double totalDosage;
+    private String totalDosagePrefix;
+    private int radAlarm;
+    private int neutrons;
+    private int initNeutrons;
+    private String errorCode;
 
     private SerialPort serialPort;
 
-    public PressureDevice(String portName, int id, Integer threshold) {
+    public DirectionDevice(String portName, int id, Integer directionAngle) {
         this.id = id;
-        this.threshold = threshold;
+        this.directionAngle = directionAngle;
+        this.totalDosagePrefix = "N";
         this.serialPort = new SerialPort(portName);
         try {
             serialPort.openPort();

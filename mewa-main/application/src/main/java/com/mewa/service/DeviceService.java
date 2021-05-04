@@ -1,6 +1,8 @@
 package com.mewa.service;
 
+import com.mewa.device.DirectionDevice;
 import com.mewa.device.PressureDevice;
+import com.mewa.service.device.DirectionHandlerService;
 import com.mewa.service.device.PressureService;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
@@ -15,17 +17,29 @@ import java.util.List;
 @Slf4j
 @Data
 public class DeviceService {
+    private boolean configurationFinished;
 
     @Autowired
     private PressureService pressureService;
 
-    private List<PressureDevice> pressureDeviceList = new ArrayList<>();
+    @Autowired
+    private DirectionHandlerService directionHandlerService;
 
-    @Scheduled(fixedDelay = 1000)
-    public void handleDevices(){
-        log.info("handle");
+    private List<PressureDevice> pressureDeviceList = new ArrayList<>();
+    private List<DirectionDevice> directionDeviceList = new ArrayList<>();
+
+    @Scheduled(fixedDelay = 20000)
+    public void handleDevices() throws Exception {
+        if(!configurationFinished){
+            return;
+        }
         for(PressureDevice pressureDevice: pressureDeviceList){
             pressureService.handlePressureDevice(pressureDevice);
         }
+        directionHandlerService.handleDirectionDevice(directionDeviceList);
+    }
+
+    public void setConfigurationFinished(boolean configurationFinished) {
+        this.configurationFinished = configurationFinished;
     }
 }

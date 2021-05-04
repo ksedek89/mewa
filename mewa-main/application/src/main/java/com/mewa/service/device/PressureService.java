@@ -22,16 +22,15 @@ public class PressureService {
     ClientService clientService;
 
     @Async
-    public void handlePressureDevice(PressureDevice pressureDevice){
-        sendFrameToPressure(pressureDevice);
-        byte[] FrameFromPressure = readFrameFromPressure(pressureDevice);
-        setDataFromPressure(pressureDevice, FrameFromPressure);
+    public void handlePressureDevice(PressureDevice pressureDevice) throws Exception{
+        sendFrameToDevice(pressureDevice);
+        byte[] frameFromPressure = readFrameFromDevice(pressureDevice);
+        setDataToDevice(pressureDevice, frameFromPressure);
         String frameForSiu =  preprareFrameForSiu(pressureDevice);
         clientService.sendDatagram(frameForSiu);
     }
 
-    private void sendFrameToPressure(PressureDevice pressureDevice){
-        try{
+    private void sendFrameToDevice(PressureDevice pressureDevice) throws Exception{
             SerialPort serialPort = pressureDevice.getSerialPort();
             byte[] crc = ModRtuCrc(PRESSURE_DEVICE_REQUEST_FRAME, PRESSURE_DEVICE_REQUEST_FRAME.length);
             ByteBuffer bb = ByteBuffer.allocate(PRESSURE_DEVICE_REQUEST_FRAME.length + crc.length);
@@ -40,23 +39,15 @@ public class PressureService {
             byte[] sendingBytes = bb.array();
             serialPort.writeBytes(sendingBytes);
             Thread.sleep(500);
-        }catch (Exception e) {
-            log.error(e.getMessage(), e);
-        }
     }
 
-    private byte[] readFrameFromPressure(PressureDevice pressureDevice) {
-        try {
-            SerialPort serialPort = pressureDevice.getSerialPort();
-            byte[] receivedBytes = serialPort.readBytes();
-            return receivedBytes;
-        } catch (Exception e) {
-            log.error(e.getMessage(), e);
-        }
-        return null;
+    private byte[] readFrameFromDevice(PressureDevice pressureDevice) throws Exception{
+        SerialPort serialPort = pressureDevice.getSerialPort();
+        byte[] receivedBytes = serialPort.readBytes();
+        return receivedBytes;
     }
 
-    private void setDataFromPressure(PressureDevice pressureDevice, byte[] data){
+    private void setDataToDevice(PressureDevice pressureDevice, byte[] data){
         pressureDevice.setReadError(false);
         if(data != null) {
             pressureDevice.setErrorCode(0);

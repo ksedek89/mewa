@@ -79,7 +79,7 @@ public class SendData {
 
     public String sendCards(DirSensor dirSensor) {
         StringBuilder frame = new StringBuilder();
-        frame.append("$PCARDS,");
+/*        frame.append("$PCARDS,");
         frame.append(getCurrentTimeToFrame());
         frame.append(dirSensor.getDirection()+",");
         frame.append(dirSensor.getTotalDosage()+",");
@@ -98,7 +98,7 @@ public class SendData {
         frame.append(dirSensor.getErrorCode()+"*");
         frame.append(Integer.toHexString(Nmea0183.calculateCheckSum(frame.toString())));
         frame.append("\r");
-        frame.append("\n");
+        frame.append("\n");*/
         return frame.toString();
     }
     

@@ -7,4 +7,5 @@ public class DeviceDto {
     private Integer moxaId;
     private String deviceType;
     private Integer thresholdPressure;
+    private Integer directionAngle;
 }

@@ -76,7 +76,7 @@ public class DirSensor implements RsDevice {
     }
     
     public  int isAlarm(){
-        try {
+/*        try {
             double thres1 = Double.valueOf(threshold1);
             double thres2 = Double.valueOf(threshold2);
             double thres3 = Double.valueOf(threshold3);
@@ -106,13 +106,13 @@ public class DirSensor implements RsDevice {
             logger.error(e.getMessage(), e);
         } catch (IllegalConfigurationException e) {
             logger.error(e.getMessage(), e);
-        }
+        }*/
         
         return 0;
     }
     
     public static int getFactor(String value1) throws IllegalConfigurationException{
-        String value = value1.toLowerCase();
+/*        String value = value1.toLowerCase();
         if(value.equalsIgnoreCase("u")){
             return  1000;
         }else if(value.equalsIgnoreCase("m")){
@@ -121,12 +121,13 @@ public class DirSensor implements RsDevice {
             return 1;
         }else{
             throw new IllegalConfigurationException("Excepted prefixes: m, u , n (no case sensitive");
-        }
+        }*/
+        return 1;
     }
 
     @Override
     public void setData(byte[] data) {             
-        try{
+/*        try{
             if(data==null){
                 errorCode = String.valueOf(1<<(id-1));                   
                 totalDosage = "0";
@@ -135,12 +136,12 @@ public class DirSensor implements RsDevice {
             }else{
 //                 sendData = true;         
                 
-              /*  System.out.println("Dir sensor:"+" ");
+              *//*  System.out.println("Dir sensor:"+" ");
                 for(int i = 0;i<data.length;i++){
                     System.out.print(String.format("0x%02X",data[i])+" ");
 
                 } 
-                System.out.println();  */                
+                System.out.println();  *//*
                 for(int i = 0;i<data.length-12;i++){
                    if((0xFF&data[i]) ==0x01&& ((0xFF&data[i+1]) == 0x1f|| (0xFF&data[i+1])  == 0xaa)){
                         String value = String.valueOf((char)data[i+4]).concat(String.valueOf((char)data[i+5])).
@@ -172,7 +173,7 @@ public class DirSensor implements RsDevice {
         }
         for(DirSensor a:dirSensorList){
             errorCode = String.valueOf(Integer.valueOf(errorCode) | Integer.valueOf(a.getErrorCode()));
-        }
+        }*/
     }
 
 
@@ -343,7 +344,7 @@ public class DirSensor implements RsDevice {
     }
     
     public void checkAllDevices(){
-        String maxTotalDosageTemp = totalDosage;
+ /*       String maxTotalDosageTemp = totalDosage;
         direction = angle;
         for(DirSensor a:dirSensorList){
            if(Integer.valueOf(a.getTotalDosage())>Integer.valueOf(maxTotalDosageTemp)){
@@ -353,7 +354,7 @@ public class DirSensor implements RsDevice {
                totalDosagePrefix = a.getTotalDosagePrefix();
            }
         }
-        totalDosage = maxTotalDosageTemp;        
+        totalDosage = maxTotalDosageTemp;  */
     }
     public void setAngle(String angle) {
         this.angle = angle;

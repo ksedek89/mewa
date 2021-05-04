@@ -23,12 +23,12 @@ public class MoxaService {
     private String moxaConfigFilePath;
 
 
-    private Map<Integer, String> moxaPortMap;
-
-
 
     public Map<Integer, String> initMoxa() throws Exception{
-        boolean theSame = false;
+        Map<Integer, String> moxaPortMap = new HashMap();
+        moxaPortMap.put(1, "com1");
+        moxaPortMap.put(2, "com2");
+/*        boolean theSame = false;
         BufferedReader br;
         try {
             br = new BufferedReader(new FileReader(moxaConfigFilePath));
@@ -37,7 +37,6 @@ public class MoxaService {
             br = new BufferedReader(new FileReader(moxaConfigFilePath));
         }
         String line;
-        moxaPortMap = new HashMap();
         boolean startPort = false;
         while ((line = br.readLine()) != null) {
             String[] tokens = line.split("\t");
@@ -65,7 +64,7 @@ public class MoxaService {
                 }
 
             }
-        }
+        }*/
         return moxaPortMap;
     }
 
