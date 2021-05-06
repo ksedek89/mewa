@@ -26,9 +26,7 @@ public class MoxaService {
 
     public Map<Integer, String> initMoxa() throws Exception{
         Map<Integer, String> moxaPortMap = new HashMap();
-        moxaPortMap.put(1, "com1");
-        moxaPortMap.put(2, "com2");
-/*        boolean theSame = false;
+        boolean theSame = false;
         BufferedReader br;
         try {
             br = new BufferedReader(new FileReader(moxaConfigFilePath));
@@ -50,7 +48,7 @@ public class MoxaService {
                 startPort = true;
             }
             if (startPort) {
-                moxaPortMap.put(Integer.valueOf(tokens[0]+1), tokens[6]);
+                moxaPortMap.put(Integer.valueOf(tokens[0])+1, tokens[6]);
             }
         }
         if (theSame) {
@@ -60,22 +58,22 @@ public class MoxaService {
                     startPort = true;
                 }
                 if (startPort) {
-                    moxaPortMap.put(Integer.valueOf(tokens[0]+1), tokens[6]);
+                    moxaPortMap.put(Integer.valueOf(tokens[0])+1, tokens[6]);
                 }
 
             }
-        }*/
+        }
         return moxaPortMap;
     }
 
     private void reinstallMoxa(){
         try {
             log.debug("Starting reinstalling moxa driver");
-            Process proc =  Runtime.getRuntime().exec(scriptPath  + " /"); //Whatever you want to execute
+            Process proc =  Runtime.getRuntime().exec(scriptPath);
             BufferedReader read = new BufferedReader(new InputStreamReader(proc.getInputStream()));
             proc.waitFor();
             while (read.ready()) {
-                read.readLine();
+                log.info(read.readLine());
             }
             log.debug("Ending reinstalling moxa driver");
         }catch (Exception e) {

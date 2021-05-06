@@ -6,14 +6,12 @@ server:
 moxa:
   ip: 192.168.40.120
   port: 80
-  script-path: /home/ksedek/test/test.sh
+  script-path: sudo /home/ksedek/Documents/moxa/init.sh
   config-file-path: /usr/lib/npreal2/driver/npreal2d.cf
   devices:
       - moxa-id: 1
-        device-type: DIR
+        device-type: PRESS
         threshold-pressure: 1000
-        direction-angle: 1000 #values: 0/60/120/-120/-60
-
       - moxa-id: 2
         device-type: DIR
         direction-angle: 1000 #values: 0/60/120/-120/-60
