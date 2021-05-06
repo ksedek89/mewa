@@ -1,12 +1,13 @@
 server:
   port: 8085
+  incoming-port: 8000
   servlet:
     context-path: /mewa
 moxa:
   ip: 192.168.40.120
   port: 80
   script-path: /home/ksedek/test/test.sh
-  config-file-path: npreal2d.cf
+  config-file-path: /usr/lib/npreal2/driver/npreal2d.cf
   devices:
       - moxa-id: 1
         device-type: DIR

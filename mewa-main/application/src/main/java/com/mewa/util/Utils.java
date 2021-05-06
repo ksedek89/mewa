@@ -44,4 +44,12 @@ public class Utils {
 
         return new byte[] { (byte)crc, (byte)(crc >>> 8) };
     }
+
+    public static int calculateCheckSum(String value){
+        int checksum = 0;
+        for(int i=1;i<value.length()-1;i++){
+            checksum = checksum ^ value.charAt(i);
+        }
+        return checksum;
+    }
 }

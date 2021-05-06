@@ -14,7 +14,7 @@ import javax.persistence.Table;
 public class ThresholdValue{
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private int id;
+    private Long id;
     private double value1;
     private double value2;
     private double value3;

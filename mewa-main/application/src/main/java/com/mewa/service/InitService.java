@@ -38,7 +38,7 @@ public class InitService {
     @Async
     public void init() throws Exception{
         thresholdValuesService.init();
-        Map<Integer, String> moxaConfigurationMap = moxaService.initMoxa();
+/*        Map<Integer, String> moxaConfigurationMap = moxaService.initMoxa();
         for (Map.Entry<Integer, String> entry : moxaConfigurationMap.entrySet()) {
             Optional<DeviceDto> element = deviceProperties.getDevices().stream().filter(e -> e.getMoxaId().equals(entry.getKey())).findFirst();
             if(!element.isPresent()){
@@ -52,7 +52,7 @@ public class InitService {
                 deviceService.getDirectionDeviceList().add((new DirectionDevice(entry.getValue(), entry.getKey(), deviceDto.getDirectionAngle())));
             }
         }
-        deviceService.setConfigurationFinished(true);
+        deviceService.setConfigurationFinished(true);*/
     }
 
 }

@@ -43,7 +43,7 @@ public class Threshold implements Runnable{
 
     @Override
     public void run() {
-        if(value.startsWith("$PCARCC")){
+/*        if(value.startsWith("$PCARCC")){
             try{
                 String [] data= value.split(",");
                 String [] checkSum = value.split("\\*");  
@@ -88,7 +88,7 @@ public class Threshold implements Runnable{
             }catch(IOException e){
                 logger.error(e.getMessage(), e);
             }
-        }
+        }*/
     }
     
     public static void updateThreshold(){

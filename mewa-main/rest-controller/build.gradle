@@ -1,6 +1,4 @@
 dependencies {
-    implementation project(':mewa-main:model')
-    implementation project(':mewa-main:util')
 
     implementation("org.springframework.boot:spring-boot-starter-web:${springBootVersion}")
     implementation("commons-io:commons-io:$apacheCommonsVersion")

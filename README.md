@@ -15,3 +15,13 @@ create table threshold_value
 
         primary key (id)
 );
+
+
+Przykładowe ramki:
+$PCARCC,230144,1,U,5,U,25,U*7a
+
+
+cd /tmp/moxa/
+./mxuninst
+./mxinst SP1
+./mxaddsvr IP_ADDRESS 32

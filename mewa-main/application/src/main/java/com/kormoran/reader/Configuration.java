@@ -155,7 +155,7 @@ public class Configuration {
     }
 
     public void reinstallMoxaDriver(String moxaIp) {
-/*        if(linux){
+        if(linux){
             try {
                 logger.info("Starting reinstalling moxa driver");
                 Process proc =  Runtime.getRuntime().exec(pathToReinstallMoxaScript  + " /"); //Whatever you want to execute
@@ -168,7 +168,7 @@ public class Configuration {
             }catch (Exception e) {
                 logger.error(e.getMessage(), e);
             }
-        }*/
+        }
     }
 
     public void initDevices() throws IllegalConfigurationException, WritingIdToNonIdDeviceException, PortNameNotFoundException, FileNotFoundException, IOException {

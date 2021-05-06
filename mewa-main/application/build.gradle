@@ -16,8 +16,6 @@ ext {
 dependencies { 
     compile fileTree(dir: '../lib', include: '*.jar')
     compile project(':mewa-main:rest-controller')
-    compile project(':mewa-main:model')
-    compile project(':mewa-main:util')
     
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-logging")
@@ -52,9 +50,8 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-engine:${junitJupiterVersion}")
 
     implementation group: 'org.mariadb.jdbc', name: 'mariadb-java-client', version: '2.7.2'
-    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-integration', version: '2.4.5'
-
-
+    
+    implementation group: 'org.springframework.integration', name: 'spring-integration-ip', version: '5.1.13.RELEASE'
 }
 
 testClasses.dependsOn compileGroovy
