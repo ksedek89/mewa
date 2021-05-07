@@ -22,7 +22,7 @@ public class ClientService{
     @Async
     public void sendDatagram(String frame){
         try{
-            log.debug("Frame sent: "+ frame);
+            log.debug("Frame sent: "+ frame.replaceAll("\n", "").replaceAll("\r", ""));
             DatagramSocket clientSocket = new DatagramSocket();
             byte[] sendData = frame.getBytes();
             DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, InetAddress.getByName(ip), port);

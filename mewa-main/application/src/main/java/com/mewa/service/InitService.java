@@ -40,7 +40,10 @@ public class InitService {
         thresholdValuesService.init();
         Map<Integer, String> moxaConfigurationMap = moxaService.initMoxa();
         for (Map.Entry<Integer, String> entry : moxaConfigurationMap.entrySet()) {
-            Optional<DeviceDto> element = deviceProperties.getDevices().stream().filter(e -> e.getMoxaId().equals(entry.getKey())).findFirst();
+            Optional<DeviceDto> element = deviceProperties.getDevices()
+                .stream()
+                .filter(e -> entry.getKey().equals(e.getMoxaId()+16*(e.getMoxaNumber()-1)))
+                .findFirst();
             if(!element.isPresent()){
                 continue;
             }

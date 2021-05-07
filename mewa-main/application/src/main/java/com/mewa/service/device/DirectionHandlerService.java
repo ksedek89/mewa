@@ -22,6 +22,9 @@ public class DirectionHandlerService{
     @Async
     public void handleDirectionDevice(List<DirectionDevice> directionDeviceList){
         try {
+            if(directionDeviceList.size() == 0){
+                return;
+            }
             List<Future<DirectionDevice>> futureList = new ArrayList<>();
             for(DirectionDevice directionDevice :directionDeviceList){
                 futureList.add(directionService.handleDirectionDevice(directionDevice));

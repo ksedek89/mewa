@@ -16,8 +16,7 @@ import static com.mewa.util.Utils.ModRtuCrc;
 @Service
 @Slf4j
 public class PressureService {
-    private static final byte[] PRESSURE_DEVICE_REQUEST_FRAME = new byte[] { 1, 4, 0, 1, 0, 1 };
-
+    private static final byte[] PRESSURE_DEVICE_REQUEST_FRAME = new byte[] { 1, 4, 0, 1, 0, 1};
     @Autowired
     ClientService clientService;
 
@@ -32,6 +31,10 @@ public class PressureService {
 
     private void sendFrameToDevice(PressureDevice pressureDevice) throws Exception{
             SerialPort serialPort = pressureDevice.getSerialPort();
+            if(!serialPort.isOpened()){
+                serialPort.openPort();
+                serialPort.setParams(SerialPort.BAUDRATE_9600, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
+            }
             byte[] crc = ModRtuCrc(PRESSURE_DEVICE_REQUEST_FRAME, PRESSURE_DEVICE_REQUEST_FRAME.length);
             ByteBuffer bb = ByteBuffer.allocate(PRESSURE_DEVICE_REQUEST_FRAME.length + crc.length);
             bb.put(PRESSURE_DEVICE_REQUEST_FRAME);
@@ -48,7 +51,6 @@ public class PressureService {
     }
 
     private void setDataToDevice(PressureDevice pressureDevice, byte[] data){
-        pressureDevice.setReadError(false);
         if(data != null) {
             pressureDevice.setErrorCode(0);
             int c = (data[3] << 8 & 0xFF00) | (data[4] & 0x00ff);
@@ -57,10 +59,11 @@ public class PressureService {
             } else {
                 pressureDevice.setPressure(c);
             }
-            pressureDevice.setAlarm(pressureDevice.getPressure() > pressureDevice.getThreshold() ? 0 : 1);
+            pressureDevice.setAlarm(pressureDevice.getPressure() > pressureDevice.getThreshold() ? 1 : 0);
         }else{
-            pressureDevice.setReadError(true);
+            pressureDevice.setErrorCode(1);
         }
+        log.info(pressureDevice.toString());
     }
 
     private String preprareFrameForSiu(PressureDevice pressureDevice) {
