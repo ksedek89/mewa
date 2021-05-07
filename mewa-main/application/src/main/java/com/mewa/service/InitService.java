@@ -4,7 +4,6 @@ import com.mewa.device.DirectionDevice;
 import com.mewa.device.PressureDevice;
 
 import com.mewa.dto.DeviceDto;
-import com.mewa.model.entity.ThresholdValue;
 import com.mewa.model.repository.ThresholdValueRepository;
 import com.mewa.properties.DeviceProperties;
 import org.springframework.beans.factory.annotation.Autowired;

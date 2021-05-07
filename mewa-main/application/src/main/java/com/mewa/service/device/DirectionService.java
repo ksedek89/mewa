@@ -1,8 +1,8 @@
 package com.mewa.service.device;
 
 import com.mewa.device.DirectionDevice;
-import com.mewa.service.ClientService;
 import com.mewa.service.ThresholdValuesService;
+import com.mewa.service.UdpService;
 import jssc.SerialPort;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +24,7 @@ public class DirectionService {
     private final String DIRECTION_DEVICE_REQUEST_FRAME = "Sk?";
 
     @Autowired
-    private ClientService clientService;
+    private UdpService udpService;
 
     @Autowired
     private ThresholdValuesService thresholdValuesService;
@@ -41,7 +41,7 @@ public class DirectionService {
     public void handleSiuFrame(List<DirectionDevice> directionDeviceList){
         DirectionDevice maxDosageDirectionDevice = directionDeviceList.stream().max(Comparator.comparing(DirectionDevice::getTotalDosage)).get();
         String frameForSiu = getDirectionFrameForSiu(maxDosageDirectionDevice, thresholdValuesService);
-        clientService.sendDatagram(frameForSiu);
+        udpService.sendDatagram(frameForSiu);
     }
 
     private void sendFrameToDevice(DirectionDevice directionDevice) throws Exception {
