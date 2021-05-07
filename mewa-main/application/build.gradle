@@ -10,7 +10,7 @@ ext {
     if (!project.hasProperty('imageTag')) {
         imageTag = version
     }
-    dockerImageName = "mewa"
+    dockerImageName = "mewa-be"
 }
 
 dependencies { 

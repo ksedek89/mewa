@@ -16,12 +16,17 @@ create table threshold_value
         primary key (id)
 );
 
+INSERT INTO mewa.threshold_value (id, value1, value2, value3, unit1, unit2, unit3) VALUES (1, 1, 5, 25, 'U', 'U', 'U');
+
 
 Przykładowe ramki:
 $PCARCC,230144,1,U,5,U,25,U*7a
 
 
-cd /tmp/moxa/
-./mxuninst
-./mxinst SP1
-./mxaddsvr IP_ADDRESS 32
+
+docker run -p 127.0.0.1:3306:3306 --restart always  --name mewa-db -e MYSQL_ROOT_PASSWORD=test -d mariadb:latest
+
+docker update --restart always/no mariadb
+
+
+mysql -u root -p mewa

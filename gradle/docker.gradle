@@ -20,11 +20,7 @@ task dockerCopyJar(type: Copy) {
 }
 
 def imageTag = {
-    if (project.hasProperty('imageTag')) {
-        "$dockerNexusUrl/${dockerImageName}:${imageTag}"
-    } else {
-        "$dockerNexusUrl/${dockerImageName}:${version}"
-    }
+    "${dockerImageName}:${version}"
 }
 
 task dockerBuildImage(type: Exec) {
@@ -38,19 +34,4 @@ task dockerBuildImage(type: Exec) {
     }
 }
 
-task dockerLogin(type: Exec) {
-    group 'docker'
-    commandLine 'docker', 'login', dockerNexusUrl, '-u', pruMavenUser, '-p', pruMavenPassword
-}
 
-task dockerPushImage(type: Exec) {
-    group 'docker'
-    dependsOn dockerLogin
-    dependsOn dockerBuildImage
-    commandLine 'docker', 'push', imageTag()
-}
-
-task dockerBuildAndPushImage {
-    group 'docker'
-    dependsOn 'dockerPushImage'
-}
