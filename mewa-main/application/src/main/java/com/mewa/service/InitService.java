@@ -3,9 +3,11 @@ package com.mewa.service;
 import com.mewa.device.DirectionDevice;
 import com.mewa.device.PressureDevice;
 
+import com.mewa.device.VentilationDevice;
 import com.mewa.dto.DeviceDto;
 import com.mewa.model.repository.ThresholdValueRepository;
 import com.mewa.properties.DeviceProperties;
+import com.mewa.service.device.VentilationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
@@ -23,6 +25,9 @@ public class InitService {
 
     @Autowired
     private DeviceService deviceService;
+
+    @Autowired
+    private VentilationService ventilationService;
 
     @Autowired
     @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
@@ -52,6 +57,9 @@ public class InitService {
             }
             if(deviceDto.getDeviceType().equals("DIR")){
                 deviceService.getDirectionDeviceList().add((new DirectionDevice(entry.getValue(), entry.getKey(), deviceDto.getDirectionAngle())));
+            }
+            if(deviceDto.getDeviceType().equals("VENT")){
+                ventilationService.setVentilationDevice(new VentilationDevice(entry.getValue()));
             }
         }
         deviceService.setConfigurationFinished(true);

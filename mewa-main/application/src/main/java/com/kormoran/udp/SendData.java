@@ -169,7 +169,7 @@ public class SendData {
     }
     
     public String sendCarfs(CarfsMessage carfsMessage){
-        StringBuilder frame = new StringBuilder();
+/*        StringBuilder frame = new StringBuilder();
         frame.append("$PCARFS,");
         frame.append(getCurrentTimeToFrame());
         frame.append(carfsMessage.getInstallationId()+",");
@@ -185,7 +185,8 @@ public class SendData {
         frame.append(Integer.toHexString(Nmea0183.calculateCheckSum(frame.toString())));
         frame.append("\r");
         frame.append("\n");
-        return frame.toString();
+        return frame.toString();*/
+        return null;
     }
 
     public String sendCarps(DptMod dptmod) {

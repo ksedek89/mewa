@@ -3,6 +3,7 @@ package com.mewa.util;
 
 import com.mewa.device.DirectionDevice;
 import com.mewa.device.PressureDevice;
+import com.mewa.device.VentilationDevice;
 import com.mewa.service.ThresholdValuesService;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -54,5 +55,22 @@ public class FrameUtil {
     }
 
 
+    //filtrowentylacja
+    public static String getVentilationFrameForSiu(VentilationDevice ventilationDevice) {
+        StringBuilder frame = new StringBuilder();
+        frame.append("$PCARFS,");
+        frame.append(getCurrentDateForSiu());
+
+        frame.append(ventilationDevice.getId()+",");
+        frame.append(ventilationDevice.getMotor()+",");
+        frame.append(ventilationDevice.getBypass()+",");
+        frame.append(ventilationDevice.getEfficiency()+",");
+        frame.append(ventilationDevice.getInitialResistance()+",");
+        frame.append(ventilationDevice.getResistance()+"*");
+
+        frame.append(calculateCheckSumForSiu(frame.toString()));
+        frame.append("\r\n");
+        return frame.toString();
+    }
 
 }

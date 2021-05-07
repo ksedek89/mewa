@@ -2,8 +2,10 @@ package com.mewa.service;
 
 import com.mewa.device.DirectionDevice;
 import com.mewa.device.PressureDevice;
+import com.mewa.device.VentilationDevice;
 import com.mewa.service.device.DirectionHandlerService;
 import com.mewa.service.device.PressureService;
+import com.mewa.service.device.VentilationService;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,8 @@ public class DeviceService {
 
     @Autowired
     private DirectionHandlerService directionHandlerService;
+
+
 
     private List<PressureDevice> pressureDeviceList = new ArrayList<>();
     private List<DirectionDevice> directionDeviceList = new ArrayList<>();

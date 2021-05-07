@@ -4,13 +4,12 @@ server:
   servlet:
     context-path: /mewa
 moxa:
-  script-path: /u01/app/moxa/init.sh
+  script-path: sudo /u01/app/moxa/init.sh
   config-file-path: /usr/lib/npreal2/driver/npreal2d.cf
   devices:
       - moxa-number: 1
-        moxa-id: 1
-        device-type: PRESS
-        threshold-pressure: 1000
+        moxa-id: 3
+        device-type: VENT
 #      - moxa-number: 1
 #        moxa-id: 2
 #        device-type: PRESS
