@@ -15,9 +15,9 @@ public class VentilationDevice implements Device{
     private int id;
     private String bypass;
     private String motor;
-    private int efficiency;
-    private int initialResistance;
-    private int resistance;
+    private double efficiency;
+    private double initialResistance;
+    private double resistance;
 
     private SerialPort serialPort;
 
@@ -38,5 +38,16 @@ public class VentilationDevice implements Device{
 
     public void setMotor(int motor) {
         this.motor = motor == 1 ? "T" : "N";
+    }
+
+    @Override
+    public String toString() {
+        return "VentilationDevice{" +
+            "bypass='" + bypass + '\'' +
+            ", motor='" + motor + '\'' +
+            ", efficiency=" + efficiency +
+            ", initialResistance=" + initialResistance +
+            ", resistance=" + resistance +
+            '}';
     }
 }

@@ -15,7 +15,6 @@ ext {
 
 dependencies { 
     compile fileTree(dir: '../lib', include: '*.jar')
-    compile project(':mewa-main:rest-controller')
     
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-logging")

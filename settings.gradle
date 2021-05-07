@@ -1,5 +1,4 @@
 rootProject.name = 'mewa'
 
 include ':mewa-main',
-        ':mewa-main:application',
-        ':mewa-main:rest-controller'
+        ':mewa-main:application'

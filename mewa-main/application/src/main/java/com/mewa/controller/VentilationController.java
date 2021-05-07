@@ -13,7 +13,7 @@ public class VentilationController {
 
     @PostMapping(value = "/turn-on")
     public void turnOn() throws Exception {
-        ventilationService.turnOn();
+        ventilationService.turnOnEngine();
         ventilationService.handleSiu();
     }
 
@@ -49,15 +49,14 @@ public class VentilationController {
 
     @PostMapping(value = "/switch-ventilation")
     public void switchToVentilation() throws Exception {
-        ventilationService.switchToVentilation();
+        ventilationService.turnOffBypass();
         ventilationService.handleSiu();
     }
 
     @PostMapping(value = "/switch-filter")
     public void switchToFilter() throws Exception {
-        ventilationService.switchToFilter();
+        ventilationService.turnOnBypass();
         ventilationService.handleSiu();
     }
-
 
 }
