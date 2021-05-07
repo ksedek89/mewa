@@ -41,7 +41,7 @@ public class MoxaService {
             BufferedReader read = new BufferedReader(new InputStreamReader(proc.getInputStream()));
             proc.waitFor();
             while (read.ready()) {
-                log.debug(read.readLine());
+                log.info(read.readLine());
             }
             log.info("Ending reinstalling moxa driver");
         }catch (Exception e) {

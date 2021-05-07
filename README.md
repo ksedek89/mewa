@@ -28,5 +28,7 @@ docker run -p 127.0.0.1:3306:3306 --restart always  --name mewa-db -e MYSQL_ROOT
 
 docker update --restart always/no mariadb
 
+mysql -u root -p 
 
-mysql -u root -p mewa
+
+docker run -p 8085:8085 -p 8000:8000 --restart always  -d mewa-be:0.0.1 
