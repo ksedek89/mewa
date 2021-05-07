@@ -1,5 +1,6 @@
 package com.mewa.service;
 
+import com.mewa.service.device.VentilationService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.integration.ip.udp.UnicastSendingMessageHandler;
@@ -17,15 +18,18 @@ public class UdpService {
     private ThresholdValuesService thresholdValuesService;
 
     @Autowired
+    private VentilationService ventilationService;
+
+    @Autowired
     private UnicastSendingMessageHandler handler;
 
-    public void receive(Message message) {
+    public void receive(Message message) throws Exception {
         String data = new String((byte[]) message.getPayload()).replace("\n", "").replace("\r", "");
         log.info("Received data: " + data);
         if (data.startsWith("$PCARCC")) {
             thresholdValuesService.updateThresholdValues(data);
         }else if(data.startsWith("$PCARSE")){
-
+            ventilationService.handleVentilationFrame(data);
         }
     }
 

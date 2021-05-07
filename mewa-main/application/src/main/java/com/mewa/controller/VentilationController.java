@@ -59,4 +59,8 @@ public class VentilationController {
         ventilationService.handleSiu();
     }
 
+    @PostMapping(value = "/measure")
+    public void measure() throws Exception {
+        ventilationService.handleSiu();
+    }
 }

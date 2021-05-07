@@ -26,7 +26,7 @@ public class Filter implements Runnable{
     
 
     public void run() {
-        logger.warn("Otrzymano: " + sentence);
+/*        logger.warn("Otrzymano: " + sentence);
         String[] values = sentence.split(",");
         String mode = values[2];
         String id = values[3];
@@ -74,7 +74,7 @@ public class Filter implements Runnable{
             }catch(Exception e){
                 logger.error(e.getMessage(), e);
             }
-        }
+        }*/
 
     }
 }

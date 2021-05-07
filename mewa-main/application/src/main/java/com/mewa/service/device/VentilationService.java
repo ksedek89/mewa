@@ -75,6 +75,20 @@ public class VentilationService {
         readFrameFromDevice();
     }
 
+    public void handleVentilationFrame(String data) throws Exception {
+        String[] values = data.split(",");
+        String mode = values[2];
+        String state = values[4].substring(0, 1);
+        if(state.equalsIgnoreCase("0")){
+            turnOff();
+        }else if(mode.equalsIgnoreCase("F")){
+            turnOnVentilation();
+        }else if(mode.equalsIgnoreCase("W")){
+            turnOnFilter();
+        }
+        handleSiu();
+    }
+
     public void handleSiu() throws Exception {
         sendFrameToDevice(CHECK_MOTOR);
         byte[] motor = readFrameFromDevice();
@@ -90,7 +104,7 @@ public class VentilationService {
 
         sendFrameToDevice(CHECK_EFFICIENCY);
         byte[] efficiency = readFrameFromDevice();
-        if(ventilationDevice.getBypass().equals("V")){
+        if(ventilationDevice.getBypass().equals("W")){
             ventilationDevice.setResistance(0);
         }else {
             ventilationDevice.setResistance(calculateResistance(efficiency));
@@ -149,4 +163,6 @@ public class VentilationService {
         System.out.println();
         return receivedBytes;
     }
+
+
 }

@@ -44,7 +44,7 @@ public class Ventilation implements Runnable {
     }
     
     public void saveToFile(String command){
-        try {
+/*        try {
             if(command.equalsIgnoreCase("off")){
                 logger.info("Zapisuje off");
             }
@@ -59,7 +59,7 @@ public class Ventilation implements Runnable {
             logger.error(e.getMessage(), e);
         } catch (FileNotFoundException e) {
             logger.error(e.getMessage(), e);
-        }
+        }*/
     }
 
 }

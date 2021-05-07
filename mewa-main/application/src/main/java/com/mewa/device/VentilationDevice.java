@@ -33,7 +33,7 @@ public class VentilationDevice implements Device{
     }
 
     public void setBypass(int bypass) {
-        this.bypass = bypass == 1 ? "F" : "V";
+        this.bypass = bypass == 1 ? "F" : "W";
     }
 
     public void setMotor(int motor) {
