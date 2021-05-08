@@ -98,8 +98,6 @@ public class Label480  implements RsDevice {
             }
             oxygenAlarm = Double.valueOf(oxygen) > Double.valueOf(THRESHOLD_O2)?"0":"1";
             alarmCo2= Double.valueOf(co2) > Double.valueOf(THRESHOLD_CO2)?"1":"0";
-//            System.out.println("Co2: " + co2);
-//            System.out.println("O2: " + oxygen);
             if(Integer.valueOf(errorCode) == 3){
                 sendData = false;
             }

@@ -9,7 +9,6 @@ import java.util.Date;
 
 import com.kormoran.reader.Nmea0183;
 
-import com.kormoran.sensors.device.DirSensor;
 import com.kormoran.sensors.device.Label480;
 
 

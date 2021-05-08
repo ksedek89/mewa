@@ -32,7 +32,7 @@ public class PressureService {
     }
 
     private void sendFrameToDevice(PressureDevice pressureDevice) throws Exception{
-            SerialPort serialPort = pressureDevice.getSerialPort();
+        SerialPort serialPort = pressureDevice.getSerialPort();
             if(!serialPort.isOpened()){
                 serialPort.openPort();
                 serialPort.setParams(SerialEnum.PRESSURE.getBaudRate(), SerialEnum.PRESSURE.getDataBits(), SerialEnum.PRESSURE.getStopBits(), SerialEnum.PRESSURE.getParityBits());

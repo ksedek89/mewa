@@ -1,49 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-
-    <if condition='isDefined("LOGSTASH_URL")'>
-        <then>
-            <appender name="STASH" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
-                <keepAliveDuration>5 minutes</keepAliveDuration>
-                <reconnectionDelay>10 second</reconnectionDelay>
-                <waitStrategyType>blocking</waitStrategyType>
-                <ringBufferSize>16384</ringBufferSize>
-                <destination>${LOGSTASH_URL}</destination>
-                <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
-                    <providers>
-                        <mdc/> <!-- MDC variables on the Thread will be written as JSON fields-->
-                        <context/> <!--Outputs entries from logback's context -->
-                        <logLevel/>
-                        <loggerName/>
-
-                        <pattern>
-                            <pattern>
-                                {
-                                "appName": "${APP_NAME}",
-                                "appVersion": "${APP_VERSION}"
-                                }
-                            </pattern>
-                        </pattern>
-
-                        <threadName/>
-                        <message/>
-
-                        <logstashMarkers/> <!-- Useful so we can add extra information for specific log lines as Markers-->
-                        <arguments/> <!--or through StructuredArguments-->
-
-                        <stackTrace>
-                            <fieldName>stackTrace</fieldName>
-                            <throwableConverter class="net.logstash.logback.stacktrace.ShortenedThrowableConverter">
-                                <exclude>net\.sf\.cglib\..*</exclude>
-                                <maxDepthPerThrowable>30</maxDepthPerThrowable>
-                                <rootCauseFirst>true</rootCauseFirst>
-                            </throwableConverter>
-                        </stackTrace>
-                    </providers>
-                </encoder>
-            </appender>
-        </then>
-    </if>
+    <timestamp key="byDay" datePattern="yyyy-MM-dd"/>
 
     <appender name="STDOUT"  class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
@@ -51,15 +8,62 @@
         </encoder>
     </appender>
 
-    <root level="info">
-        <if condition='isDefined("LOGSTASH_URL")'>
-            <then>
-                <appender-ref ref="STASH" />
-            </then>
-        </if>
-        <appender-ref ref="STDOUT" />
-    </root>
-    <logger name="org.springframework.security.web.session" level="debug"/>
-    <logger name="org.springframework.security.web.authentication" level="debug"/>
+    <appender name="FILE-ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file> /u01/app/logs/error/mewa.log</file>
+    <filter class="ch.qos.logback.classic.filter.LevelFilter">
+        <level>ERROR</level>
+        <onMatch>ACCEPT</onMatch>
+        <onMismatch>DENY</onMismatch>
+    </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>/u01/app/logs/error/mewa-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <maxFileSize>50MB</maxFileSize>
+            <maxHistory>30</maxHistory>
+            <totalSizeCap>1GB</totalSizeCap>
+        </rollingPolicy>
+        <encoder>
+        <pattern>%d{dd-MM-yyyy HH:mm:ss.SSS} %highlight(%-5level) %logger{36}.%M - %msg%n</pattern>
+    </encoder>
+    </appender>
 
+    <appender name="FILE-INFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file> /u01/app/logs/info/mewa.log</file>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>INFO</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>/u01/app/logs/info/mewa-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <maxFileSize>50MB</maxFileSize>
+            <maxHistory>30</maxHistory>
+            <totalSizeCap>1GB</totalSizeCap>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{dd-MM-yyyy HH:mm:ss.S
+                SS} %highlight(%-5level) %logger{36}.%M - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="FILE-ALL" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file> /u01/app/logs/all/mewa.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>/u01/app/logs/all/mewa-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <maxFileSize>50MB</maxFileSize>
+            <maxHistory>30</maxHistory>
+            <totalSizeCap>1GB</totalSizeCap>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{dd-MM-yyyy HH:mm:ss.SSS} %highlight(%-5level) %logger{36}.%M - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <root level="info">
+        <appender-ref ref="STDOUT" />
+        <appender-ref ref="FILE-ERROR" />
+        <appender-ref ref="FILE-INFO" />
+        <appender-ref ref="FILE-ALL" />
+    </root>
+
+    <logger name="com.mewa" level="info" />
 </configuration>

@@ -10,6 +10,7 @@ import com.mewa.model.repository.ThresholdValueRepository;
 import com.mewa.properties.DeviceProperties;
 import com.mewa.properties.MoxaProperties;
 import com.mewa.service.device.VentilationService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
@@ -19,7 +20,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
 @Service
 public class InitService {
 
@@ -47,7 +47,7 @@ public class InitService {
     private ThresholdValuesService thresholdValuesService;
 
     @Async
-    public void init() throws Exception{
+    public void init() throws Exception {
         thresholdValuesService.init();
         Map<Integer, String> moxaConfigurationMap = moxaService.initMoxa();
         for (DeviceDto deviceDto: deviceProperties.getDevices()){
