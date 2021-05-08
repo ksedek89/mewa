@@ -20,9 +20,6 @@ public class UdpService {
     @Autowired
     private VentilationService ventilationService;
 
-    @Autowired
-    private UnicastSendingMessageHandler handler;
-
     public void receive(Message message) throws Exception {
         String data = new String((byte[]) message.getPayload()).replace("\n", "").replace("\r", "");
         log.info("Received data: " + data);
@@ -33,13 +30,4 @@ public class UdpService {
         }
     }
 
-    @Async
-    public void sendDatagram(String frame){
-        try{
-            log.debug("Frame sent: "+ frame.replaceAll("\n", "").replaceAll("\r", ""));
-            handler.handleMessageInternal(new GenericMessage(frame));
-        }catch(Exception e){
-            log.error(e.getMessage(), e);
-        }
-    }
 }

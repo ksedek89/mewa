@@ -1,7 +1,7 @@
 package com.mewa.service.device;
 
 import com.mewa.device.PressureDevice;
-import com.mewa.service.UdpService;
+import com.mewa.service.UdpClientService;
 import jssc.SerialPort;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +19,7 @@ public class PressureService {
     private static final byte[] PRESSURE_DEVICE_REQUEST_FRAME = new byte[] { 1, 4, 0, 1, 0, 1};
 
     @Autowired
-    UdpService udpService;
+    UdpClientService udpClientService;
 
     @Async
     public void handlePressureDevice(PressureDevice pressureDevice) throws Exception{
@@ -27,7 +27,7 @@ public class PressureService {
         byte[] frameFromPressure = readFrameFromDevice(pressureDevice);
         setDataToDevice(pressureDevice, frameFromPressure);
         String frameForSiu =  preprareFrameForSiu(pressureDevice);
-        udpService.sendDatagram(frameForSiu);
+        udpClientService.sendDatagram(frameForSiu);
     }
 
     private void sendFrameToDevice(PressureDevice pressureDevice) throws Exception{

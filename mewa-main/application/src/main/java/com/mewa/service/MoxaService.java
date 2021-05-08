@@ -14,13 +14,10 @@ import java.util.Map;
 @Service
 @Slf4j
 public class MoxaService {
-    @Value(value = "${moxa.script-path}")
-    private String scriptPath;
     @Value(value = "${moxa.config-file-path}")
     private String moxaConfigFilePath;
 
     public Map<Integer, String> initMoxa() throws Exception{
-//        reinstallMoxa();
         Map<Integer, String> moxaPortMap = new HashMap();
         BufferedReader br = new BufferedReader(new FileReader(moxaConfigFilePath));
         String line;
@@ -33,22 +30,6 @@ public class MoxaService {
         Thread.sleep(1000);
         return moxaPortMap;
     }
-
-    private void reinstallMoxa(){
-        try {
-            log.info("Starting reinstalling moxa driver");
-            Process proc =  Runtime.getRuntime().exec(scriptPath);
-            BufferedReader read = new BufferedReader(new InputStreamReader(proc.getInputStream()));
-            proc.waitFor();
-            while (read.ready()) {
-                log.debug(read.readLine());
-            }
-            log.info("Ending reinstalling moxa driver");
-        }catch (Exception e) {
-            log.error(e.getMessage(), e);
-        }
-    }
-
 
 
 }

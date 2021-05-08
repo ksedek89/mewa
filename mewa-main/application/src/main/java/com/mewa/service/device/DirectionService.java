@@ -2,6 +2,7 @@ package com.mewa.service.device;
 
 import com.mewa.device.DirectionDevice;
 import com.mewa.service.ThresholdValuesService;
+import com.mewa.service.UdpClientService;
 import com.mewa.service.UdpService;
 import jssc.SerialPort;
 import lombok.extern.slf4j.Slf4j;
@@ -24,7 +25,7 @@ public class DirectionService {
     private final String DIRECTION_DEVICE_REQUEST_FRAME = "Sk?";
 
     @Autowired
-    private UdpService udpService;
+    private UdpClientService udpClientService;
 
     @Autowired
     private ThresholdValuesService thresholdValuesService;
@@ -41,7 +42,7 @@ public class DirectionService {
     public void handleSiuFrame(List<DirectionDevice> directionDeviceList){
         DirectionDevice maxDosageDirectionDevice = directionDeviceList.stream().max(Comparator.comparing(DirectionDevice::getTotalDosage)).get();
         String frameForSiu = getDirectionFrameForSiu(maxDosageDirectionDevice, thresholdValuesService);
-        udpService.sendDatagram(frameForSiu);
+        udpClientService.sendDatagram(frameForSiu);
     }
 
     private void sendFrameToDevice(DirectionDevice directionDevice) throws Exception {
@@ -62,12 +63,12 @@ public class DirectionService {
             directionDevice.setTotalDosage(0);
             return;
         }
-/*        System.out.println("Dir sensor:"+" ");
-        for(int i = 0;i<data.length;i++){
-            System.out.print(String.format("0x%02X",data[i])+" ");
-
-        }
-        System.out.println(); */
+//        System.out.println("Dir sensor:"+" ");
+//        for(int i = 0;i<data.length;i++){
+//            System.out.print(String.format("0x%02X",data[i])+" ");
+//
+//        }
+//        System.out.println();
         for(int i = 0;i<data.length-12;i++){
             if((0xFF&data[i]) ==0x01&& ((0xFF&data[i+1]) == 0x1f|| (0xFF&data[i+1])  == 0xaa)){
                 String value = String.valueOf((char)data[i+4]).concat(String.valueOf((char)data[i+5])).

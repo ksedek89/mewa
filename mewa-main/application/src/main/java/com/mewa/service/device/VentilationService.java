@@ -1,7 +1,7 @@
 package com.mewa.service.device;
 
 import com.mewa.device.VentilationDevice;
-import com.mewa.service.UdpService;
+import com.mewa.service.UdpClientService;
 import jssc.SerialPort;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +16,7 @@ import static com.mewa.util.Utils.ModRtuCrc;
 @Slf4j
 public class VentilationService {
     @Autowired
-    private UdpService udpService;
+    private UdpClientService udpClientService;
 
     private VentilationDevice ventilationDevice;
 
@@ -65,14 +65,12 @@ public class VentilationService {
         log.info("Turning on ventilation");
         turnOnEngine();
         turnOffBypass();
-        readFrameFromDevice();
     }
 
     public void turnOnFilter() throws Exception {
         log.info("Turning on filter");
         turnOnEngine();
         turnOnBypass();
-        readFrameFromDevice();
     }
 
     public void handleVentilationFrame(String data) throws Exception {
@@ -113,7 +111,7 @@ public class VentilationService {
 
         String frame = getVentilationFrameForSiu(ventilationDevice);
         log.info(ventilationDevice.toString());
-        udpService.sendDatagram(frame);
+        udpClientService.sendDatagram(frame);
     }
 
     public void setVentilationDevice(VentilationDevice ventilationDevice) {
