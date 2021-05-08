@@ -4,28 +4,37 @@ server:
   servlet:
     context-path: /mewa
 moxa:
+  init:
+    configuration:
+      - id: 1
+        ip: 192.168.40.120
+      - id: 2
+        ip: 192.168.40.121
+      - id: 3
+        ip: 192.168.40.122
   config-file-path: /usr/lib/npreal2/driver/npreal2d.cf
   devices:
-      - moxa-number: 1
-        moxa-id: 1
-        device-type: PRESS
-        threshold-pressure: 1000
-      - moxa-number: 1
-        moxa-id: 3
-        device-type: VENT
-      - moxa-number: 1
-        moxa-id: 2
-        device-type: PRESS
-        threshold-pressure: 1000
-      - moxa-number: 2
-        moxa-id: 1
-        device-type: PRESS
-        threshold-pressure: 1000
+#      - moxa-number: 1
+#        moxa-id: 1
+#        device-type: PRESS
+#        threshold-pressure: 1000
+#      - moxa-number: 1
+#        moxa-id: 3
+#        device-type: VENT
+#      - moxa-number: 1
+#        moxa-id: 2
+#        device-type: PRESS
+#        threshold-pressure: 1000
+#      - moxa-number: 2
+#        moxa-id: 1
+#        device-type: PRESS
+#        threshold-pressure: 1000
       - moxa-number: 3
         moxa-id: 1
         device-type: PRESS
         threshold-pressure: 1000
-#      - moxa-id: 2
+#      - moxa-number: 3
+#        moxa-id: 2
 #        device-type: DIR
 #        direction-angle: 1000 #values: 0/60/120/-120/-60
 siu:

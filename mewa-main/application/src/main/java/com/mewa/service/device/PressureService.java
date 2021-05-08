@@ -1,6 +1,7 @@
 package com.mewa.service.device;
 
 import com.mewa.device.PressureDevice;
+import com.mewa.enums.SerialEnum;
 import com.mewa.service.UdpClientService;
 import jssc.SerialPort;
 import lombok.extern.slf4j.Slf4j;
@@ -34,7 +35,7 @@ public class PressureService {
             SerialPort serialPort = pressureDevice.getSerialPort();
             if(!serialPort.isOpened()){
                 serialPort.openPort();
-                serialPort.setParams(SerialPort.BAUDRATE_9600, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
+                serialPort.setParams(SerialEnum.PRESSURE.getBaudRate(), SerialEnum.PRESSURE.getDataBits(), SerialEnum.PRESSURE.getStopBits(), SerialEnum.PRESSURE.getParityBits());
             }
             byte[] crc = ModRtuCrc(PRESSURE_DEVICE_REQUEST_FRAME, PRESSURE_DEVICE_REQUEST_FRAME.length);
             ByteBuffer bb = ByteBuffer.allocate(PRESSURE_DEVICE_REQUEST_FRAME.length + crc.length);
@@ -47,6 +48,9 @@ public class PressureService {
 
     private byte[] readFrameFromDevice(PressureDevice pressureDevice) throws Exception{
         SerialPort serialPort = pressureDevice.getSerialPort();
+        if(!serialPort.isOpened()){
+            return null;
+        }
         byte[] receivedBytes = serialPort.readBytes();
         return receivedBytes;
     }

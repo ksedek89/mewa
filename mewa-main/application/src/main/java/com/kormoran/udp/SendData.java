@@ -159,12 +159,12 @@ public class SendData {
     
     public String sendCaris(CarisMessage carisMessage){
         StringBuilder frame = new StringBuilder();
-        frame.append("$PCARIS,");
+/*        frame.append("$PCARIS,");
         frame.append(getCurrentTimeToFrame());        
         frame.append(carisMessage.getStatus()+",0*");
         frame.append(Integer.toHexString(Nmea0183.calculateCheckSum(frame.toString())));
         frame.append("\r");
-        frame.append("\n");
+        frame.append("\n");*/
         return frame.toString();
     }
     

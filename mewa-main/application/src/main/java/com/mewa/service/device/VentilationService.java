@@ -153,6 +153,9 @@ public class VentilationService {
 
     private byte[] readFrameFromDevice() throws Exception{
         SerialPort serialPort = ventilationDevice.getSerialPort();
+        if(!serialPort.isOpened()){
+            return null;
+        }
         byte[] receivedBytes = serialPort.readBytes();
         System.out.print("Received bytes: ");
         for(int i = 0;i<receivedBytes.length;i++){

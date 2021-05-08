@@ -1,6 +1,7 @@
 package com.mewa.service.device;
 
 import com.mewa.device.DirectionDevice;
+import com.mewa.enums.SerialEnum;
 import com.mewa.service.ThresholdValuesService;
 import com.mewa.service.UdpClientService;
 import com.mewa.service.UdpService;
@@ -49,11 +50,19 @@ public class DirectionService {
         ByteBuffer bb = ByteBuffer.allocate(DIRECTION_DEVICE_REQUEST_FRAME.length());
         bb.put(DIRECTION_DEVICE_REQUEST_FRAME.getBytes());
         byte[] sendingBytes = bb.array();
-        directionDevice.getSerialPort().writeBytes(sendingBytes);
+        SerialPort serialPort = directionDevice.getSerialPort();
+        if(!serialPort.isOpened()){
+            serialPort.openPort();
+            serialPort.setParams(SerialEnum.DIRECTION.getBaudRate(), SerialEnum.DIRECTION.getDataBits(), SerialEnum.DIRECTION.getStopBits(), SerialEnum.DIRECTION.getParityBits());
+        }
+        serialPort.writeBytes(sendingBytes);
     }
 
     private byte[] readFrameFromDevice(DirectionDevice directionDevice) throws Exception{
         SerialPort serialPort = directionDevice.getSerialPort();
+        if(!serialPort.isOpened()){
+            return null;
+        }
         return serialPort.readBytes();
     }
 

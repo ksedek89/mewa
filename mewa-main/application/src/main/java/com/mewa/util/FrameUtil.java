@@ -2,11 +2,14 @@ package com.mewa.util;
 
 
 import com.mewa.device.DirectionDevice;
+import com.mewa.device.MoxaDevice;
 import com.mewa.device.PressureDevice;
 import com.mewa.device.VentilationDevice;
 import com.mewa.service.ThresholdValuesService;
 import org.springframework.beans.factory.annotation.Autowired;
 
+
+import java.util.List;
 
 import static com.mewa.util.Utils.calculateCheckSumForSiu;
 import static com.mewa.util.Utils.getCurrentDateForSiu;
@@ -68,6 +71,20 @@ public class FrameUtil {
         frame.append(ventilationDevice.getInitialResistance()+",");
         frame.append(ventilationDevice.getResistance()+"*");
 
+        frame.append(calculateCheckSumForSiu(frame.toString()));
+        frame.append("\r\n");
+        return frame.toString();
+    }
+
+    //moxa
+    public static String getMoxaFrameForSiu(List<MoxaDevice> moxaDeviceList){
+        StringBuilder frame = new StringBuilder();
+        frame.append("$PCARIS,");
+        frame.append(getCurrentDateForSiu());
+        frame.append(moxaDeviceList.get(0).getId() + "," + moxaDeviceList.get(0).getStatus() +"," + moxaDeviceList.get(0).getErrorCode()+",");
+        frame.append(moxaDeviceList.get(1).getId() + "," + moxaDeviceList.get(1).getStatus() +"," + moxaDeviceList.get(1).getErrorCode()+",");
+        frame.append(moxaDeviceList.get(2).getId() + "," + moxaDeviceList.get(2).getStatus() +"," + moxaDeviceList.get(2).getErrorCode());
+        frame.append("*");
         frame.append(calculateCheckSumForSiu(frame.toString()));
         frame.append("\r\n");
         return frame.toString();

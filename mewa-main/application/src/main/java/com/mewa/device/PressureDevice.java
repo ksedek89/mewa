@@ -1,5 +1,6 @@
 package com.mewa.device;
 
+import com.mewa.enums.SerialEnum;
 import jssc.SerialPort;
 import jssc.SerialPortException;
 import lombok.Data;
@@ -23,7 +24,7 @@ public class PressureDevice implements Device{
         this.serialPort = new SerialPort(portName);
         try {
             serialPort.openPort();
-            serialPort.setParams(SerialPort.BAUDRATE_9600, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
+            serialPort.setParams(SerialEnum.PRESSURE.getBaudRate(), SerialEnum.PRESSURE.getDataBits(), SerialEnum.PRESSURE.getStopBits(), SerialEnum.PRESSURE.getParityBits());
         } catch (SerialPortException e) {
             log.error(e.getMessage(), e);
         }

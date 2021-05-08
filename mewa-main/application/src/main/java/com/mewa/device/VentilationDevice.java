@@ -1,5 +1,6 @@
 package com.mewa.device;
 
+import com.mewa.enums.SerialEnum;
 import jssc.SerialPort;
 import jssc.SerialPortException;
 import lombok.Data;
@@ -26,7 +27,7 @@ public class VentilationDevice implements Device{
         try {
             id = 1;
             serialPort.openPort();
-            serialPort.setParams(SerialPort.BAUDRATE_9600, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
+            serialPort.setParams(SerialEnum.VENTILATION.getBaudRate(), SerialEnum.VENTILATION.getDataBits(), SerialEnum.VENTILATION.getStopBits(), SerialEnum.VENTILATION.getParityBits());
         } catch (SerialPortException e) {
             log.error(e.getMessage(), e);
         }

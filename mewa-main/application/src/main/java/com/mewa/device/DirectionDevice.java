@@ -1,5 +1,6 @@
 package com.mewa.device;
 
+import com.mewa.enums.SerialEnum;
 import jssc.SerialPort;
 import jssc.SerialPortException;
 import lombok.Data;
@@ -27,7 +28,7 @@ public class DirectionDevice implements Device{
         this.serialPort = new SerialPort(portName);
         try {
             serialPort.openPort();
-            serialPort.setParams(SerialPort.BAUDRATE_9600, SerialPort.DATABITS_8, SerialPort.PARITY_NONE, SerialPort.STOPBITS_1);
+            serialPort.setParams(SerialEnum.DIRECTION.getBaudRate(), SerialEnum.DIRECTION.getDataBits(), SerialEnum.DIRECTION.getStopBits(), SerialEnum.DIRECTION.getParityBits());
         } catch (SerialPortException e) {
             log.error(e.getMessage(), e);
         }

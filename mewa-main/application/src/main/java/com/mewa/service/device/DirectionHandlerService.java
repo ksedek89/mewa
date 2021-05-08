@@ -33,7 +33,6 @@ public class DirectionHandlerService{
                 future.get();
             }
             directionService.handleSiuFrame(directionDeviceList);
-            System.out.println();
         }catch (Exception e){
 
         }
