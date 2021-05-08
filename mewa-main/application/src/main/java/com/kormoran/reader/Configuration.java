@@ -1,9 +1,5 @@
 package com.kormoran.reader;
 
-import com.kormoran.exception.IllegalConfigurationException;
-
-import com.kormoran.exception.PortNameNotFoundException;
-import com.kormoran.exception.WritingIdToNonIdDeviceException;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -28,9 +24,6 @@ import com.kormoran.sensors.Device;
 
 import com.kormoran.sensors.RsDevice;
 
-import com.kormoran.sensors.Threshold;
-
-import com.kormoran.sensors.device.CarisMessage;
 import com.kormoran.sensors.device.DirSensor;
 import com.kormoran.sensors.device.DptMod;
 import com.kormoran.sensors.device.Label480;
@@ -55,30 +48,16 @@ public class Configuration {
     private String pathToCf;
     private String pathToReinstallMoxaScript;
     
-    public Configuration() {
-        try {
+    public Configuration() throws Exception{
             initMoxaDriver(initNetwork());
             initThreshold();
             initDevices();
             new Thread(new TelnetClient()).start();
-        } catch (IllegalConfigurationException e) {
-            logger.error(e.getMessage(), e);
-        } catch (WritingIdToNonIdDeviceException e) {
-            logger.error(e.getMessage(), e);
-        } catch (PortNameNotFoundException e) {
-            logger.error(e.getMessage(), e);
-        } catch (FileNotFoundException e) {
-            logger.error(e.getMessage(), e);
-        } catch (IOException e) {
-            logger.error(e.getMessage(), e);
-        } catch(Exception e){
-            logger.error(e.getMessage(), e);                
-        }
         deviceListToString();
     }
 
     //pobranie parametrow sieci + sciezki do plikow
-    public String initNetwork() throws IllegalConfigurationException, FileNotFoundException, IOException {
+    public String initNetwork() throws  FileNotFoundException, IOException {
         try {
             //setting network properties
             Properties prop = new Properties();
@@ -91,24 +70,19 @@ public class Configuration {
             Client.setPort(Integer.valueOf(prop.getProperty("outcoming.udp.port")));
             Server.setIncomingPort(Integer.valueOf(prop.getProperty("incoming.udp.port")));
             Reader.setTimestamp(Integer.valueOf(prop.getProperty("frame.send.timestamp"))*1000);
-            Threshold.setCheckingChecksum(Boolean.valueOf(prop.getProperty("checkingChecksum")));
             linux = prop.getProperty("operating.system").equalsIgnoreCase("linux");
 
             pathToCf = prop.getProperty("npreal.path");
             pathToReinstallMoxaScript = prop.getProperty("script.path");
             String moxaIp = prop.getProperty("moxa.ip");
 
-            if (moxaIp == null) {
-                throw new IllegalConfigurationException();
-            } else {
-                return moxaIp;
-            }
 
         } catch (FileNotFoundException fnfe) {
             throw fnfe;
         } catch (IOException ioe) {
             throw ioe;
         }
+        return null;
     }
 
 
@@ -171,7 +145,7 @@ public class Configuration {
         }
     }
 
-    public void initDevices() throws IllegalConfigurationException, WritingIdToNonIdDeviceException, PortNameNotFoundException, FileNotFoundException, IOException {
+    public void initDevices() throws FileNotFoundException, IOException {
         try {
             //setting device properties
             Properties prop = new Properties();
@@ -186,7 +160,6 @@ public class Configuration {
             deviceList = new ArrayList<Device>();
             int counter = 0;
             for(int i = 1; i != 32; i++) {
-                try{
                     if(prop.getProperty("port" + i + ".type") != null) {
                         PortType type = PortType.valueOf(prop.getProperty("port" + i + ".type").toUpperCase());
                         counter++;
@@ -210,13 +183,7 @@ public class Configuration {
                         deviceList.get(counter - 1).getRsDevice().setThreshold(prop.getProperty("port" + i + ".pressure"));
                     }
                     
-                }catch(WritingIdToNonIdDeviceException e) {
-                    throw new WritingIdToNonIdDeviceException("Trying write id to " + deviceList.get(counter - 1).getDeviceType());
-                }catch(Exception e) {
-                    throw new IllegalConfigurationException("Wrong configuration for port number: " + i, e);
-                }catch(PortNameNotFoundException ef) {
-                    throw ef;
-                }
+
             }
         }catch (FileNotFoundException fnfe) {
             throw fnfe;
@@ -229,7 +196,7 @@ public class Configuration {
 
     }
     //inicjalizacja wartości progowych
-    private void initThreshold() throws IOException, FileNotFoundException, IllegalConfigurationException {
+    private void initThreshold() throws IOException, FileNotFoundException {
         try {
             Properties prop = new Properties();
             String propFileName = "threshold.properties";
@@ -246,9 +213,6 @@ public class Configuration {
             properties2 = prop.getProperty("threshold2").split(" ");
             properties3 = prop.getProperty("threshold3").split(" ");
 
-            if (properties1.length != 2 || properties2.length != 2 || properties3.length != 2) {
-                throw new IllegalConfigurationException("No spaces between threshold values");
-            }
 
             DirSensor.setThreshold1(properties1[0]);
             DirSensor.setPrefixThreshold1(properties1[1].toUpperCase());
@@ -264,7 +228,6 @@ public class Configuration {
                 DirSensor.setPrefixThreshold2(null);
                 DirSensor.setThreshold3(null);
                 DirSensor.setPrefixThreshold3(null);
-                throw new IllegalConfigurationException("Threshold 3 must be the greatest, Threshold 1 must be the smalest");
             }
         } catch (IOException e) {
             throw e;
@@ -284,12 +247,12 @@ public class Configuration {
         return null;
     }
 
-    private String getPortNameFromInteger(int portNumber) throws PortNameNotFoundException {
+    private String getPortNameFromInteger(int portNumber) {
         for (Map.Entry a : portMap.entrySet()) {
             if (((Integer)a.getKey()) == portNumber)
                 return linux ? "/dev/" + (String)a.getValue() : (String)a.getValue();
         }
-        throw new PortNameNotFoundException();
+        return "";
     }
 
 

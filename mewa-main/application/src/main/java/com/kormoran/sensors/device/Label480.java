@@ -1,6 +1,5 @@
 package com.kormoran.sensors.device;
 
-import com.kormoran.exception.WritingIdToNonIdDeviceException;
 
 import java.util.Random;
 
@@ -116,8 +115,7 @@ public class Label480  implements RsDevice {
 
 
     @Override
-    public void setId(int id) throws WritingIdToNonIdDeviceException {
-        throw new WritingIdToNonIdDeviceException("Trying to set id to Co2O2 sensor");
+    public void setId(int id){
     }
 
     @Override

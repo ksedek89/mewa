@@ -1,6 +1,5 @@
 package com.kormoran.sensors.device;
 
-import com.kormoran.exception.IllegalConfigurationException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -212,11 +211,8 @@ public class RadSensor  implements RsDevice {
 
 
     @Override
-    public void setId(int id) throws IllegalConfigurationException {
-        if(id>3||id<1){
-            throw new IllegalConfigurationException("Id must be between 1 and 3");
-        }
-        this.id = id;
+    public void setId(int id){
+
         
     }
     
@@ -265,7 +261,6 @@ public class RadSensor  implements RsDevice {
     
     
     public  int isAlarmExt(){
-        try {
             double thres1 = Double.valueOf(DirSensor.getThreshold1());
             double thres2 = Double.valueOf(DirSensor.getThreshold2());
             double thres3 = Double.valueOf(DirSensor.getThreshold3());
@@ -292,19 +287,11 @@ public class RadSensor  implements RsDevice {
                 return 0;
             }
             
-            
-        } catch (NumberFormatException e) {
-            logger.error(e.getMessage(), e);
-        } catch (IllegalConfigurationException e) {
-            logger.error(e.getMessage(), e);
-        }
-        
-        return 0;
+
     }
     
     
     public  int isAlarmInt(){
-        try {
             int thres1 = Integer.valueOf(DirSensor.getThreshold1());
             int thres2 = Integer.valueOf(DirSensor.getThreshold2());
             int thres3 = Integer.valueOf(DirSensor.getThreshold3());
@@ -331,14 +318,7 @@ public class RadSensor  implements RsDevice {
             }else{
                 return 0;
             }
-            
-            
-        } catch (NumberFormatException e) {
-            logger.error(e.getMessage(), e);
-        } catch (IllegalConfigurationException e) {
-            logger.error(e.getMessage(), e);
-        }
-        return 0;
+
     }
     
     

@@ -1,7 +1,5 @@
 package com.kormoran.sensors.device;
 
-import com.kormoran.exception.IllegalConfigurationException;
-import com.kormoran.exception.WritingIdToNonIdDeviceException;
 
 import java.util.Timer;
 
@@ -29,7 +27,7 @@ public class CarisMessage implements RsDevice {
     }
 
     @Override
-    public void setId(int id) throws WritingIdToNonIdDeviceException, IllegalConfigurationException {
+    public void setId(int id) {
     }
 
     @Override

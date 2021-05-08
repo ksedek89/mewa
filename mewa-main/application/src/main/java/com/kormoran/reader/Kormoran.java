@@ -14,7 +14,7 @@ public class Kormoran {
         super();
     }
 
-    public static void main(String[] args){
+    public static void main(String[] args) throws Exception {
         Configuration configuration = new Configuration();
         (new Thread(new Server(configuration.getDeviceList()))).start();
         (new Reader(configuration)).initReader();

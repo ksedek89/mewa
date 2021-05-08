@@ -1,6 +1,5 @@
 package com.kormoran.sensors.device;
 
-import com.kormoran.exception.IllegalConfigurationException;
 
 import java.util.Random;
 
@@ -111,11 +110,8 @@ public class DptMod  implements RsDevice {
     }
     
     
-    public void setId(int id) throws IllegalConfigurationException {
-        if(id<1||id>14){
-            throw new IllegalConfigurationException("Id must be between 1 and 14");
-        }
-        this.id = id;
+    public void setId(int id){
+
     }
 
     public int getId() {

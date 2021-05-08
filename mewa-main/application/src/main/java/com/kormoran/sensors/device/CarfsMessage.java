@@ -1,7 +1,5 @@
 package com.kormoran.sensors.device;
 
-import com.kormoran.exception.IllegalConfigurationException;
-import com.kormoran.exception.WritingIdToNonIdDeviceException;
 
 import com.kormoran.filterventilation.Ventilation;
 
@@ -59,7 +57,7 @@ public class CarfsMessage implements RsDevice {
     }
 
     @Override
-    public void setId(int id) throws WritingIdToNonIdDeviceException, IllegalConfigurationException {
+    public void setId(int id){
     }
 
     public int getId() {

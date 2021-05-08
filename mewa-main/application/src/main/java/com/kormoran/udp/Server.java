@@ -9,7 +9,6 @@ import org.apache.log4j.Logger;
 
 import com.kormoran.sensors.Device;
 import com.kormoran.sensors.Filter;
-import com.kormoran.sensors.Threshold;
 
 
 public class Server implements Runnable {
@@ -34,9 +33,6 @@ public class Server implements Runnable {
                 serverSocket.receive(receivePacket);
                 String sentence = new String(receivePacket.getData());
                 logger.info("Received data: " + sentence);
-                if(sentence.startsWith("$PCARCC")){
-                    new Thread(new Threshold(sentence)).start();
-                }
                 if(sentence.startsWith("$PCARSE")){
                     new Thread(new Filter(deviceList,sentence)).start();
                 }

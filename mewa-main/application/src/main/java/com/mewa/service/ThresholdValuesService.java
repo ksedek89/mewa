@@ -1,29 +1,12 @@
 package com.mewa.service;
 
-import com.kormoran.exception.IllegalConfigurationException;
-import com.kormoran.exception.WrongChecksumException;
-import com.kormoran.reader.Nmea0183;
-import com.kormoran.sensors.device.DirSensor;
-import com.kormoran.udp.Client;
-import com.kormoran.udp.SendData;
-import com.mewa.device.DirectionDevice;
-import com.mewa.device.PressureDevice;
-import com.mewa.dto.DeviceDto;
+
 import com.mewa.model.entity.ThresholdValue;
 import com.mewa.model.repository.ThresholdValueRepository;
-import com.mewa.properties.DeviceProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Properties;
 
 import static com.mewa.util.Utils.calculateCheckSum;
 

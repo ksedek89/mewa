@@ -1,12 +1,9 @@
 package com.kormoran.sensors;
 
-import com.kormoran.exception.IllegalConfigurationException;
-import com.kormoran.exception.WritingIdToNonIdDeviceException;
-
 
 
 public interface RsDevice {    
-    public void setId(int id) throws WritingIdToNonIdDeviceException, IllegalConfigurationException;   
+    public void setId(int id);
     public int getId();
     public boolean needRequest();
     public void sendFrame(String comPort) throws Exception;

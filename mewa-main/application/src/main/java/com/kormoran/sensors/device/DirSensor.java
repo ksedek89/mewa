@@ -1,8 +1,5 @@
 package com.kormoran.sensors.device;
 
-import com.kormoran.exception.IllegalConfigurationException;
-import com.kormoran.exception.WritingIdToNonIdDeviceException;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -62,7 +59,7 @@ public class DirSensor implements RsDevice {
         rs485.setStopBit(SerialPort.STOPBITS_1);   
     }
     
-    public static boolean isConfigurationCorrect() throws IllegalConfigurationException {
+    public static boolean isConfigurationCorrect(){
         double thres1  = Double.valueOf(threshold1);
         double thres2  = Double.valueOf(threshold2);
         double thres3  = Double.valueOf(threshold3);
@@ -76,132 +73,23 @@ public class DirSensor implements RsDevice {
     }
     
     public  int isAlarm(){
-/*        try {
-            double thres1 = Double.valueOf(threshold1);
-            double thres2 = Double.valueOf(threshold2);
-            double thres3 = Double.valueOf(threshold3);
-            int factor1 = getFactor(prefixThreshold1);
-            int factor2 = getFactor(prefixThreshold2);
-            int factor3 = getFactor(prefixThreshold3);
-            double value1 = thres1 * factor1;
-            double value2 = thres2 * factor2;
-            double value3 = thres3 * factor3;
-            
-            double totalDos = Double.valueOf(totalDosage);
-            int totalFac = getFactor(totalDosagePrefix);
-            double total = totalDos * totalFac;
-            
-            if(total>value3){
-                return 3;
-            }else if(total>value2){
-                return 2;
-            }else if(total>value1){
-                return 1;
-            }else{
-                return 0;
-            }
-            
-            
-        } catch (NumberFormatException e) {
-            logger.error(e.getMessage(), e);
-        } catch (IllegalConfigurationException e) {
-            logger.error(e.getMessage(), e);
-        }*/
-        
         return 0;
     }
     
-    public static int getFactor(String value1) throws IllegalConfigurationException{
-/*        String value = value1.toLowerCase();
-        if(value.equalsIgnoreCase("u")){
-            return  1000;
-        }else if(value.equalsIgnoreCase("m")){
-            return 1000000;
-        }else if(value.equalsIgnoreCase("n")){
-            return 1;
-        }else{
-            throw new IllegalConfigurationException("Excepted prefixes: m, u , n (no case sensitive");
-        }*/
+    public static int getFactor(String value1){
         return 1;
     }
 
     @Override
-    public void setData(byte[] data) {             
-/*        try{
-            if(data==null){
-                errorCode = String.valueOf(1<<(id-1));                   
-                totalDosage = "0";
-//                sendData = false;
-                return;
-            }else{
-//                 sendData = true;         
-                
-              *//*  System.out.println("Dir sensor:"+" ");
-                for(int i = 0;i<data.length;i++){
-                    System.out.print(String.format("0x%02X",data[i])+" ");
-
-                } 
-                System.out.println();  *//*
-                for(int i = 0;i<data.length-12;i++){
-                   if((0xFF&data[i]) ==0x01&& ((0xFF&data[i+1]) == 0x1f|| (0xFF&data[i+1])  == 0xaa)){
-                        String value = String.valueOf((char)data[i+4]).concat(String.valueOf((char)data[i+5])).
-                            concat(String.valueOf((char)data[i+6])).concat(String.valueOf((char)data[i+7])).
-                            concat(String.valueOf((char)data[i+8])).concat(String.valueOf((char)data[i+9])).
-                            concat(String.valueOf((char)data[i+10])).concat(String.valueOf((char)data[i+11]));
-                        value = value.replaceAll("\\s", "0");
-                        totalDosage =String.valueOf(new Double((Double.valueOf(value)*1000)).intValue());
-                        totalDosagePrefix = "N";
-                        radAlarm =  String.valueOf(isAlarm());
-                        errorCode = "0";  
-                        
-                       neutrons = String.valueOf(data[i+25]);
-
-                       if(initNeutrons==null){
-                           initNeutrons = neutrons;
-                       }
-                       
-                       if (id ==1){         
-                           checkAllDevices();
-                       }
-                        break;
-                   }
-                }
-
-            }
-        }catch(Exception e){
-            logger.error(e.getMessage(), e);
-        }
-        for(DirSensor a:dirSensorList){
-            errorCode = String.valueOf(Integer.valueOf(errorCode) | Integer.valueOf(a.getErrorCode()));
-        }*/
+    public void setData(byte[] data) {
     }
 
 
 
     @Override
-    
-    public void setId(int id) throws WritingIdToNonIdDeviceException, IllegalConfigurationException {
-        if(id<1||id>5){
-            throw new IllegalConfigurationException("Id must be between 1 and 14");
-        }
-        switch (id){
-        case 1:
-            angle = "0";
-            break;
-        case 2:
-            angle = "60";
-            break;
-        case 3:
-            angle = "120";
-            break;
-        case 4:
-            angle = "-120";
-            break;
-        case 5: 
-            angle = "-60";
-            break;
-        }
-        this.id = id;
+
+    public void setId(int id)  {
+
     }
 
     @Override
