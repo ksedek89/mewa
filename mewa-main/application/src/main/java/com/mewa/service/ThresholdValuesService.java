@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
+import static com.mewa.util.FrameUtil.getThresholdsFrameForSiu;
 import static com.mewa.util.Utils.calculateCheckSum;
 
 @Service
@@ -17,6 +18,9 @@ public class ThresholdValuesService {
 
     @Autowired
     private ThresholdValueRepository thresholdValueRepository;
+
+    @Autowired
+    private UdpClientService udpClientService;
 
     public void init(){
         thresholdValue = thresholdValueRepository.findAll().get(0);
@@ -42,5 +46,9 @@ public class ThresholdValuesService {
         thresholdValue.setUnit2(data[5]);
         thresholdValue.setUnit3(data[7]);
         thresholdValueRepository.save(thresholdValue);
+
+        String frame = getThresholdsFrameForSiu(thresholdValue);
+        udpClientService.sendDatagram(frame);
+
     }
 }

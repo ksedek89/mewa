@@ -19,61 +19,6 @@ public class SendData {
     public SendData() {
         super();
     }
-    
-    public String sendCarse(String mode, String id, String state) {
-        StringBuilder frame = new StringBuilder();
-        frame.append("$PCARSE,");
-        frame.append(getCurrentTimeToFrame());
-        frame.append(mode+",");
-        frame.append(id+",");
-        frame.append(state+",");
-        frame.append(Integer.toHexString(Nmea0183.calculateCheckSum(frame.toString())));
-        frame.append("\r");
-        frame.append("\n");
-        return frame.toString();
-    }    
-    public String sendCarca() {
-        StringBuilder frame = new StringBuilder();
-        frame.append("$PCARCA,");
-        frame.append(getCurrentTimeToFrame());
-        frame.append(DirSensor.getThreshold1()+",");
-        frame.append(DirSensor.getPrefixThreshold1()+",");
-        frame.append(DirSensor.getThreshold2()+",");
-        frame.append(DirSensor.getPrefixThreshold2()+",");
-        frame.append(DirSensor.getThreshold3()+",");
-        frame.append(DirSensor.getPrefixThreshold3()+"*");  
-        frame.append(Integer.toHexString(Nmea0183.calculateCheckSum(frame.toString())));
-        frame.append("\r");
-        frame.append("\n");
-        return frame.toString();
-    }
-    
-    
-    //do testow
-    public String sendCarcc() {
-        StringBuilder frame = new StringBuilder();
-        frame.append("$PCARCC,");
-        frame.append(getCurrentTimeToFrame());
-        String threshold1 = "1";
-        String prefixThreshold1 = "N";
-        String threshold2 =  "10" ;
-        String prefixThreshold2 = "N";;
-        String threshold3 = "80";
-        String prefixThreshold3 = "N";
-        frame.append(threshold1+",");
-        frame.append(prefixThreshold1+",");
-        frame.append(threshold2+",");
-        frame.append(prefixThreshold2+",");
-        frame.append(threshold3+",");
-        frame.append(prefixThreshold3+"*");
-        frame.append(Integer.toHexString(Nmea0183.calculateCheckSum(frame.toString())));
-        frame.append("\r");
-        frame.append("\n");
-        return frame.toString();
-    }
-
-
-
 
 
     public String sendCarac(Label480 label480) {

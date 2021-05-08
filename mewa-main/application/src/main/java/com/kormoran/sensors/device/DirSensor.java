@@ -8,22 +8,18 @@ import jssc.SerialPort;
 
 import org.apache.log4j.Logger;
 
-import com.kormoran.reader.protocols.ModbusReader;
 
 import com.kormoran.sensors.Rs485;
 import com.kormoran.sensors.RsDevice;
 
-import com.kormoran.sensors.propertiesenum.Prefix;
 
-import com.kormoran.udp.SendData;
 
         //czujnik kierunkowy
 public class DirSensor implements RsDevice {
     final static Logger logger = Logger.getLogger(DirSensor.class);
 
     private Rs485 rs485;    
-    private ModbusReader modbusReader;
-    
+
     private final String frame = "Sk?";
     private int id;
     private String angle;
@@ -99,13 +95,12 @@ public class DirSensor implements RsDevice {
 
     @Override
     public void sendFrame(String comPort) throws Exception{
-        modbusReader = new ModbusReader();
-        modbusReader.sentBytesWithoutCheckSum(frame.getBytes(), comPort, rs485);
+
     }
 
     @Override
     public byte[] getFrame(String comPort) {
-        return modbusReader.getBytes() ;
+        return null;
     }
 
 
@@ -121,11 +116,7 @@ public class DirSensor implements RsDevice {
         totalDosage = String.valueOf(random.nextInt(1000));
         
         int temp = new Random().nextInt(3);
-        for(Prefix value:Prefix.values()){
-            if(value.getValue()==temp){
-                totalDosagePrefix = value.getName();
-            }
-        }
+
         radAlarm =  String.valueOf(isAlarm());
         errorCode =  String.valueOf(random.nextInt(16));
     }

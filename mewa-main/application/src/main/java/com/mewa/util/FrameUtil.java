@@ -5,6 +5,7 @@ import com.mewa.device.DirectionDevice;
 import com.mewa.device.MoxaDevice;
 import com.mewa.device.PressureDevice;
 import com.mewa.device.VentilationDevice;
+import com.mewa.model.entity.ThresholdValue;
 import com.mewa.service.ThresholdValuesService;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -87,6 +88,23 @@ public class FrameUtil {
         frame.append("*");
         frame.append(calculateCheckSumForSiu(frame.toString()));
         frame.append("\r\n");
+        return frame.toString();
+    }
+
+
+    public static String getThresholdsFrameForSiu(ThresholdValue thresholdValue) {
+        StringBuilder frame = new StringBuilder();
+        frame.append("$PCARCA,");
+        frame.append(getCurrentDateForSiu());
+        frame.append(thresholdValue.getValue1()+",");
+        frame.append(thresholdValue.getUnit1()+",");
+        frame.append(thresholdValue.getValue2()+",");
+        frame.append(thresholdValue.getUnit2()+",");
+        frame.append(thresholdValue.getValue3()+",");
+        frame.append(thresholdValue.getUnit3()+"*");
+        frame.append(calculateCheckSumForSiu(frame.toString()));
+        frame.append("\r");
+        frame.append("\n");
         return frame.toString();
     }
 
