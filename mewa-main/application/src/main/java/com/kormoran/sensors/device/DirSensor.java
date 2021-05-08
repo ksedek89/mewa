@@ -15,7 +15,6 @@ import com.kormoran.sensors.RsDevice;
 
 import com.kormoran.sensors.propertiesenum.Prefix;
 
-import com.kormoran.udp.Client;
 import com.kormoran.udp.SendData;
 
         //czujnik kierunkowy
@@ -221,29 +220,14 @@ public class DirSensor implements RsDevice {
 
     @Override
     public String getUdpFrame() {
-        return new SendData().sendCards(this);
+        return null;
     }
 
     @Override
     public void sendDataOverUdp(String frame) {
-        if (id ==1){        
-            new Thread(new Client(frame)).start();
-        }
+
     }
-    
-    public void checkAllDevices(){
- /*       String maxTotalDosageTemp = totalDosage;
-        direction = angle;
-        for(DirSensor a:dirSensorList){
-           if(Integer.valueOf(a.getTotalDosage())>Integer.valueOf(maxTotalDosageTemp)){
-               maxTotalDosageTemp = a.getTotalDosage();
-               direction = a.getAngle();
-               radAlarm = a.getRadAlarm();
-               totalDosagePrefix = a.getTotalDosagePrefix();
-           }
-        }
-        totalDosage = maxTotalDosageTemp;  */
-    }
+
     public void setAngle(String angle) {
         this.angle = angle;
     }

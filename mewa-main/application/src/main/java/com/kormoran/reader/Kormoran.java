@@ -4,7 +4,6 @@ package com.kormoran.reader;
 import org.apache.log4j.Logger;
 
 
-import com.kormoran.udp.Server;
 
 
 public class Kormoran {
@@ -16,7 +15,6 @@ public class Kormoran {
 
     public static void main(String[] args) throws Exception {
         Configuration configuration = new Configuration();
-        (new Thread(new Server(configuration.getDeviceList()))).start();
         (new Reader(configuration)).initReader();
         try{
             Thread.sleep(5000);

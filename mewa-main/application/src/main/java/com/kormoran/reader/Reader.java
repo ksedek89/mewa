@@ -2,23 +2,17 @@ package com.kormoran.reader;
 
 import java.util.Timer;
 
-import org.apache.log4j.Logger;
 
 import com.kormoran.sensors.Device;
-
-import com.kormoran.sensors.device.CarfsMessage;
-import com.kormoran.sensors.device.CarisMessage;
 
 import com.kormoran.sensors.device.DirSensor;
 
 import com.kormoran.sensors.device.RadSensor;
 
-import com.kormoran.sensors.propertiesenum.PortType;
 
 import com.kormoran.timer.ReadDataTimer;
 
 public class Reader {
-    final static Logger logger = Logger.getLogger(Reader.class);
 
     private static int timestamp;
 
@@ -72,23 +66,9 @@ public class Reader {
             timerDevice.scheduleAtFixedRate(readDataTimer, 0, timestamp);
          }
         
-        //init pcaris - integrator status
-        Timer timerDevice = new Timer();
-        Device carisMessage =new Device();
-        carisMessage.setRsDevice(new CarisMessage());
-        carisMessage.setType(PortType.SYM);
-        ReadDataTimer readDataTimer = new ReadDataTimer(carisMessage);
-        timerDevice.scheduleAtFixedRate(readDataTimer,0, timestamp);
+
         
-        
-        //init pcarfs - filtrowentylacja
-        timerDevice = new Timer();
-        Device carfsMessage =new Device();
-        carfsMessage.setRsDevice(new CarfsMessage());
-        carfsMessage.setType(PortType.SYM);
-        readDataTimer = new ReadDataTimer(carfsMessage);
-        timerDevice.scheduleAtFixedRate(readDataTimer,0, timestamp);      
-        
+
 
     }
 

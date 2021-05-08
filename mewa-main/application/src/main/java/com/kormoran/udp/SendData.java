@@ -9,10 +9,7 @@ import java.util.Date;
 
 import com.kormoran.reader.Nmea0183;
 
-import com.kormoran.sensors.device.CarfsMessage;
-import com.kormoran.sensors.device.CarisMessage;
 import com.kormoran.sensors.device.DirSensor;
-import com.kormoran.sensors.device.DptMod;
 import com.kormoran.sensors.device.Label480;
 import com.kormoran.sensors.device.RadSensor;
 
@@ -75,32 +72,7 @@ public class SendData {
         frame.append("\n");
         return frame.toString();
     }
-    
 
-    public String sendCards(DirSensor dirSensor) {
-        StringBuilder frame = new StringBuilder();
-/*        frame.append("$PCARDS,");
-        frame.append(getCurrentTimeToFrame());
-        frame.append(dirSensor.getDirection()+",");
-        frame.append(dirSensor.getTotalDosage()+",");
-        frame.append(dirSensor.getTotalDosagePrefix()+",");
-        frame.append(dirSensor.getRadAlarm()+",");
-        frame.append(DirSensor.getThreshold1()+",");
-        frame.append(DirSensor.getThreshold2()+",");
-        frame.append(DirSensor.getThreshold3()+",");
-        
-        frame.append("0"+",");
-        frame.append(dirSensor.getNeutrons()+",");
-        String difference = String.valueOf(Integer.valueOf(dirSensor.getNeutrons()).intValue() - Integer.valueOf(dirSensor.getInitNeutrons()).intValue());
-        frame.append(difference+",");
-        frame.append(difference+",");
-
-        frame.append(dirSensor.getErrorCode()+"*");
-        frame.append(Integer.toHexString(Nmea0183.calculateCheckSum(frame.toString())));
-        frame.append("\r");
-        frame.append("\n");*/
-        return frame.toString();
-    }
     
     public String sendCarrcInt(RadSensor radSensor){
         StringBuilder frame = new StringBuilder();
@@ -155,55 +127,7 @@ public class SendData {
         frame.append("\n");
         return frame.toString();
     }
-    
-    
-    public String sendCaris(CarisMessage carisMessage){
-        StringBuilder frame = new StringBuilder();
-/*        frame.append("$PCARIS,");
-        frame.append(getCurrentTimeToFrame());        
-        frame.append(carisMessage.getStatus()+",0*");
-        frame.append(Integer.toHexString(Nmea0183.calculateCheckSum(frame.toString())));
-        frame.append("\r");
-        frame.append("\n");*/
-        return frame.toString();
-    }
-    
-    public String sendCarfs(CarfsMessage carfsMessage){
-/*        StringBuilder frame = new StringBuilder();
-        frame.append("$PCARFS,");
-        frame.append(getCurrentTimeToFrame());
-        frame.append(carfsMessage.getInstallationId()+",");
-        if(RadSensor.isSendVentilationFailure()){
-            frame.append("F,");            
-       }else{            
-            frame.append(carfsMessage.getWorkState()+",");
-        }
-        frame.append(carfsMessage.getWorkMode()+",");
-        frame.append(carfsMessage.getEfficiency()+",");
-        frame.append(carfsMessage.getInitialResistance()+",");
-        frame.append(carfsMessage.getResistance()+"*");
-        frame.append(Integer.toHexString(Nmea0183.calculateCheckSum(frame.toString())));
-        frame.append("\r");
-        frame.append("\n");
-        return frame.toString();*/
-        return null;
-    }
 
-    public String sendCarps(DptMod dptmod) {
-/*        StringBuilder frame = new StringBuilder();
-        frame.append("$PCARPS,");
-        frame.append(getCurrentTimeToFrame());
-        frame.append(dptmod.getId() + ",");
-        frame.append(dptmod.getPressure()+ ",");
-        frame.append(dptmod.getThreshold()+ ",");
-        frame.append(dptmod.getAlarm()+ ",");
-        frame.append(dptmod.getErrorCode()+ "*");
-        frame.append(Integer.toHexString(Nmea0183.calculateCheckSum(frame.toString())));
-        frame.append("\r");
-        frame.append("\n");
-        return frame.toString();*/
-        return null;
-    }
 
     public String sendCarac(Label480 label480) {
         StringBuilder frame = new StringBuilder();

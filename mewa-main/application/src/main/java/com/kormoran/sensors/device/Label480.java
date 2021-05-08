@@ -14,7 +14,6 @@ import com.kormoran.sensors.RsDevice;
 
 
 
-import com.kormoran.udp.Client;
 import com.kormoran.udp.SendData;
         //czujnik 
 public class Label480  implements RsDevice {
@@ -189,9 +188,7 @@ public class Label480  implements RsDevice {
 
     @Override
     public void sendDataOverUdp(String frame) {
-        if(sendData){
-            new Thread(new Client(frame)).start();
-        }
+
     }
 
     public String getUdp2Frame() {

@@ -33,10 +33,6 @@ import com.kormoran.sensors.device.RadSensor;
 import com.kormoran.sensors.propertiesenum.DeviceType;
 import com.kormoran.sensors.propertiesenum.PortType;
 
-import com.kormoran.udp.Server;
-import com.kormoran.udp.Client;
-import com.kormoran.udp.TelnetClient;
-
 
 public class Configuration {
     private final static Logger logger = Logger.getLogger(Configuration.class);
@@ -52,7 +48,6 @@ public class Configuration {
             initMoxaDriver(initNetwork());
             initThreshold();
             initDevices();
-            new Thread(new TelnetClient()).start();
         deviceListToString();
     }
 
@@ -66,9 +61,6 @@ public class Configuration {
             String propertiesPath = jarPath.getParentFile().getAbsolutePath();
             prop.load(new FileInputStream(propertiesPath + "/" + "network.properties"));
 
-            Client.setIp(prop.getProperty("outcoming.udp.ip"));
-            Client.setPort(Integer.valueOf(prop.getProperty("outcoming.udp.port")));
-            Server.setIncomingPort(Integer.valueOf(prop.getProperty("incoming.udp.port")));
             Reader.setTimestamp(Integer.valueOf(prop.getProperty("frame.send.timestamp"))*1000);
             linux = prop.getProperty("operating.system").equalsIgnoreCase("linux");
 

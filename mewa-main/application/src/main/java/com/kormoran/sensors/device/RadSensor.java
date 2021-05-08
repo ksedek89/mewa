@@ -17,7 +17,6 @@ import com.kormoran.sensors.RsDevice;
 
 import com.kormoran.sensors.propertiesenum.Prefix;
 
-import com.kormoran.udp.Client;
 import com.kormoran.udp.SendData;
 
 
@@ -78,9 +77,7 @@ public class RadSensor  implements RsDevice {
 
     @Override
     public void sendDataOverUdp(String frame) {
-        if(sendData){
-            new Thread(new Client(frame)).start();
-        }
+
     }
 
 

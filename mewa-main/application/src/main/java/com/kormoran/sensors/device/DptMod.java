@@ -14,7 +14,6 @@ import com.kormoran.sensors.Rs485;
 import com.kormoran.sensors.RsDevice;
 
 
-import com.kormoran.udp.Client;
 import com.kormoran.udp.SendData;
     // czujnik ciśnienia 
 public class DptMod  implements RsDevice {
@@ -145,14 +144,12 @@ public class DptMod  implements RsDevice {
 
     @Override
     public String getUdpFrame() {
-       return new SendData().sendCarps(this);
+       return null;
     }
 
     @Override
     public void sendDataOverUdp(String frame) {
-        if(sendData){
-            new Thread(new Client(frame)).start();
-        }
+
     }
 
     public String getUdp2Frame() {
