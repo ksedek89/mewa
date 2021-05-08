@@ -31,6 +31,7 @@ moxa:
 #        threshold-pressure: 1000
       - moxa-number: 3
         moxa-id: 1
+        device-id: 33
         device-type: PRESS
         threshold-pressure: 1000
 #      - moxa-number: 3

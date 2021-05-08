@@ -6,6 +6,7 @@ import lombok.Data;
 public class DeviceDto {
     private Integer moxaNumber;
     private Integer moxaId;
+    private Integer deviceId;
     private String deviceType;
     private Integer thresholdPressure;
     private Integer directionAngle;

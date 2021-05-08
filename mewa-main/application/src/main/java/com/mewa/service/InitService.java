@@ -65,10 +65,12 @@ public class InitService {
             }
             DeviceDto deviceDto = element.get();
             if(deviceDto.getDeviceType().equals("PRESS")){
-                deviceService.getPressureDeviceList().add((new PressureDevice(entry.getValue(), entry.getKey(), deviceDto.getThresholdPressure())));
+                deviceService.getPressureDeviceList()
+                    .add((new PressureDevice(entry.getValue(), deviceDto.getDeviceId() != null ? deviceDto.getDeviceId(): entry.getKey(), deviceDto.getThresholdPressure())));
             }
             if(deviceDto.getDeviceType().equals("DIR")){
-                deviceService.getDirectionDeviceList().add((new DirectionDevice(entry.getValue(), entry.getKey(), deviceDto.getDirectionAngle())));
+                deviceService.getDirectionDeviceList()
+                    .add((new DirectionDevice(entry.getValue(), deviceDto.getDeviceId() != null ? deviceDto.getDeviceId(): entry.getKey(), deviceDto.getDirectionAngle())));
             }
             if(deviceDto.getDeviceType().equals("VENT")){
                 ventilationService.setVentilationDevice(new VentilationDevice(entry.getValue()));
