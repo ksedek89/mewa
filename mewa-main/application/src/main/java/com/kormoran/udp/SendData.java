@@ -11,7 +11,6 @@ import com.kormoran.reader.Nmea0183;
 
 import com.kormoran.sensors.device.DirSensor;
 import com.kormoran.sensors.device.Label480;
-import com.kormoran.sensors.device.RadSensor;
 
 
 public class SendData {
@@ -73,60 +72,8 @@ public class SendData {
         return frame.toString();
     }
 
-    
-    public String sendCarrcInt(RadSensor radSensor){
-        StringBuilder frame = new StringBuilder();
-        frame.append("$PCARRC,");
-        frame.append(getCurrentTimeToFrame());
-        frame.append(radSensor.getId()+",");
-        frame.append("I"+",");
-        frame.append(Double.valueOf(radSensor.getTotalDosageInt()).intValue()+",");
-        frame.append(radSensor.getPrefixTotalDosageInt()+",");
-        frame.append(Double.valueOf(radSensor.getDosagePowerInt()).intValue()+",");
-        frame.append(radSensor.getPrefixDosagePowerInt()+",");
-        frame.append(DirSensor.getThreshold1()+",");
-        frame.append(DirSensor.getThreshold2()+",");
-        frame.append(DirSensor.getThreshold3()+",");
-        frame.append(radSensor.getTimestampFromTurnOn()+",");
-        frame.append("G"+radSensor.getPollutionG()+",");
-        frame.append("H"+radSensor.getPollutionH()+",");
-        frame.append("T"+radSensor.getPollutionT()+",");
-        frame.append(radSensor.getRadAlarmInt()+",");
-        frame.append(radSensor.getChemAlarm()+",");
-        frame.append(radSensor.getErrorCode()+"*");
-        frame.append(Integer.toHexString(Nmea0183.calculateCheckSum(frame.toString())));
-        frame.append("\r");
-        frame.append("\n");
-        return frame.toString();
-    }
-    
-    
-    public String sendCarrcExt(RadSensor radSensor){
-        StringBuilder frame = new StringBuilder();
-        frame.append("$PCARRC,");
-        frame.append(getCurrentTimeToFrame());
-        
-        frame.append(radSensor.getId()+",");
-        frame.append("E"+",");
-        frame.append(Double.valueOf(radSensor.getTotalDosageExt()).intValue()+",");
-        frame.append(radSensor.getPrefixTotalDosageExt()+",");
-        frame.append(Double.valueOf(radSensor.getDosagePowerExt()).intValue()+",");
-        frame.append(radSensor.getPrefixDosagePowerExt()+",");
-        frame.append(DirSensor.getThreshold1()+",");
-        frame.append(DirSensor.getThreshold2()+",");
-        frame.append(DirSensor.getThreshold3()+",");
-        frame.append(radSensor.getTimestampFromTurnOn()+",");
-        frame.append("G"+radSensor.getPollutionG()+",");
-        frame.append("H"+radSensor.getPollutionH()+",");
-        frame.append("T"+radSensor.getPollutionT()+",");
-        frame.append(radSensor.getRadAlarmExt()+",");
-        frame.append(radSensor.getChemAlarm()+",");
-        frame.append(radSensor.getErrorCode()+"*");
-        frame.append(Integer.toHexString(Nmea0183.calculateCheckSum(frame.toString())));
-        frame.append("\r");
-        frame.append("\n");
-        return frame.toString();
-    }
+
+
 
 
     public String sendCarac(Label480 label480) {

@@ -6,7 +6,6 @@ import java.util.Random;
 import jssc.SerialPort;
 
 
-import com.kormoran.reader.protocols.ModbusReader;
 
 import com.kormoran.sensors.Rs485;
 
@@ -18,7 +17,6 @@ import com.kormoran.udp.SendData;
         //czujnik 
 public class Label480  implements RsDevice {
 
-    private ModbusReader modbusReader;
     private Rs485 rs485;
     private byte[] frame;
     
@@ -124,14 +122,12 @@ public class Label480  implements RsDevice {
 
     @Override
     public void sendFrame(String comPort) throws Exception{
-        modbusReader = new ModbusReader();
-        modbusReader.sentBytes(frame, comPort, rs485);
-    
+
     }
 
     @Override
     public byte[] getFrame(String comPort) {
-        return modbusReader.getBytes() ;
+        return null;
     }
 
 
