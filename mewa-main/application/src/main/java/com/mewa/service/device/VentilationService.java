@@ -28,8 +28,8 @@ public class VentilationService {
 
     private static final byte[] CHECK_MOTOR=    new byte[] {2, 2, 0, 0, 0, 1};
     private static final byte[] CHECK_BYPASS=   new byte[] {2, 1, 0, 5, 0, 1};
-    private static final byte[] CHECK_PRESSURE= new byte[] {2, 4, 0, 48, 0, 1};
-    private static final byte[] CHECK_EFFICIENCY= new byte[] {2, 4, 0, 49, 0, 1};
+    private static final byte[] CHECK_PRESSURE= new byte[] {2, 4, 0, 49, 0, 1};
+    private static final byte[] CHECK_EFFICIENCY= new byte[] {2, 4, 0, 50, 0, 1};
 
     private static final byte[] CONAMINATION_ON =      new byte[] { 2, 5, 0, 8, (byte)255, 0};
     private static final byte[] CONAMINATION_OFF =     new byte[] {2, 5, 0, 8 , 0, 0};
