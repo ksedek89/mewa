@@ -18,3 +18,6 @@ mysql -u root -p
 docker save -o /u01/app/images/mewa-be\:0.0.1  mewa-be:0.0.1
 scp -r /u01/app/images/mewa-be\:0.0.1 administrator@192.168.40.2:/u01/app/images
 docker load -i /u01/app/images/mewa-be\:0.0.1
+
+
+curl -X POST http://localhost:8085/mewa/turn-on

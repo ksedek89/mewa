@@ -1,5 +1,6 @@
 package com.mewa.controller;
 
+import com.mewa.device.VentilationDevice;
 import com.mewa.service.device.VentilationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,55 +13,55 @@ public class VentilationController {
     private VentilationService ventilationService;
 
     @PostMapping(value = "/turn-on")
-    public void turnOn() throws Exception {
+    public VentilationDevice turnOn() throws Exception {
         ventilationService.turnOnEngine();
-        ventilationService.handleSiu();
+        return ventilationService.handleSiu();
     }
 
     @PostMapping(value = "/turn-off")
-    public void turnOffVentilation() throws Exception {
+    public VentilationDevice turnOffVentilation() throws Exception {
         ventilationService.turnOff();
-        ventilationService.handleSiu();
+        return ventilationService.handleSiu();
     }
 
     @PostMapping(value = "/turn-off-bypass")
-    public void turnOffBypass() throws Exception {
+    public VentilationDevice turnOffBypass() throws Exception {
         ventilationService.turnOffBypass();
-        ventilationService.handleSiu();
+        return ventilationService.handleSiu();
     }
 
     @PostMapping(value = "/turn-off-engine")
-    public void turnOffEngine() throws Exception {
+    public VentilationDevice turnOffEngine() throws Exception {
         ventilationService.turnOffEngine();
-        ventilationService.handleSiu();
+        return ventilationService.handleSiu();
     }
 
     @PostMapping(value = "/turn-on-ventilation")
-    public void turnOnVentilation() throws Exception {
+    public VentilationDevice turnOnVentilation() throws Exception {
         ventilationService.turnOnVentilation();
-        ventilationService.handleSiu();
+        return ventilationService.handleSiu();
     }
 
     @PostMapping(value = "/turn-on-filter")
-    public void turnOnFilter() throws Exception {
+    public VentilationDevice turnOnFilter() throws Exception {
         ventilationService.turnOnFilter();
-        ventilationService.handleSiu();
+        return ventilationService.handleSiu();
     }
 
     @PostMapping(value = "/switch-ventilation")
-    public void switchToVentilation() throws Exception {
+    public VentilationDevice switchToVentilation() throws Exception {
         ventilationService.turnOffBypass();
-        ventilationService.handleSiu();
+        return ventilationService.handleSiu();
     }
 
     @PostMapping(value = "/switch-filter")
-    public void switchToFilter() throws Exception {
+    public VentilationDevice switchToFilter() throws Exception {
         ventilationService.turnOnBypass();
-        ventilationService.handleSiu();
+        return ventilationService.handleSiu();
     }
 
     @PostMapping(value = "/measure")
-    public void measure() throws Exception {
-        ventilationService.handleSiu();
+    public VentilationDevice measure() throws Exception {
+        return ventilationService.handleSiu();
     }
 }

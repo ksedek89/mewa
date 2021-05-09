@@ -87,7 +87,7 @@ public class VentilationService {
         handleSiu();
     }
 
-    public void handleSiu() throws Exception {
+    public VentilationDevice handleSiu() throws Exception {
         sendFrameToDevice(CHECK_MOTOR);
         byte[] motor = readFrameFromDevice();
         ventilationDevice.setMotor((int) motor[3]);
@@ -112,6 +112,7 @@ public class VentilationService {
         String frame = getVentilationFrameForSiu(ventilationDevice);
         log.info(ventilationDevice.toString());
         udpClientService.sendDatagram(frame);
+        return ventilationDevice;
     }
 
     public void setVentilationDevice(VentilationDevice ventilationDevice) {
