@@ -19,6 +19,8 @@ public class VentilationDevice implements Device{
     private double efficiency;
     private double initialResistance;
     private double resistance;
+    private double contamination;
+    private double puncture;
 
     private SerialPort serialPort;
 

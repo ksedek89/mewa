@@ -67,22 +67,26 @@ public class VentilationController {
     //skazenie
     @PostMapping(value = "/turn-on-contamination")
     public VentilationDevice turnOnContamination() throws Exception {
-        return ventilationService.turnOnContamination();
+        ventilationService.turnOnContamination();
+        return ventilationService.handleSiu();
     }
 
     @PostMapping(value = "/turn-off-contamination")
     public VentilationDevice turnOffContamination() throws Exception {
-        return ventilationService.turnOffContamination();
+        ventilationService.turnOffContamination();
+        return ventilationService.handleSiu();
     }
 
     //przebicie
     @PostMapping(value = "/turn-on-puncture")
     public VentilationDevice turnOnPuncture() throws Exception {
-        return ventilationService.turnOnPuncture();
+        ventilationService.turnOnPuncture();
+        return ventilationService.handleSiu();
     }
 
     @PostMapping(value = "/turn-off-puncture")
     public VentilationDevice turnOffPuncture() throws Exception {
-        return ventilationService.turnOffPuncture();
+        ventilationService.turnOffPuncture();
+        return ventilationService.handleSiu();
     }
 }
