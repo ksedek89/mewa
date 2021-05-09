@@ -64,4 +64,25 @@ public class VentilationController {
     public VentilationDevice measure() throws Exception {
         return ventilationService.handleSiu();
     }
+    //skazenie
+    @PostMapping(value = "/turn-on-contamination")
+    public VentilationDevice turnOnContamination() throws Exception {
+        return ventilationService.turnOnContamination();
+    }
+
+    @PostMapping(value = "/turn-off-contamination")
+    public VentilationDevice turnOffContamination() throws Exception {
+        return ventilationService.turnOffContamination();
+    }
+
+    //przebicie
+    @PostMapping(value = "/turn-on-puncture")
+    public VentilationDevice turnOnPuncture() throws Exception {
+        return ventilationService.turnOnPuncture();
+    }
+
+    @PostMapping(value = "/turn-off-puncture")
+    public VentilationDevice turnOffPuncture() throws Exception {
+        return ventilationService.turnOffPuncture();
+    }
 }

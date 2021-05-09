@@ -31,6 +31,14 @@ public class VentilationService {
     private static final byte[] CHECK_PRESSURE= new byte[] {2, 4, 0, 48, 0, 1};
     private static final byte[] CHECK_EFFICIENCY= new byte[] {2, 4, 0, 49, 0, 1};
 
+    private static final byte[] CONAMINATION_ON =      new byte[] { 2, 5, 0, 8, (byte)255, 0};
+    private static final byte[] CONAMINATION_OFF =     new byte[] {2, 5, 0, 8 , 0, 0};
+    private static final byte[] CHECK_CONTAMINATION =    new byte[] {2, 2, 0, 8, 0, 1};
+
+    private static final byte[] PUNCTURE_ON =      new byte[] { 2, 5, 0, 9, (byte)255, 0};
+    private static final byte[] PUNCTURE_OFF =     new byte[] {2, 5, 0, 9 , 0, 0};
+    private static final byte[] CHECK_PUNCTURE =    new byte[] {2, 2, 0, 9, 0, 1};
+
     public void turnOnEngine() throws Exception {
         log.info("Turning on");
         sendFrameToDevice(MOTOR_ON);
@@ -71,6 +79,48 @@ public class VentilationService {
         log.info("Turning on filter");
         turnOnEngine();
         turnOnBypass();
+    }
+
+    public VentilationDevice turnOnContamination() throws Exception {
+        log.info("Turning on Contamination");
+        sendFrameToDevice(CONAMINATION_ON);
+        readFrameFromDevice();
+
+        sendFrameToDevice(CHECK_CONTAMINATION);
+        byte[] contamination = readFrameFromDevice();
+        return ventilationDevice;
+
+    }
+
+    public VentilationDevice turnOffContamination() throws Exception {
+        log.info("Turning off Contamination");
+        sendFrameToDevice(CONAMINATION_OFF);
+        readFrameFromDevice();
+
+        sendFrameToDevice(CHECK_CONTAMINATION);
+        byte[] contamination = readFrameFromDevice();
+        return ventilationDevice;
+    }
+
+    public VentilationDevice turnOnPuncture() throws Exception {
+        log.info("Turning on Contamination");
+        sendFrameToDevice(PUNCTURE_ON);
+        readFrameFromDevice();
+
+        sendFrameToDevice(CHECK_PUNCTURE);
+        byte[] contamination = readFrameFromDevice();
+        return ventilationDevice;
+
+    }
+
+    public VentilationDevice turnOffPuncture() throws Exception {
+        log.info("Turning off Contamination");
+        sendFrameToDevice(PUNCTURE_OFF);
+        readFrameFromDevice();
+
+        sendFrameToDevice(CHECK_PUNCTURE);
+        byte[] contamination = readFrameFromDevice();
+        return ventilationDevice;
     }
 
     public void handleVentilationFrame(String data) throws Exception {
@@ -155,7 +205,8 @@ public class VentilationService {
     private byte[] readFrameFromDevice() throws Exception{
         SerialPort serialPort = ventilationDevice.getSerialPort();
         if(!serialPort.isOpened()){
-            return null;
+            serialPort.openPort();
+            serialPort.setParams(SerialPort.BAUDRATE_9600, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
         }
         byte[] receivedBytes = serialPort.readBytes();
         System.out.print("Received bytes: ");
@@ -165,6 +216,4 @@ public class VentilationService {
         System.out.println();
         return receivedBytes;
     }
-
-
 }
