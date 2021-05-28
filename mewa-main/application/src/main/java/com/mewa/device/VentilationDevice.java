@@ -40,7 +40,7 @@ public class VentilationDevice implements Device{
     }
 
     public void setMotor(int motor) {
-        this.motor = motor == 1 ? "T" : "N";
+        this.motor = motor == 1 ? "A" : "N";
     }
 
     @Override
