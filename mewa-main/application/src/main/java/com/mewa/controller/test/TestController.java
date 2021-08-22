@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import pl.keeit.DirDto;
+import pl.keeit.FilterDto;
 import pl.keeit.RequestDto;
 
 import java.util.Optional;
@@ -26,6 +27,8 @@ import static com.mewa.util.Utils.getFactorCompareToNano;
 public class TestController {
     @Autowired
     DeviceService deviceService;
+    @Autowired
+    VentilationService ventilationService;
 
     @PostMapping
     public void setDevicesData(@RequestBody  RequestDto requestDto){
@@ -90,7 +93,14 @@ public class TestController {
                     moxaDevice.setStatus(e.isEnabled() ? "A" : "F");
                 }
             });
-
+        requestDto.getFilterDevices()
+            .stream()
+            .forEach(e-> {
+                VentilationDevice ventilationDevice = ventilationService.getVentilationDevice();
+                ventilationDevice.setResistance(Double.valueOf(e.getResistance()));
+                ventilationDevice.setInitialResistance(Double.valueOf(e.getInitialResistance()));
+                ventilationDevice.setEfficiency(Double.valueOf(e.getEfficiency()));
+            });
 
     }
 

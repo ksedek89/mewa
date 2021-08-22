@@ -18,4 +18,5 @@ public class RequestDto {
     private List<DpoDto> dpoDevices;
     private List<DirDto> dirDevices;
     private List<MoxaDto> moxaDevices;
+    private List<FilterDto> filterDevices;
 }

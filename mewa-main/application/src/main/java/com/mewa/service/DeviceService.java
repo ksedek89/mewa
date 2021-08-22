@@ -70,7 +70,7 @@ public class DeviceService {
         dpoService.handleDpoDevice(Arrays.asList(singleDpoDevice));
 
         directionHandlerService.handleDirectionDevice(directionDeviceList);
-        moxaHandlerService.handleMoxaDevice(moxaDeviceList);
+//        moxaHandlerService.handleMoxaDevice(moxaDeviceList);
 
     }
 

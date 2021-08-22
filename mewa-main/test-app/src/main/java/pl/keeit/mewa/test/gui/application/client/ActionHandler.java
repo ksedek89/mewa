@@ -5,12 +5,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Data;
 import pl.keeit.DirDto;
 import pl.keeit.DpoDto;
+import pl.keeit.FilterDto;
 import pl.keeit.MoxaDto;
 import pl.keeit.OxygenDto;
 import pl.keeit.PressureDto;
 import pl.keeit.RequestDto;
 import pl.keeit.mewa.test.gui.application.dto.DirDeviceDto;
 import pl.keeit.mewa.test.gui.application.dto.DpoDeviceDto;
+import pl.keeit.mewa.test.gui.application.dto.FilterDeviceDto;
 import pl.keeit.mewa.test.gui.application.dto.MoxaDeviceDto;
 import pl.keeit.mewa.test.gui.application.dto.OxygenDeviceDto;
 import pl.keeit.mewa.test.gui.application.dto.PressureDeviceDto;
@@ -35,6 +37,7 @@ public class ActionHandler {
     private List<DpoDeviceDto> dpoDeviceList;
     private List<DirDeviceDto> dirDeviceList;
     private List<MoxaDeviceDto> moxaDeviceList;
+    private List<FilterDeviceDto> filterDeviceList;
 
     public ActionHandler() {
         objectMapper = new ObjectMapper();
@@ -87,6 +90,16 @@ public class ActionHandler {
                     .id(e.getId())
                     .build())
                 .collect(Collectors.toList()))
+            .filterDevices(filterDeviceList
+            .stream()
+            .filter(e->e.getFilterEnabled().isSelected())
+            .map(e-> FilterDto
+                .builder()
+                .efficiency(e.getFilterEfficiency().getText())
+                .resistance(e.getFilterResistance().getText())
+                .initialResistance(e.getFilterInitialResistance().getText())
+                .id(e.getId())
+                .build()).collect(Collectors.toList()))
             .moxaDevices(moxaDeviceList.stream().map(e-> MoxaDto.builder().enabled(e.getEnabledCheckbox().isSelected()).id(e.getId()).build()).collect(Collectors.toList()))
             .build();
         String requestBody = objectMapper.writeValueAsString(requestObject);
@@ -130,7 +143,12 @@ public class ActionHandler {
         moxaDeviceList.stream().forEach(e->{
             e.getEnabledCheckbox().setSelected(true);
         });
-
+        filterDeviceList.stream().forEach(e->{
+            e.getFilterEfficiency().setText("0");
+            e.getFilterResistance().setText("0");
+            e.getFilterInitialResistance().setText("0");
+            e.getFilterEnabled().setSelected(false);
+        });
     }
 
     public void checkAllPressureEvent(boolean selected) {

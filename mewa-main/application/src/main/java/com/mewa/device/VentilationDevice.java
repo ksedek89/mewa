@@ -1,6 +1,7 @@
 package com.mewa.device;
 
 import com.mewa.enums.SerialEnum;
+import com.mewa.enums.TypeE;
 import jssc.SerialPort;
 import jssc.SerialPortException;
 import lombok.Data;
@@ -22,12 +23,18 @@ public class VentilationDevice implements Device{
     private double contamination;
     private double puncture;
 
+    private TypeE type;
+
     private SerialPort serialPort;
 
-    public VentilationDevice(String portName) {
+    public VentilationDevice(String portName, TypeE type) {
         this.serialPort = new SerialPort(portName);
         try {
+            this.type = type;
             id = 1;
+            if(type.equals(TypeE.SYM)){
+                return;
+            }
             serialPort.openPort();
             serialPort.setParams(SerialEnum.VENTILATION.getBaudRate(), SerialEnum.VENTILATION.getDataBits(), SerialEnum.VENTILATION.getStopBits(), SerialEnum.VENTILATION.getParityBits());
         } catch (SerialPortException e) {

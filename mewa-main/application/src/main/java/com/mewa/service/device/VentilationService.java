@@ -1,6 +1,7 @@
 package com.mewa.service.device;
 
 import com.mewa.device.VentilationDevice;
+import com.mewa.enums.TypeE;
 import com.mewa.service.UdpClientService;
 import jssc.SerialPort;
 import lombok.extern.slf4j.Slf4j;
@@ -107,10 +108,24 @@ public class VentilationService {
     }
 
     public void handleVentilationFrame(String data) throws Exception {
-        String[] values = data.split(",");
+        String[] values = data.split("\\*")[0].split(",");
         String mode = values[2];
-        String state = values[4].substring(0, 1);
-        if(state.equalsIgnoreCase("0")){
+        if(ventilationDevice.getType().equals(TypeE.SYM)){
+            if(mode.equalsIgnoreCase("0")){
+                ventilationDevice.setMotor(0);
+            }else if(mode.equalsIgnoreCase("F")){
+                ventilationDevice.setMotor(1);
+                ventilationDevice.setBypass(1);
+            }else if(mode.equalsIgnoreCase("W")){
+                ventilationDevice.setMotor(1);
+                ventilationDevice.setBypass(0);
+            }
+            String frame = getVentilationFrameForSiu(ventilationDevice);
+            udpClientService.sendDatagram(frame);
+            return;
+        }
+
+        if(mode.equalsIgnoreCase("0")){
             turnOff();
         }else if(mode.equalsIgnoreCase("F")){
             turnOnVentilation();
@@ -209,5 +224,9 @@ public class VentilationService {
         }
         System.out.println();
         return receivedBytes;
+    }
+
+    public VentilationDevice getVentilationDevice() {
+        return ventilationDevice;
     }
 }

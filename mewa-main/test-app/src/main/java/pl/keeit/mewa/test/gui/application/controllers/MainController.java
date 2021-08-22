@@ -12,6 +12,7 @@ import pl.keeit.RequestDto;
 import pl.keeit.mewa.test.gui.application.client.ActionHandler;
 import pl.keeit.mewa.test.gui.application.dto.DirDeviceDto;
 import pl.keeit.mewa.test.gui.application.dto.DpoDeviceDto;
+import pl.keeit.mewa.test.gui.application.dto.FilterDeviceDto;
 import pl.keeit.mewa.test.gui.application.dto.MoxaDeviceDto;
 import pl.keeit.mewa.test.gui.application.dto.OxygenDeviceDto;
 import pl.keeit.mewa.test.gui.application.dto.PressureDeviceDto;
@@ -167,6 +168,13 @@ public class MainController {
     @FXML private CheckBox moxaEnabled3;
     //moxa - end
 
+    //filtrowentylacja - start
+    @FXML private CheckBox filterEnabled1;
+    @FXML private TextField filterEfficiency1;
+    @FXML private TextField filterInitialResistance1;
+    @FXML private TextField filterResistance1;
+    //filtrowentylacja - end
+
     @FXML private Button sendButton;
 
 
@@ -266,6 +274,9 @@ public class MainController {
             MoxaDeviceDto.builder().enabledCheckbox(moxaEnabled1).id(moxaCounter++).build(),
             MoxaDeviceDto.builder().enabledCheckbox(moxaEnabled2).id(moxaCounter++).build(),
             MoxaDeviceDto.builder().enabledCheckbox(moxaEnabled3).id(moxaCounter++).build()
+        ));
+        actionHandler.setFilterDeviceList(Arrays.asList(
+            FilterDeviceDto.builder().filterEfficiency(filterEfficiency1).filterResistance(filterResistance1).filterInitialResistance(filterInitialResistance1).filterEnabled(filterEnabled1).id(1).build()
         ));
         actionHandler.initalize();
 

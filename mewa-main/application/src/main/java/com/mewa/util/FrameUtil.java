@@ -84,7 +84,6 @@ public class FrameUtil {
         frame.append("$PCARFS,");
         frame.append(getCurrentDateForSiu());
 
-        frame.append(ventilationDevice.getId()+",");
         frame.append(ventilationDevice.getMotor()+",");
         frame.append(ventilationDevice.getBypass()+",");
         frame.append(ventilationDevice.getEfficiency()+",");

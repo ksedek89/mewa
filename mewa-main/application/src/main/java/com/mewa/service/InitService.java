@@ -77,6 +77,9 @@ public class InitService {
                         deviceService.getDpoDeviceList().add(new DpoDevice(null, deviceDto.getDeviceId(), deviceDto.getType()));
                     }
                 }
+                if (deviceDto.getDeviceType().equals("VENT")) {
+                    ventilationService.setVentilationDevice(new VentilationDevice(null, deviceDto.getType()));
+                }
             }
             List<MoxaDevice> moxaDevices = moxaProperties.getConfiguration().stream().map(e -> MoxaDevice.builder().status("A").type(TypeE.SYM).id(e.getId()).ip(e.getIp()).build()).collect(Collectors.toList());
             deviceService.setMoxaDeviceList(moxaDevices);
@@ -110,7 +113,7 @@ public class InitService {
                         .add((new DirectionDevice(entry.getValue(), entry.getKey(), deviceDto.getDirectionAngle(),deviceDto.getType())));
                 }
                 if (deviceDto.getDeviceType().equals("VENT")) {
-                    ventilationService.setVentilationDevice(new VentilationDevice(entry.getValue()));
+                    ventilationService.setVentilationDevice(new VentilationDevice(entry.getValue(), deviceDto.getType()));
                 }
                 if (deviceDto.getDeviceType().equals("OXY")) {
                     deviceService.getOxygenDeviceList().add((new OxygenDevice(entry.getValue(), entry.getKey(), deviceDto.getType())));

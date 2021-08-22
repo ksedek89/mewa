@@ -1,5 +1,6 @@
 package com.mewa.service;
 
+import com.mewa.enums.TypeE;
 import com.mewa.service.device.VentilationService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
