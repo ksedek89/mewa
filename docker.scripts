@@ -1,4 +1,4 @@
-docker run -p 127.0.0.1:3306:3306 --restart always  --name mewa-db -e MYSQL_ROOT_PASSWORD=test -d mariadb:latest
+docker run -p 127.0.0.1:3306:3306 --restart always  --name mewa-db -e MYSQL_ROOT_PASSWORD=F71mGr -d mariadb:latest
 
 docker update --restart always/no mariadb
 

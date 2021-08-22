@@ -29,3 +29,6 @@ create table device(
                        primary key (id)
 );
 
+alter table device add column device_id int;
+
+alter table device add column type  varchar(4);

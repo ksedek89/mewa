@@ -9,21 +9,22 @@ import lombok.extern.slf4j.Slf4j;
 
 @Data
 @Slf4j
-public class PressureDevice implements Device{
+public class OxygenDevice implements Device{
     private int id;
-    private int pressure;
-    private int alarm;
-    private int errorCode;
-    private int threshold;
+    private double oxygen;
+    private double oxygenThreshold;
+    private String oxygenAlarm;
+    private double co2;
+    private double co2Threshold;
+    private String co2Alarm;
+    private String errorCode;
+
     private TypeE type;
-
-
 
     private SerialPort serialPort;
 
-    public PressureDevice(String portName, int id, Integer threshold, TypeE type) {
+    public OxygenDevice(String portName, int id, TypeE type) {
         this.id = id;
-        this.threshold = threshold;
         this.serialPort = new SerialPort(portName);
         this.type = type;
         if(type.equals(TypeE.SYM)){
@@ -37,16 +38,4 @@ public class PressureDevice implements Device{
         }
     }
 
-    @Override
-    public String toString() {
-        return String.format("PressureDevice{%-5s%-13s%-15s%-10s%-13s%-16s}",
-            "id=" + id,
-            ", moxa-id=" + (id/16+1) + "-" + id%16,
-            ", pressure=" + pressure,
-            ", alarm=" + alarm ,
-            ", errorCode=" + errorCode,
-            ", threshold=" + threshold
-
-        );
-    }
 }

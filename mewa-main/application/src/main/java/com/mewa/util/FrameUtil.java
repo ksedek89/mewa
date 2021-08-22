@@ -2,7 +2,9 @@ package com.mewa.util;
 
 
 import com.mewa.device.DirectionDevice;
+import com.mewa.device.DpoDevice;
 import com.mewa.device.MoxaDevice;
+import com.mewa.device.OxygenDevice;
 import com.mewa.device.PressureDevice;
 import com.mewa.device.VentilationDevice;
 import com.mewa.model.entity.ThresholdValue;
@@ -13,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 
 import static com.mewa.util.Utils.calculateCheckSumForSiu;
+import static com.mewa.util.Utils.calculateToMicro;
 import static com.mewa.util.Utils.getCurrentDateForSiu;
 
 public class FrameUtil {
@@ -34,6 +37,24 @@ public class FrameUtil {
         return frame.toString();
     }
 
+
+    //czujnik o2/co2
+    public static String getOxygenFrameForSiu(OxygenDevice oxygenDevice) {
+        StringBuilder frame = new StringBuilder();
+        frame.append("$PCARAC,");
+        frame.append(getCurrentDateForSiu());
+        frame.append(oxygenDevice.getId() + ",");
+        frame.append(oxygenDevice.getOxygen()+ ",");
+        frame.append(oxygenDevice.getOxygenThreshold()+ ",");
+        frame.append(oxygenDevice.getOxygenAlarm()+ ",");
+        frame.append(oxygenDevice.getCo2()+ ",");
+        frame.append(oxygenDevice.getCo2Threshold()+ ",");
+        frame.append(oxygenDevice.getCo2Alarm()+ "*");
+        frame.append(calculateCheckSumForSiu(frame.toString()));
+        frame.append("\r\n");
+        return frame.toString();
+    }
+
     //czujnik kierunkowy
     public static String getDirectionFrameForSiu(DirectionDevice directionDevice, ThresholdValuesService thresholdValuesService) {
         StringBuilder frame = new StringBuilder();
@@ -43,14 +64,12 @@ public class FrameUtil {
         frame.append(directionDevice.getTotalDosage() + ",");
         frame.append(directionDevice.getTotalDosagePrefix() + ",");
         frame.append(directionDevice.getRadAlarm() + ",");
-        frame.append(thresholdValuesService.getThresholdValue().getValue1() + ",");
-        frame.append(thresholdValuesService.getThresholdValue().getValue2() + ",");
-        frame.append(thresholdValuesService.getThresholdValue().getValue3() + ",");
+        frame.append(thresholdValuesService.getThresholdValue().getValue1() * calculateToMicro(thresholdValuesService.getThresholdValue().getUnit1()) + ",");
+        frame.append(thresholdValuesService.getThresholdValue().getValue2() * calculateToMicro(thresholdValuesService.getThresholdValue().getUnit2()) + ",");
+        frame.append(thresholdValuesService.getThresholdValue().getValue3() * calculateToMicro(thresholdValuesService.getThresholdValue().getUnit3()) + ",");
 
-        frame.append("0" + ",");
         frame.append(directionDevice.getNeutrons() + ",");
-        frame.append((directionDevice.getNeutrons() - directionDevice.getInitNeutrons()) + ",");
-        frame.append((directionDevice.getNeutrons() - directionDevice.getInitNeutrons()) + ",");
+        frame.append(directionDevice.getInitNeutrons() + ",");
 
         frame.append(directionDevice.getErrorCode() + "*");
         frame.append(calculateCheckSumForSiu(frame.toString()));
@@ -82,9 +101,9 @@ public class FrameUtil {
         StringBuilder frame = new StringBuilder();
         frame.append("$PCARIS,");
         frame.append(getCurrentDateForSiu());
-        frame.append(moxaDeviceList.get(0).getId() + "," + moxaDeviceList.get(0).getStatus() +"," + moxaDeviceList.get(0).getErrorCode()+",");
-        frame.append(moxaDeviceList.get(1).getId() + "," + moxaDeviceList.get(1).getStatus() +"," + moxaDeviceList.get(1).getErrorCode()+",");
-        frame.append(moxaDeviceList.get(2).getId() + "," + moxaDeviceList.get(2).getStatus() +"," + moxaDeviceList.get(2).getErrorCode());
+        frame.append(moxaDeviceList.get(0).getStatus()+",");
+        frame.append(moxaDeviceList.get(1).getStatus()+",");
+        frame.append(moxaDeviceList.get(2).getStatus());
         frame.append("*");
         frame.append(calculateCheckSumForSiu(frame.toString()));
         frame.append("\r\n");
@@ -107,5 +126,27 @@ public class FrameUtil {
         frame.append("\n");
         return frame.toString();
     }
+
+    public static String getDpoFrameForSiu(DpoDevice dpoDevice, ThresholdValuesService thresholdValuesService){
+        StringBuilder frame = new StringBuilder();
+        frame.append("$PCARRC,");
+        frame.append(getCurrentDateForSiu());
+
+        frame.append(dpoDevice.getId()+",");
+        frame.append(dpoDevice.getDosage()+",");
+        frame.append("n,");
+        frame.append(dpoDevice.getPower()+",");
+        frame.append("n,");
+        frame.append(thresholdValuesService.getThresholdValue().getValue1() + ",");
+        frame.append(thresholdValuesService.getThresholdValue().getValue2() + ",");
+        frame.append(thresholdValuesService.getThresholdValue().getValue3() + ",");
+        frame.append(dpoDevice.getAlarm()+",");
+        frame.append(dpoDevice.getErrorCode()+"*");
+        frame.append(calculateCheckSumForSiu(frame.toString()));
+        frame.append("\r");
+        frame.append("\n");
+        return frame.toString();
+    }
+
 
 }

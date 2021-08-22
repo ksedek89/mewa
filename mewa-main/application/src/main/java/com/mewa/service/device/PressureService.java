@@ -2,6 +2,7 @@ package com.mewa.service.device;
 
 import com.mewa.device.PressureDevice;
 import com.mewa.enums.SerialEnum;
+import com.mewa.enums.TypeE;
 import com.mewa.service.UdpClientService;
 import jssc.SerialPort;
 import lombok.extern.slf4j.Slf4j;
@@ -24,11 +25,19 @@ public class PressureService {
 
     @Async
     public void handlePressureDevice(PressureDevice pressureDevice) throws Exception{
-        sendFrameToDevice(pressureDevice);
-        byte[] frameFromPressure = readFrameFromDevice(pressureDevice);
-        setDataToDevice(pressureDevice, frameFromPressure);
+        if(pressureDevice.getType().equals(TypeE.SYM)){
+            prepareSymData(pressureDevice);
+        }else {
+            sendFrameToDevice(pressureDevice);
+            byte[] frameFromPressure = readFrameFromDevice(pressureDevice);
+            setDataToDevice(pressureDevice, frameFromPressure);
+        }
         String frameForSiu =  preprareFrameForSiu(pressureDevice);
         udpClientService.sendDatagram(frameForSiu);
+    }
+
+    private void prepareSymData(PressureDevice pressureDevice) {
+        pressureDevice.setAlarm(pressureDevice.getPressure() > pressureDevice.getThreshold() ? 1 : 0);
     }
 
     private void sendFrameToDevice(PressureDevice pressureDevice) throws Exception{

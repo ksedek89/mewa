@@ -22,7 +22,7 @@ public class UdpService {
 
     public void receive(Message message) throws Exception {
         String data = new String((byte[]) message.getPayload()).replace("\n", "").replace("\r", "");
-        log.info("Received data: " + data);
+//        log.info("Received data: " + data);
         if (data.startsWith("$PCARCC")) {
             thresholdValuesService.updateThresholdValues(data);
         }else if(data.startsWith("$PCARSE")){

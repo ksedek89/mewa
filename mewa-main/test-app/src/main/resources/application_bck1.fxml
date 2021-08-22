@@ -1,0 +1,468 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<StackPane maxHeight="1080.0" maxWidth="1920.0" minHeight="1080.0" minWidth="1920.0" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.keeit.mewa.test.gui.application.controllers.MainController">
+   <children>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0">
+         <children>
+            <Text layoutX="762.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Testy integracyjne Mewa">
+               <font>
+                  <Font size="27.0" />
+               </font>
+            </Text>
+            <AnchorPane fx:id="pressureAnchorPane" layoutX="32.0" layoutY="28.07666015625">
+               <children>
+                  <Text layoutX="1.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ciśnienie">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Text>
+                  <Button layoutX="44.0" layoutY="59.92333984375" mnemonicParsing="false" prefHeight="24.0" prefWidth="154.0" text="USTAW CIŚNIENIE DLA WSZYSTKICH">
+                     <font>
+                        <Font size="9.0" />
+                     </font>
+                  </Button>
+                  <TextField layoutY="59.92333984375" prefHeight="24.0" prefWidth="31.0" />
+                  <CheckBox fx:id="checkAllPressure" onAction="#checkAllPressureEvent" layoutY="27.92333984375" mnemonicParsing="false" text="Zaznacz wszystkie" />
+                  <CheckBox layoutX="236.0" layoutY="25.92333984375" mnemonicParsing="false" text="Zaznacz losowe" />
+                  <TextField layoutX="409.0" layoutY="22.92333984375" prefHeight="24.0" prefWidth="80.0">
+                     <tooltip>
+                        <Tooltip text="Wprowadź liczbę czujników, które powinny być zaznaczone" />
+                     </tooltip>
+                  </TextField>
+                  <Text layoutX="380.0" layoutY="26.92333984375" strokeType="OUTSIDE" strokeWidth="0.0" text="Ile" />
+                  <TextField layoutX="586.0" layoutY="22.92333984375" prefHeight="24.0" prefWidth="80.0">
+                     <tooltip>
+                        <Tooltip text="Wprowadź liczbę czujników, które powinny być zaznaczone" />
+                     </tooltip>
+                  </TextField>
+                  <Text layoutX="505.0" layoutY="26.92333984375" strokeType="OUTSIDE" strokeWidth="0.0" text="W zakresie" />
+                  <TextField layoutX="793.0" layoutY="22.92333984375" prefHeight="24.0" prefWidth="80.0">
+                     <tooltip>
+                        <Tooltip text="Wprowadź liczbę czujników, które powinny być zaznaczone" />
+                     </tooltip>
+                  </TextField>
+                  <Text layoutX="686.0" layoutY="26.92333984375" strokeType="OUTSIDE" strokeWidth="0.0" text="Poza zakresem" />
+                  <Button layoutX="236.0" layoutY="57.92333984375" mnemonicParsing="false" prefHeight="24.0" prefWidth="204.0" text="USTAW LOSOWE DLA ZAZNACZONYCH">
+                     <font>
+                        <Font size="9.0" />
+                     </font>
+                  </Button>
+                  <CheckBox fx:id="pressureEnabled1" layoutX="4.0" layoutY="141.92333984375" mnemonicParsing="false" text="P1" />
+                  <CheckBox fx:id="pressureEnabled2" layoutX="4.0" layoutY="181.92333984375" mnemonicParsing="false" text="P2" />
+                  <TextField fx:id="pressureValue1" layoutX="54.0" layoutY="138.92333984375" prefHeight="24.0" prefWidth="41.0" />
+                  <TextField fx:id="pressureValue2" layoutX="54.0" layoutY="178.92333984375" prefHeight="24.0" prefWidth="41.0" />
+                  <CheckBox fx:id="pressureEnabled3" layoutX="3.0" layoutY="222.92333984375" mnemonicParsing="false" text="P3" />
+                  <TextField fx:id="pressureValue3" layoutX="53.0" layoutY="219.92333984375" prefHeight="24.0" prefWidth="41.0" />
+                  <CheckBox fx:id="pressureEnabled4" layoutX="3.0" layoutY="259.92333984375" mnemonicParsing="false" text="P4" />
+                  <TextField fx:id="pressureValue4" layoutX="53.0" layoutY="256.92333984375" prefHeight="24.0" prefWidth="41.0" />
+                  <CheckBox fx:id="pressureEnabled5" layoutX="233.0" layoutY="141.92333984375" mnemonicParsing="false" text="P5" />
+                  <CheckBox fx:id="pressureEnabled6" layoutX="233.0" layoutY="181.92333984375" mnemonicParsing="false" text="P6" />
+                  <TextField fx:id="pressureValue5" layoutX="283.0" layoutY="138.92333984375" prefHeight="24.0" prefWidth="41.0" />
+                  <TextField fx:id="pressureValue6" layoutX="283.0" layoutY="178.92333984375" prefHeight="24.0" prefWidth="41.0" />
+                  <CheckBox fx:id="pressureEnabled7" layoutX="232.0" layoutY="222.92333984375" mnemonicParsing="false" text="P7" />
+                  <TextField fx:id="pressureValue7" layoutX="282.0" layoutY="219.92333984375" prefHeight="24.0" prefWidth="41.0" />
+                  <CheckBox fx:id="pressureEnabled8" layoutX="232.0" layoutY="259.92333984375" mnemonicParsing="false" text="P8" />
+                  <TextField fx:id="pressureValue8" layoutX="282.0" layoutY="256.92333984375" prefHeight="24.0" prefWidth="41.0" />
+                  <CheckBox fx:id="pressureEnabled9" layoutX="494.0" layoutY="141.92333984375" mnemonicParsing="false" text="P9" />
+                  <CheckBox fx:id="pressureEnabled10" layoutX="494.0" layoutY="181.92333984375" mnemonicParsing="false" text="P10" />
+                  <TextField fx:id="pressureValue9" layoutX="544.0" layoutY="138.92333984375" prefHeight="24.0" prefWidth="41.0" />
+                  <TextField fx:id="pressureValue10" layoutX="544.0" layoutY="178.92333984375" prefHeight="24.0" prefWidth="41.0" />
+                  <CheckBox fx:id="pressureEnabled11" layoutX="493.0" layoutY="222.92333984375" mnemonicParsing="false" text="P11" />
+                  <TextField fx:id="pressureValue11" layoutX="543.0" layoutY="219.92333984375" prefHeight="24.0" prefWidth="41.0" />
+                  <CheckBox fx:id="pressureEnabled12" layoutX="493.0" layoutY="259.92333984375" mnemonicParsing="false" text="P12" />
+                  <TextField fx:id="pressureValue12" layoutX="543.0" layoutY="256.92333984375" prefHeight="24.0" prefWidth="41.0" />
+                  <CheckBox fx:id="pressureEnabled13" layoutX="737.0" layoutY="141.92333984375" mnemonicParsing="false" text="P13" />
+                  <CheckBox fx:id="pressureEnabled14" layoutX="737.0" layoutY="181.92333984375" mnemonicParsing="false" text="P14" />
+                  <TextField fx:id="pressureValue13" layoutX="787.0" layoutY="138.92333984375" prefHeight="24.0" prefWidth="41.0" />
+                  <TextField fx:id="pressureValue14" layoutX="787.0" layoutY="178.92333984375" prefHeight="24.0" prefWidth="41.0" />
+                  <CheckBox fx:id="pressureEnabled15" layoutX="736.0" layoutY="222.92333984375" mnemonicParsing="false" text="P15" />
+                  <TextField fx:id="pressureValue15" layoutX="786.0" layoutY="219.92333984375" prefHeight="24.0" prefWidth="41.0" />
+                  <CheckBox fx:id="pressureEnabled16" layoutX="736.0" layoutY="259.92333984375" mnemonicParsing="false" text="P16" />
+                  <TextField fx:id="pressureValue16" layoutX="786.0" layoutY="256.92333984375" prefHeight="24.0" prefWidth="41.0" />
+                  <Label layoutX="109.0" layoutY="141.92333984375" text="PRÓG" textFill="#1e1e7c" />
+                  <TextField fx:id="pressureThresholdValue1" layoutX="157.0" layoutY="137.92333984375" prefHeight="24.0" prefWidth="41.0">
+
+                  </TextField>
+                  <Label layoutX="109.0" layoutY="181.92333984375" text="PRÓG" textFill="#1e1e7c" />
+                  <TextField fx:id="pressureThresholdValue2" layoutX="157.0" layoutY="177.92333984375" prefHeight="24.0" prefWidth="41.0">
+
+                  </TextField>
+                  <Label layoutX="109.0" layoutY="224.92333984375" text="PRÓG" textFill="#1e1e7c" />
+                  <TextField fx:id="pressureThresholdValue3" layoutX="157.0" layoutY="219.92333984375" prefHeight="24.0" prefWidth="41.0">
+
+                  </TextField>
+                  <Label layoutX="109.0" layoutY="259.92333984375" text="PRÓG" textFill="#1e1e7c" />
+                  <TextField fx:id="pressureThresholdValue4" layoutX="157.0" layoutY="257.92333984375" prefHeight="24.0" prefWidth="41.0">
+
+                  </TextField>
+                  <Label layoutX="336.0" layoutY="141.92333984375" text="PRÓG" textFill="#1e1e7c" />
+                  <TextField fx:id="pressureThresholdValue5" layoutX="384.0" layoutY="137.92333984375" prefHeight="24.0" prefWidth="41.0">
+
+                  </TextField>
+                  <Label layoutX="336.0" layoutY="181.92333984375" text="PRÓG" textFill="#1e1e7c" />
+                  <TextField fx:id="pressureThresholdValue6" layoutX="384.0" layoutY="177.92333984375" prefHeight="24.0" prefWidth="41.0">
+
+                  </TextField>
+                  <Label layoutX="336.0" layoutY="224.92333984375" text="PRÓG" textFill="#1e1e7c" />
+                  <TextField fx:id="pressureThresholdValue7" layoutX="384.0" layoutY="219.92333984375" prefHeight="24.0" prefWidth="41.0">
+
+                  </TextField>
+                  <Label layoutX="336.0" layoutY="259.92333984375" text="PRÓG" textFill="#1e1e7c" />
+                  <TextField fx:id="pressureThresholdValue8" layoutX="384.0" layoutY="257.92333984375" prefHeight="24.0" prefWidth="41.0">
+
+                  </TextField>
+                  <Label layoutX="608.0" layoutY="142.92333984375" text="PRÓG" textFill="#1e1e7c" />
+                  <TextField fx:id="pressureThresholdValue9" layoutX="656.0" layoutY="138.92333984375" prefHeight="24.0" prefWidth="41.0">
+
+                  </TextField>
+                  <Label layoutX="608.0" layoutY="182.92333984375" text="PRÓG" textFill="#1e1e7c" />
+                  <TextField fx:id="pressureThresholdValue10" layoutX="656.0" layoutY="178.92333984375" prefHeight="24.0" prefWidth="41.0">
+
+                  </TextField>
+                  <Label layoutX="608.0" layoutY="225.92333984375" text="PRÓG" textFill="#1e1e7c" />
+                  <TextField fx:id="pressureThresholdValue11" layoutX="656.0" layoutY="220.92333984375" prefHeight="24.0" prefWidth="41.0">
+
+                  </TextField>
+                  <Label layoutX="608.0" layoutY="260.92333984375" text="PRÓG" textFill="#1e1e7c" />
+                  <TextField fx:id="pressureThresholdValue12" layoutX="656.0" layoutY="258.92333984375" prefHeight="24.0" prefWidth="41.0">
+
+                  </TextField>
+                  <Label layoutX="845.0" layoutY="142.92333984375" text="PRÓG" textFill="#1e1e7c" />
+                  <TextField fx:id="pressureThresholdValue13" layoutX="893.0" layoutY="138.92333984375" prefHeight="24.0" prefWidth="41.0">
+
+                  </TextField>
+                  <Label layoutX="845.0" layoutY="182.92333984375" text="PRÓG" textFill="#1e1e7c" />
+                  <TextField fx:id="pressureThresholdValue14" layoutX="893.0" layoutY="178.92333984375" prefHeight="24.0" prefWidth="41.0">
+
+                  </TextField>
+                  <Label layoutX="845.0" layoutY="225.92333984375" text="PRÓG" textFill="#1e1e7c" />
+                  <TextField fx:id="pressureThresholdValue15" layoutX="893.0" layoutY="220.92333984375" prefHeight="24.0" prefWidth="41.0">
+
+                  </TextField>
+                  <Label layoutX="845.0" layoutY="260.92333984375" text="PRÓG" textFill="#1e1e7c" />
+                  <TextField fx:id="pressureThresholdValue16" layoutX="893.0" layoutY="258.92333984375" prefHeight="24.0" prefWidth="41.0">
+
+                  </TextField>
+                  <Button layoutX="531.0" layoutY="58.92333984375" mnemonicParsing="false" prefHeight="24.0" prefWidth="204.0" text="WARTOŚĆ PROGOWA DLA WSZYSTKICH" textFill="#1e1e7c">
+                     <font>
+                        <Font size="9.0" />
+                     </font>
+                  </Button>
+                  <TextField layoutX="487.0" layoutY="58.92333984375" prefHeight="24.0" prefWidth="31.0" />
+                  <Button layoutX="753.0" layoutY="58.92333984375" mnemonicParsing="false" prefHeight="24.0" prefWidth="204.0" text="LOSOWE WARTOŚCO PROGOWE" textFill="#1e1e7c">
+                     <font>
+                        <Font size="9.0" />
+                     </font>
+                  </Button>
+                  <Button layoutX="753.0" layoutY="95.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="204.0" text="WARTOŚĆ PROGOWA DLA ZAZNACZONYCH" textFill="#1e1e7c">
+                     <font>
+                        <Font size="9.0" />
+                     </font>
+                  </Button>
+                  <TextField layoutX="487.0" layoutY="95.0" prefHeight="24.0" prefWidth="31.0" />
+                  <Button layoutX="531.0" layoutY="95.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="204.0" text="WYCZYŚĆ WARTOŚCI PROGOWE" textFill="#d30707">
+                     <font>
+                        <Font size="9.0" />
+                     </font>
+                  </Button>
+                  <Button layoutX="44.0" layoutY="95.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="154.0" text="CIŚNIENIE DLA ZAZNACZONYCH">
+                     <font>
+                        <Font size="9.0" />
+                     </font>
+                  </Button>
+                  <Button layoutX="236.0" layoutY="95.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="204.0" text="WYCZYŚĆ WARTOŚCI CIŚNIENIA" textFill="#d30707">
+                     <font>
+                        <Font size="9.0" />
+                     </font>
+                  </Button>
+                  <TextField layoutY="95.0" prefHeight="24.0" prefWidth="31.0" />
+               </children>
+            </AnchorPane>
+            <AnchorPane layoutX="1240.0" layoutY="63.07666015625">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Filtrowentylacja">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Text>
+                  <CheckBox layoutY="31.92333984375" mnemonicParsing="false" text="PODŁĄCZONA DO ZASILANIA" />
+                  <CheckBox layoutY="68.92333984375" mnemonicParsing="false" text="WŁĄCZ FW" />
+                  <RadioButton layoutX="130.0" layoutY="68.92333984375" mnemonicParsing="false" text="FILTROWENTYLACJA" />
+                  <RadioButton layoutX="299.0" layoutY="68.92333984375" mnemonicParsing="false" text="WENTYLACJA" />
+               </children>
+            </AnchorPane>
+            <AnchorPane layoutX="32.0" layoutY="452.07666015625">
+               <children>
+                  <Text layoutX="1.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DPO">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Text>
+                  <Button layoutX="44.0" layoutY="61.92333984375" mnemonicParsing="false" prefHeight="24.0" prefWidth="112.0" text="MD DLA WSZYSTKICH">
+                     <font>
+                        <Font size="9.0" />
+                     </font>
+                  </Button>
+                  <TextField layoutY="61.92333984375" prefHeight="24.0" prefWidth="31.0" />
+                  <CheckBox layoutY="29.92333984375" mnemonicParsing="false" text="Zaznacz wszystkie" />
+                  <Button layoutX="169.0" layoutY="61.92333984375" mnemonicParsing="false" prefHeight="24.0" prefWidth="155.0" text="LOSOWE MD DLA ZAZNACZONYCH">
+                     <font>
+                        <Font size="9.0" />
+                     </font>
+                  </Button>
+                  <CheckBox layoutX="2.0" layoutY="129.92333984375" mnemonicParsing="false" text="DPO1" />
+                  <TextField layoutX="100.0" layoutY="126.92333984375" prefHeight="24.0" prefWidth="41.0" />
+                  <Label layoutX="71.0" layoutY="130.92333984375" text="MD" />
+                  <TextField layoutX="180.0" layoutY="126.92333984375" prefHeight="24.0" prefWidth="41.0" />
+                  <Label layoutX="151.0" layoutY="130.92333984375" text="DC" />
+                  <CheckBox layoutX="2.0" layoutY="161.92333984375" mnemonicParsing="false" text="DPO2" />
+                  <TextField layoutX="100.0" layoutY="158.92333984375" prefHeight="24.0" prefWidth="41.0" />
+                  <Label layoutX="71.0" layoutY="162.92333984375" text="MD" />
+                  <TextField layoutX="180.0" layoutY="158.92333984375" prefHeight="24.0" prefWidth="41.0" />
+                  <Label layoutX="151.0" layoutY="162.92333984375" text="DC" />
+                  <CheckBox layoutX="1.0" layoutY="192.92333984375" mnemonicParsing="false" text="DPO3" />
+                  <TextField layoutX="101.0" layoutY="189.92333984375" prefHeight="24.0" prefWidth="41.0" />
+                  <Label layoutX="72.0" layoutY="193.92333984375" text="MD" />
+                  <TextField layoutX="181.0" layoutY="189.92333984375" prefHeight="24.0" prefWidth="41.0" />
+                  <Label layoutX="152.0" layoutY="193.92333984375" text="DC" />
+                  <Button layoutX="44.0" layoutY="91.92333984375" mnemonicParsing="false" prefHeight="24.0" prefWidth="112.0" text="MD DLA ZAZNACZONYCH">
+                     <font>
+                        <Font size="9.0" />
+                     </font>
+                  </Button>
+                  <TextField layoutY="91.92333984375" prefHeight="24.0" prefWidth="31.0" />
+                  <CheckBox layoutX="164.0" layoutY="29.92333984375" mnemonicParsing="false" text="Zaznacz losowe" />
+                  <Button layoutX="169.0" layoutY="91.92333984375" mnemonicParsing="false" prefHeight="24.0" prefWidth="155.0" text="WYCZYŚĆ WARTOŚCI MD" textFill="#d30707">
+                     <font>
+                        <Font size="9.0" />
+                     </font>
+                  </Button>
+                  <TextField layoutX="386.0" layoutY="26.92333984375" prefHeight="24.0" prefWidth="80.0">
+                     <tooltip>
+                        <Tooltip text="Wprowadź liczbę czujników, które powinny być zaznaczone" />
+                     </tooltip>
+                  </TextField>
+                  <Text layoutX="305.0" layoutY="30.92333984375" strokeType="OUTSIDE" strokeWidth="0.0" text="W zakresie" />
+                  <TextField layoutX="593.0" layoutY="26.92333984375" prefHeight="24.0" prefWidth="80.0">
+                     <tooltip>
+                        <Tooltip text="Wprowadź liczbę czujników, które powinny być zaznaczone" />
+                     </tooltip>
+                  </TextField>
+                  <Text layoutX="486.0" layoutY="30.92333984375" strokeType="OUTSIDE" strokeWidth="0.0" text="Poza zakresem" />
+                  <Button layoutX="402.0" layoutY="62.92333984375" mnemonicParsing="false" prefHeight="24.0" prefWidth="103.0" text="DC DLA WSZYSTKICH">
+                     <font>
+                        <Font size="9.0" />
+                     </font>
+                  </Button>
+                  <TextField layoutX="358.0" layoutY="62.92333984375" prefHeight="24.0" prefWidth="31.0" />
+                  <Button layoutX="517.0" layoutY="62.92333984375" mnemonicParsing="false" prefHeight="24.0" prefWidth="121.0" text="LOSOWE DC DLA ZAZNACZONYCH">
+                     <font>
+                        <Font size="9.0" />
+                     </font>
+                  </Button>
+                  <Button layoutX="402.0" layoutY="92.92333984375" mnemonicParsing="false" prefHeight="24.0" prefWidth="103.0" text="DC DLA ZAZNACZONYCH">
+                     <font>
+                        <Font size="9.0" />
+                     </font>
+                  </Button>
+                  <TextField layoutX="358.0" layoutY="92.92333984375" prefHeight="24.0" prefWidth="31.0" />
+                  <Button layoutX="517.0" layoutY="92.92333984375" mnemonicParsing="false" prefHeight="24.0" prefWidth="121.0" text="WYCZYŚĆ WARTOŚCI DC" textFill="#d30707">
+                     <font>
+                        <Font size="9.0" />
+                     </font>
+                  </Button>
+               </children>
+            </AnchorPane>
+            <AnchorPane layoutX="33.0" layoutY="387.0">
+               <children>
+                  <Button layoutX="44.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="204.0" text="WARTOŚĆ PROGOWA DLA WSZYSTKICH" textFill="#1e1e7c">
+                     <font>
+                        <Font size="9.0" />
+                     </font>
+                  </Button>
+                  <Label layoutX="488.0" layoutY="4.0" text="PRÓG 1 MD" textFill="#1e1e7c" />
+                  <TextField layoutX="572.0" prefHeight="24.0" prefWidth="38.0">
+
+                  </TextField>
+                  <Label layoutX="645.0" layoutY="4.0" text="PRÓG 2 MD" textFill="#1e1e7c" />
+                  <TextField layoutX="729.0" prefHeight="24.0" prefWidth="38.0">
+
+                  </TextField>
+                  <Label layoutX="786.0" layoutY="4.0" text="PRÓG 3 MD" textFill="#1e1e7c" />
+                  <TextField layoutX="870.0" layoutY="3.0" prefHeight="24.0" prefWidth="38.0">
+
+                  </TextField>
+                  <TextField prefHeight="24.0" prefWidth="31.0" />
+                  <Button layoutX="260.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="204.0" text="WYCZYŚĆ WARTOŚCI PROGOWE" textFill="#d30707">
+                     <font>
+                        <Font size="9.0" />
+                     </font>
+                  </Button>
+               </children>
+            </AnchorPane>
+            <Line endX="1099.0" layoutX="132.0" layoutY="347.0" startX="-144.5" stroke="#a8a1a1" />
+            <Line endX="259.5" endY="-317.0" layoutX="972.0" layoutY="367.0" startX="259.5" startY="726.0" stroke="#a8a1a1" />
+            <AnchorPane layoutX="30.0" layoutY="355.07666015625">
+               <children>
+                  <Text layoutX="3.0" layoutY="345.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sonda kierunkowa">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Text>
+                  <CheckBox layoutX="2.0" layoutY="471.92333984375" mnemonicParsing="false" text="K1" />
+                  <TextField layoutX="158.0" layoutY="468.92333984375" prefHeight="24.0" prefWidth="41.0" />
+                  <Label layoutX="129.0" layoutY="472.92333984375" text="MD" />
+                  <TextField layoutX="238.0" layoutY="468.92333984375" prefHeight="24.0" prefWidth="41.0" />
+                  <Label layoutX="209.0" layoutY="472.92333984375" text="L.N" />
+                  <CheckBox layoutX="2.0" layoutY="503.92333984375" mnemonicParsing="false" text="K2" />
+                  <TextField layoutX="158.0" layoutY="500.92333984375" prefHeight="24.0" prefWidth="41.0" />
+                  <Label layoutX="129.0" layoutY="504.92333984375" text="MD" />
+                  <TextField layoutX="238.0" layoutY="500.92333984375" prefHeight="24.0" prefWidth="41.0" />
+                  <Label layoutX="209.0" layoutY="504.92333984375" text="L.N" />
+                  <CheckBox layoutX="1.0" layoutY="534.92333984375" mnemonicParsing="false" text="K3" />
+                  <TextField layoutX="159.0" layoutY="531.92333984375" prefHeight="24.0" prefWidth="41.0" />
+                  <Label layoutX="130.0" layoutY="535.92333984375" text="MD" />
+                  <TextField layoutX="239.0" layoutY="531.92333984375" prefHeight="24.0" prefWidth="41.0" />
+                  <Label layoutX="210.0" layoutY="535.92333984375" text="L.N" />
+                  <Text layoutX="3.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Czujniki radiometryczne">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Text>
+                  <Label layoutX="75.0" layoutY="472.92333984375" text="-120" textFill="#1e1e7c" />
+                  <Label layoutX="79.0" layoutY="504.92333984375" text="-60" textFill="#1e1e7c" />
+                  <Label layoutX="85.0" layoutY="535.92333984375" text="0" textFill="#1e1e7c" />
+                  <CheckBox layoutX="1.0" layoutY="566.92333984375" mnemonicParsing="false" text="K4" />
+                  <TextField layoutX="159.0" layoutY="563.92333984375" prefHeight="24.0" prefWidth="41.0" />
+                  <Label layoutX="130.0" layoutY="567.92333984375" text="MD" />
+                  <TextField layoutX="239.0" layoutY="563.92333984375" prefHeight="24.0" prefWidth="41.0" />
+                  <Label layoutX="210.0" layoutY="567.92333984375" text="L.N" />
+                  <Label layoutX="85.0" layoutY="567.92333984375" text="60" textFill="#1e1e7c" />
+                  <CheckBox layoutY="598.92333984375" mnemonicParsing="false" text="K5" />
+                  <TextField layoutX="158.0" layoutY="595.92333984375" prefHeight="24.0" prefWidth="41.0" />
+                  <Label layoutX="129.0" layoutY="599.92333984375" text="MD" />
+                  <TextField layoutX="238.0" layoutY="595.92333984375" prefHeight="24.0" prefWidth="41.0" />
+                  <Label layoutX="209.0" layoutY="599.92333984375" text="L.N" />
+                  <Label layoutX="84.0" layoutY="599.92333984375" text="120" textFill="#1e1e7c" />
+                  <TextField layoutX="340.0" layoutY="470.92333984375" prefHeight="24.0" prefWidth="41.0">
+                     <tooltip>
+                        <Tooltip text="Liczba neutronów neutralnych" />
+                     </tooltip>
+                  </TextField>
+                  <Label layoutX="297.0" layoutY="474.92333984375" text="L.N. I" />
+                  <TextField layoutX="341.0" layoutY="500.92333984375" prefHeight="24.0" prefWidth="41.0">
+                     <tooltip>
+                        <Tooltip text="Liczba neutronów neutralnych" />
+                     </tooltip>
+                  </TextField>
+                  <Label layoutX="298.0" layoutY="504.92333984375" text="L.N. I" />
+                  <TextField layoutX="341.0" layoutY="528.92333984375" prefHeight="24.0" prefWidth="41.0">
+                     <tooltip>
+                        <Tooltip text="Liczba neutronów neutralnych" />
+                     </tooltip>
+                  </TextField>
+                  <Label layoutX="298.0" layoutY="532.92333984375" text="L.N. I" />
+                  <TextField layoutX="341.0" layoutY="563.92333984375" prefHeight="24.0" prefWidth="41.0">
+                     <tooltip>
+                        <Tooltip text="Liczba neutronów neutralnych" />
+                     </tooltip>
+                  </TextField>
+                  <Label layoutX="298.0" layoutY="567.92333984375" text="L.N. I" />
+                  <TextField layoutX="341.0" layoutY="595.92333984375" prefHeight="24.0" prefWidth="41.0">
+                     <tooltip>
+                        <Tooltip text="Liczba neutronów neutralnych" />
+                     </tooltip>
+                  </TextField>
+                  <Label layoutX="298.0" layoutY="599.92333984375" text="L.N. I" />
+                  <Button layoutX="47.0" layoutY="402.92333984375" mnemonicParsing="false" prefHeight="24.0" prefWidth="112.0" text="MD DLA WSZYSTKICH">
+                     <font>
+                        <Font size="9.0" />
+                     </font>
+                  </Button>
+                  <TextField layoutX="3.0" layoutY="402.92333984375" prefHeight="24.0" prefWidth="31.0" />
+                  <CheckBox layoutX="3.0" layoutY="370.92333984375" mnemonicParsing="false" text="Zaznacz wszystkie" />
+                  <Button layoutX="172.0" layoutY="402.92333984375" mnemonicParsing="false" prefHeight="24.0" prefWidth="155.0" text="LOSOWE MD DLA ZAZNACZONYCH">
+                     <font>
+                        <Font size="9.0" />
+                     </font>
+                  </Button>
+                  <Button layoutX="47.0" layoutY="432.92333984375" mnemonicParsing="false" prefHeight="24.0" prefWidth="112.0" text="MD DLA ZAZNACZONYCH">
+                     <font>
+                        <Font size="9.0" />
+                     </font>
+                  </Button>
+                  <TextField layoutX="3.0" layoutY="432.92333984375" prefHeight="24.0" prefWidth="31.0" />
+                  <CheckBox layoutX="167.0" layoutY="370.92333984375" mnemonicParsing="false" text="Zaznacz losowe" />
+                  <Button layoutX="172.0" layoutY="432.92333984375" mnemonicParsing="false" prefHeight="24.0" prefWidth="155.0" text="WYCZYŚĆ WARTOŚCI MD" textFill="#d30707">
+                     <font>
+                        <Font size="9.0" />
+                     </font>
+                  </Button>
+                  <TextField layoutX="389.0" layoutY="367.92333984375" prefHeight="24.0" prefWidth="80.0">
+                     <tooltip>
+                        <Tooltip text="Wprowadź liczbę czujników, które powinny być zaznaczone" />
+                     </tooltip>
+                  </TextField>
+                  <Text layoutX="308.0" layoutY="371.92333984375" strokeType="OUTSIDE" strokeWidth="0.0" text="W zakresie" />
+                  <TextField layoutX="596.0" layoutY="367.92333984375" prefHeight="24.0" prefWidth="80.0">
+                     <tooltip>
+                        <Tooltip text="Wprowadź liczbę czujników, które powinny być zaznaczone" />
+                     </tooltip>
+                  </TextField>
+                  <Text layoutX="489.0" layoutY="371.92333984375" strokeType="OUTSIDE" strokeWidth="0.0" text="Poza zakresem" />
+               </children>
+            </AnchorPane>
+            <AnchorPane layoutX="1244.0" layoutY="190.07666015625">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="CO2/O2">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Text>
+                  <CheckBox layoutX="2.0" layoutY="67.92333984375" mnemonicParsing="false" text="COS/O2" />
+                  <Label layoutX="3.0" layoutY="32.92333984375" text="PRÓG CO2" textFill="#1e1e7c" />
+                  <TextField layoutX="77.0" layoutY="28.92333984375" prefHeight="24.0" prefWidth="41.0">
+
+                  </TextField>
+                  <TextField layoutX="126.0" layoutY="64.92333984375" prefHeight="24.0" prefWidth="41.0" />
+                  <Text layoutX="86.0" layoutY="68.92333984375" strokeType="OUTSIDE" strokeWidth="0.0" text="CO2" />
+                  <TextField layoutX="208.0" layoutY="64.92333984375" prefHeight="24.0" prefWidth="41.0" />
+                  <Text layoutX="182.0" layoutY="68.92333984375" strokeType="OUTSIDE" strokeWidth="0.0" text="O2" />
+                  <Label layoutX="131.0" layoutY="33.92333984375" text="PRÓG O2" textFill="#1e1e7c" />
+                  <TextField layoutX="211.0" layoutY="28.92333984375" prefHeight="24.0" prefWidth="41.0">
+
+                  </TextField>
+               </children>
+            </AnchorPane>
+            <Line endX="703.0" endY="10.0" layoutX="1208.0" layoutY="166.0" startX="24.0" startY="10.0" stroke="#a8a1a1" />
+            <Line endX="1095.0" layoutX="136.0" layoutY="433.0" startX="-132.0" stroke="#a8a1a1" />
+            <AnchorPane layoutX="1545.0" layoutY="1035.0">
+               <children>
+                  <Button fx:id="sendButton" mnemonicParsing="false" onAction="#sendButtonClicked" prefHeight="31.0" prefWidth="154.0" text="PRZEŚLJ DO SIU" textFill="#3b861d">
+                     <font>
+                        <Font name="System Bold" size="9.0" />
+                     </font>
+                  </Button>
+                  <Button layoutX="168.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="154.0" text="ZATRZYMAJ" textFill="#bf1010">
+                     <font>
+                        <Font name="System Bold" size="9.0" />
+                     </font>
+                  </Button>
+               </children>
+            </AnchorPane>
+         </children>
+      </AnchorPane>
+   </children>
+</StackPane>

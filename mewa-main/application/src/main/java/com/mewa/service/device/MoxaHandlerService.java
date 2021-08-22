@@ -1,6 +1,7 @@
 package com.mewa.service.device;
 
 import com.mewa.device.MoxaDevice;
+import com.mewa.enums.TypeE;
 import com.mewa.service.MoxaService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,13 +21,17 @@ public class MoxaHandlerService {
 
     @Async
     public void handleMoxaDevice(List<MoxaDevice> moxaDeviceList) throws Exception {
-            List<Future<MoxaDevice>> futureList = new ArrayList<>();
-            for(MoxaDevice moxaDevice : moxaDeviceList){
-                futureList.add(moxaService.handleMoxaDevices(moxaDevice));
-            }
-            for(Future future: futureList){
-                future.get();
-            }
+        if(moxaDeviceList.stream().anyMatch(e->e.getType().equals(TypeE.SYM))){
             moxaService.handleSiuFrame(moxaDeviceList);
+            return;
+        }
+        List<Future<MoxaDevice>> futureList = new ArrayList<>();
+        for(MoxaDevice moxaDevice : moxaDeviceList){
+            futureList.add(moxaService.handleMoxaDevices(moxaDevice));
+        }
+        for(Future future: futureList){
+            future.get();
+        }
+        moxaService.handleSiuFrame(moxaDeviceList);
     }
 }

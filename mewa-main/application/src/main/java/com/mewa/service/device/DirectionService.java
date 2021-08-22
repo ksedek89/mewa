@@ -98,7 +98,7 @@ public class DirectionService {
         }
     }
 
-    private  int isAlarm(DirectionDevice directionDevice){
+    public int isAlarm(DirectionDevice directionDevice){
         double total = directionDevice.getTotalDosage() * getFactor(directionDevice.getTotalDosagePrefix());
         if(total>thresholdValuesService.getThresholdValue().getValue3() * getFactor(thresholdValuesService.getThresholdValue().getUnit3())){
             return 3;

@@ -1,5 +1,6 @@
 package com.mewa.device;
 
+import com.mewa.enums.TypeE;
 import lombok.Builder;
 import lombok.Data;
 
@@ -9,5 +10,5 @@ public class MoxaDevice {
     private int id;
     private String ip;
     private String status;
-    private int errorCode;
+    private TypeE type;
 }

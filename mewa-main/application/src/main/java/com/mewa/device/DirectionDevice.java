@@ -1,6 +1,7 @@
 package com.mewa.device;
 
 import com.mewa.enums.SerialEnum;
+import com.mewa.enums.TypeE;
 import jssc.SerialPort;
 import jssc.SerialPortException;
 import lombok.Data;
@@ -19,13 +20,20 @@ public class DirectionDevice implements Device{
     private int initNeutrons;
     private String errorCode;
 
+    private TypeE type;
     private SerialPort serialPort;
 
-    public DirectionDevice(String portName, int id, Integer directionAngle) {
+
+    public DirectionDevice(String portName, int id, Integer directionAngle, TypeE typeE) {
+        this.type = typeE;
+
         this.id = id;
         this.directionAngle = directionAngle;
         this.totalDosagePrefix = "N";
         this.serialPort = new SerialPort(portName);
+        if(type.equals(TypeE.SYM)){
+            return;
+        }
         try {
             serialPort.openPort();
             serialPort.setParams(SerialEnum.DIRECTION.getBaudRate(), SerialEnum.DIRECTION.getDataBits(), SerialEnum.DIRECTION.getStopBits(), SerialEnum.DIRECTION.getParityBits());

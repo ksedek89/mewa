@@ -5,6 +5,38 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Utils {
+    public static final long NANO = 1000000000;
+
+    public static int getFactorCompareToNano(String factor){
+        if(factor.equalsIgnoreCase("m")){
+            return 1000000;
+        }
+        if(factor.equalsIgnoreCase("u")){
+            return 1000;
+        }
+        if(factor.equalsIgnoreCase("n")){
+            return 1;
+        }
+        return 1;
+    }
+
+    public static double calculateToMicro(String factor){
+        if(factor.equalsIgnoreCase("m")){
+            return 1000;
+        }
+        if(factor.equalsIgnoreCase("u")){
+            return 1;
+        }
+        if(factor.equalsIgnoreCase("n")){
+            return 0.001;
+        }
+        return 1;
+    }
+
+    public static int getNumericValueFromByte(byte[] bytes){
+        return Character.getNumericValue((char)bytes[2]);
+    }
+
    public static String getCurrentDateForSiu(){
            SimpleDateFormat sdf = new SimpleDateFormat("HHmmss.SSS");
            Date now = new Date();
@@ -21,10 +53,9 @@ public class Utils {
         return Integer.toHexString(checksum);
     }
 
-    public static float ieee24Format(byte[] data) {
+    public static double ieee32Format(byte[] data) {
         int bits =
-            (data[0] & 0xff) | (data[1] & 0xff) << 8 | (data[2] & 0xff) << 16 |
-                (data[3] & 0xff) << 24;
+            (data[0] & 0xff) | (data[1] & 0xff) << 8 | (data[2] & 0xff) << 16 | (data[3] & 0xff) << 24;
         return Float.intBitsToFloat(bits);
     }
 
