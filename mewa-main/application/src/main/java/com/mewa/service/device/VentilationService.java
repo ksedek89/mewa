@@ -111,7 +111,7 @@ public class VentilationService {
         String[] values = data.split("\\*")[0].split(",");
         String mode = values[2];
         if(ventilationDevice.getType().equals(TypeE.SYM)){
-            if(mode.equalsIgnoreCase("0")){
+            if(mode.equalsIgnoreCase("O")){
                 ventilationDevice.setMotor(0);
             }else if(mode.equalsIgnoreCase("F")){
                 ventilationDevice.setMotor(1);

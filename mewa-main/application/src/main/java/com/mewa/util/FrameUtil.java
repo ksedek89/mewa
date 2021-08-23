@@ -48,7 +48,7 @@ public class FrameUtil {
         frame.append(oxygenDevice.getOxygenAlarm()+ ",");
         frame.append(oxygenDevice.getCo2()+ ",");
         frame.append(oxygenDevice.getCo2Threshold()+ ",");
-        frame.append(oxygenDevice.getCo2Alarm()+ "*");
+        frame.append(oxygenDevice.getCo2Alarm()+ ",");
         frame.append(oxygenDevice.getErrorCode()+ "*");
         frame.append(calculateCheckSumForSiu(frame.toString()));
         frame.append("\r\n");

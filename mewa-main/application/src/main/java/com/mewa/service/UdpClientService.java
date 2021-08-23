@@ -16,7 +16,7 @@ public class UdpClientService {
     @Async
     public void sendDatagram(String frame){
         try{
-//            log.info("Frame sent: "+ frame.replaceAll("\n", "").replaceAll("\r", ""));
+            log.info("Frame sent: "+ frame.replaceAll("\n", "").replaceAll("\r", ""));
             handler.handleMessageInternal(new GenericMessage(frame));
         }catch(Exception e){
             log.error(e.getMessage(), e);
