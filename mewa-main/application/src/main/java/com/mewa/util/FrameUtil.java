@@ -7,10 +7,10 @@ import com.mewa.device.MoxaDevice;
 import com.mewa.device.OxygenDevice;
 import com.mewa.device.PressureDevice;
 import com.mewa.device.VentilationDevice;
+import com.mewa.enums.ThresholdE;
 import com.mewa.model.entity.ThresholdValue;
 import com.mewa.service.ThresholdValuesService;
 import org.springframework.beans.factory.annotation.Autowired;
-
 
 import java.util.List;
 
@@ -43,13 +43,13 @@ public class FrameUtil {
         StringBuilder frame = new StringBuilder();
         frame.append("$PCARAC,");
         frame.append(getCurrentDateForSiu());
-        frame.append(oxygenDevice.getId() + ",");
         frame.append(oxygenDevice.getOxygen()+ ",");
         frame.append(oxygenDevice.getOxygenThreshold()+ ",");
         frame.append(oxygenDevice.getOxygenAlarm()+ ",");
         frame.append(oxygenDevice.getCo2()+ ",");
         frame.append(oxygenDevice.getCo2Threshold()+ ",");
         frame.append(oxygenDevice.getCo2Alarm()+ "*");
+        frame.append(oxygenDevice.getErrorCode()+ "*");
         frame.append(calculateCheckSumForSiu(frame.toString()));
         frame.append("\r\n");
         return frame.toString();
@@ -133,9 +133,9 @@ public class FrameUtil {
 
         frame.append(dpoDevice.getId()+",");
         frame.append(dpoDevice.getDosage()+",");
-        frame.append("n,");
+        frame.append(ThresholdE.N + ",");
         frame.append(dpoDevice.getPower()+",");
-        frame.append("n,");
+        frame.append(ThresholdE.N + ",");
         frame.append(thresholdValuesService.getThresholdValue().getValue1() + ",");
         frame.append(thresholdValuesService.getThresholdValue().getValue2() + ",");
         frame.append(thresholdValuesService.getThresholdValue().getValue3() + ",");

@@ -16,7 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -70,7 +69,7 @@ public class DeviceService {
         dpoService.handleDpoDevice(Arrays.asList(singleDpoDevice));
 
         directionHandlerService.handleDirectionDevice(directionDeviceList);
-//        moxaHandlerService.handleMoxaDevice(moxaDeviceList);
+        moxaHandlerService.handleMoxaDevice(moxaDeviceList);
 
     }
 

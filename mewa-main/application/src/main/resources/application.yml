@@ -14,8 +14,8 @@ moxa:
         ip: 192.168.40.122
   config-file-path: /usr/lib/npreal2/driver/npreal2d.cf
 siu:
-  ip: localhost
-  port: 8001
+  ip: 192.168.1.1
+  port: 10014
 spring:
   datasource:
     url: jdbc:mariadb://localhost:3306/mewa

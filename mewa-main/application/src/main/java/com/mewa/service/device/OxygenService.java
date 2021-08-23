@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
-
 import static com.mewa.util.FrameUtil.getOxygenFrameForSiu;
 
 @Service
@@ -27,6 +26,7 @@ public class OxygenService {
     }
 
     private void prepareSymData(OxygenDevice oxygenDevice) {
+        oxygenDevice.setErrorCode("0");
         oxygenDevice.setCo2Alarm(oxygenDevice.getCo2() > oxygenDevice.getCo2Threshold() ? "1" : "0");
         oxygenDevice.setOxygenAlarm(oxygenDevice.getOxygen() < oxygenDevice.getOxygenThreshold() ? "1" : "0");
     }

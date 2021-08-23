@@ -1,33 +1,36 @@
 package com.mewa.util;
 
 
+import com.mewa.enums.ThresholdE;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Utils {
     public static final long NANO = 1000000000;
+    private final static SimpleDateFormat nmeaDateFormat = new SimpleDateFormat("HHmmss.SSS");
 
     public static int getFactorCompareToNano(String factor){
-        if(factor.equalsIgnoreCase("m")){
+        if(factor.equalsIgnoreCase(ThresholdE.M.toString())){
             return 1000000;
         }
-        if(factor.equalsIgnoreCase("u")){
+        if(factor.equalsIgnoreCase(ThresholdE.U.toString())){
             return 1000;
         }
-        if(factor.equalsIgnoreCase("n")){
+        if(factor.equalsIgnoreCase(ThresholdE.N.toString())){
             return 1;
         }
         return 1;
     }
 
     public static double calculateToMicro(String factor){
-        if(factor.equalsIgnoreCase("m")){
+        if(factor.equalsIgnoreCase(ThresholdE.M.toString())){
             return 1000;
         }
-        if(factor.equalsIgnoreCase("u")){
+        if(factor.equalsIgnoreCase(ThresholdE.U.toString())){
             return 1;
         }
-        if(factor.equalsIgnoreCase("n")){
+        if(factor.equalsIgnoreCase(ThresholdE.N.toString())){
             return 0.001;
         }
         return 1;
@@ -38,9 +41,8 @@ public class Utils {
     }
 
    public static String getCurrentDateForSiu(){
-           SimpleDateFormat sdf = new SimpleDateFormat("HHmmss.SSS");
            Date now = new Date();
-           String strDate = sdf.format(now);
+           String strDate = nmeaDateFormat.format(now);
            return strDate.substring(0, strDate.length() - 1).concat(",");
 
    }
