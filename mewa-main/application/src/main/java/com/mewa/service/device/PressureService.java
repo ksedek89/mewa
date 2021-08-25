@@ -24,7 +24,7 @@ public class PressureService {
     UdpClientService udpClientService;
 
     @Async
-    public void     handlePressureDevice(PressureDevice pressureDevice) throws Exception{
+    public void handlePressureDevice(PressureDevice pressureDevice) throws Exception{
         if(pressureDevice.getType().equals(TypeE.SYM)){
             prepareSymData(pressureDevice);
         }else {

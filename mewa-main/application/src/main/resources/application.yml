@@ -24,3 +24,5 @@ spring:
     driver-class-name: org.mariadb.jdbc.Driver
 cron:
   request-frequency: '*/1 * * * * *'
+oxygen:
+  url: http://192.168.40.10/json

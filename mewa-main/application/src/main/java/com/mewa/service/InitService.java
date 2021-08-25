@@ -54,17 +54,19 @@ public class InitService {
 
         thresholdValuesService.init();
         List<Device> activeDevices = deviceRepository.findAllByActiveEquals("T");
-
+        boolean anySym = activeDevices.stream().anyMatch(e->e.getType().equals(TypeE.SYM));
+        boolean anyReal = activeDevices.stream().anyMatch(e->e.getType().equals(TypeE.REAL));
+        List<MoxaDevice> moxaDevices = null;
         //SIMULATION
-        if(activeDevices.stream().anyMatch(e->e.getType().equals(TypeE.SYM))){
+        if(anySym) {
             deviceService.setSymulation(true);
-            for(Device deviceDto: activeDevices) {
+            for (Device deviceDto : activeDevices) {
                 if (deviceDto.getDeviceType().equals("PRESS")) {
                     deviceService.getPressureDeviceList()
                         .add((new PressureDevice(null, deviceDto.getDeviceId(), deviceDto.getThresholdPressure(), deviceDto.getType())));
                 }
                 if (deviceDto.getDeviceType().equals("OXY")) {
-                    deviceService.getOxygenDeviceList().add((new OxygenDevice(null, deviceDto.getDeviceId(), deviceDto.getType())));
+                    deviceService.getOxygenDeviceList().add((new OxygenDevice(deviceDto.getDeviceId(), deviceDto.getType())));
                 }
                 if (deviceDto.getDeviceType().equals("DIR")) {
                     deviceService.getDirectionDeviceList()
@@ -81,53 +83,56 @@ public class InitService {
                     ventilationService.setVentilationDevice(new VentilationDevice(null, deviceDto.getType()));
                 }
             }
-            List<MoxaDevice> moxaDevices = moxaProperties.getConfiguration().stream().map(e -> MoxaDevice.builder().status("A").type(TypeE.SYM).id(e.getId()).ip(e.getIp()).build()).collect(Collectors.toList());
-            deviceService.setMoxaDeviceList(moxaDevices);
-            deviceService.setConfigurationFinished(true);
-            return;
+            if (!anyReal) {
+                moxaDevices = moxaProperties.getConfiguration().stream().map(e -> MoxaDevice.builder().status("A").type(TypeE.SYM).id(e.getId()).ip(e.getIp()).build()).collect(Collectors.toList());
+            }
         }
 
-        //REAL DEVICES
-        Map<Integer, String> moxaConfigurationMap = moxaService.initMoxa();
-        for (Device device: activeDevices){
-            log.info("Device from properties: " + device.toString());
-            if(device.getMoxaId() == null || device.getMoxaNumber() == null || device.getDeviceType() == null){
-                throw new Exception("Bledna konfiguracja");
+        if(anyReal) {
+            //REAL DEVICES
+            Map<Integer, String> moxaConfigurationMap = moxaService.initMoxa();
+            for (Device device : activeDevices) {
+                log.info("Device from properties: " + device.toString());
+                if (device.getMoxaId() == null || device.getMoxaNumber() == null || device.getDeviceType() == null) {
+                    throw new Exception("Bledna konfiguracja");
+                }
             }
-        }
-        for (Map.Entry<Integer, String> entry : moxaConfigurationMap.entrySet()) {
-            List<Device> deviceList = activeDevices
-                .stream()
-                .filter(e -> entry.getKey().equals(e.getMoxaId() + 16 * (e.getMoxaNumber() - 1))).collect(Collectors.toList());
-            if(deviceList.size() == 0){
-                continue;
-            }
-            for(Device deviceDto: deviceList) {
-                log.info("For element: " + entry.getKey() + ", port: " + entry.getValue() + ",  Found device:" + deviceDto.toString());
-                if (deviceDto.getDeviceType().equals("PRESS")) {
-                    deviceService.getPressureDeviceList()
-                        .add((new PressureDevice(entry.getValue(), entry.getKey(), deviceDto.getThresholdPressure(), deviceDto.getType())));
+            for (Map.Entry<Integer, String> entry : moxaConfigurationMap.entrySet()) {
+                List<Device> deviceList = activeDevices
+                    .stream()
+                    .filter(e -> entry.getKey().equals(e.getMoxaId() + 16 * (e.getMoxaNumber() - 1))).collect(Collectors.toList());
+                if (deviceList.size() == 0) {
+                    continue;
                 }
-                if (deviceDto.getDeviceType().equals("DIR")) {
-                    deviceService.getDirectionDeviceList()
-                        .add((new DirectionDevice(entry.getValue(), entry.getKey(), deviceDto.getDirectionAngle(),deviceDto.getType())));
-                }
-                if (deviceDto.getDeviceType().equals("VENT")) {
-                    ventilationService.setVentilationDevice(new VentilationDevice(entry.getValue(), deviceDto.getType()));
-                }
-                if (deviceDto.getDeviceType().equals("OXY")) {
-                    deviceService.getOxygenDeviceList().add((new OxygenDevice(entry.getValue(), entry.getKey(), deviceDto.getType())));
-                }
-                if (deviceDto.getDeviceType().equals("DPO")) {
-                    if (deviceDto.getDeviceId() == 3) {
-                        deviceService.setSingleDpoDevice(new DpoDevice(entry.getValue(), deviceDto.getDeviceId(), deviceDto.getType()));
-                    } else {
-                        deviceService.getDpoDeviceList().add(new DpoDevice(entry.getValue(), deviceDto.getDeviceId(), deviceDto.getType()));
+                for (Device deviceDto : deviceList) {
+                    log.info("For element: " + entry.getKey() + ", port: " + entry.getValue() + ",  Found device:" + deviceDto.toString());
+                    if (deviceDto.getDeviceType().equals("PRESS")) {
+                        deviceService.getPressureDeviceList()
+                            .add((new PressureDevice(entry.getValue(), entry.getKey(), deviceDto.getThresholdPressure(), deviceDto.getType())));
+                    }
+                    if (deviceDto.getDeviceType().equals("DIR")) {
+                        deviceService.getDirectionDeviceList()
+                            .add((new DirectionDevice(entry.getValue(), entry.getKey(), deviceDto.getDirectionAngle(), deviceDto.getType())));
+                    }
+                    if (deviceDto.getDeviceType().equals("VENT")) {
+                        ventilationService.setVentilationDevice(new VentilationDevice(entry.getValue(), deviceDto.getType()));
+                    }
+                    if (deviceDto.getDeviceType().equals("OXY")) {
+                        deviceService.getOxygenDeviceList().add((new OxygenDevice(entry.getKey(), deviceDto.getType())));
+                    }
+                    if (deviceDto.getDeviceType().equals("DPO")) {
+                        if (deviceDto.getDeviceId() == 3) {
+                            deviceService.setSingleDpoDevice(new DpoDevice(entry.getValue(), deviceDto.getDeviceId(), deviceDto.getType()));
+                        } else {
+                            deviceService.getDpoDeviceList().add(new DpoDevice(entry.getValue(), deviceDto.getDeviceId(), deviceDto.getType()));
+                        }
                     }
                 }
             }
+            moxaDevices = moxaProperties.getConfiguration().stream().map(e -> MoxaDevice.builder().type(TypeE.REAL).id(e.getId()).ip(e.getIp()).build()).collect(Collectors.toList());
         }
-        List<MoxaDevice> moxaDevices = moxaProperties.getConfiguration().stream().map(e -> MoxaDevice.builder().type(TypeE.REAL).id(e.getId()).ip(e.getIp()).build()).collect(Collectors.toList());
+
+
         deviceService.setMoxaDeviceList(moxaDevices);
         deviceService.setConfigurationFinished(true);
     }
