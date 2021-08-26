@@ -108,17 +108,17 @@ public class InitService {
                     log.info("For element: " + entry.getKey() + ", port: " + entry.getValue() + ",  Found device:" + deviceDto.toString());
                     if (deviceDto.getDeviceType().equals("PRESS")) {
                         deviceService.getPressureDeviceList()
-                            .add((new PressureDevice(entry.getValue(), entry.getKey(), deviceDto.getThresholdPressure(), deviceDto.getType())));
+                            .add((new PressureDevice(entry.getValue(), deviceDto.getDeviceId(), deviceDto.getThresholdPressure(), deviceDto.getType())));
                     }
                     if (deviceDto.getDeviceType().equals("DIR")) {
                         deviceService.getDirectionDeviceList()
-                            .add((new DirectionDevice(entry.getValue(), entry.getKey(), deviceDto.getDirectionAngle(), deviceDto.getType())));
+                            .add((new DirectionDevice(entry.getValue(), deviceDto.getDeviceId(), deviceDto.getDirectionAngle(), deviceDto.getType())));
                     }
                     if (deviceDto.getDeviceType().equals("VENT")) {
                         ventilationService.setVentilationDevice(new VentilationDevice(entry.getValue(), deviceDto.getType()));
                     }
                     if (deviceDto.getDeviceType().equals("OXY")) {
-                        deviceService.getOxygenDeviceList().add((new OxygenDevice(entry.getKey(), deviceDto.getType())));
+                        deviceService.getOxygenDeviceList().add((new OxygenDevice(deviceDto.getDeviceId(), deviceDto.getType())));
                     }
                     if (deviceDto.getDeviceType().equals("DPO")) {
                         if (deviceDto.getDeviceId() == 3) {

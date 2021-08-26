@@ -52,6 +52,7 @@ public class OxygenService {
     }
 
     private void getData(OxygenDevice oxygenDevice){
+        oxygenDevice.setErrorCode("0");
         try {
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             String body = response.body();
