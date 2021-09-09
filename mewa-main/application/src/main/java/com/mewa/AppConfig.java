@@ -1,6 +1,7 @@
 package com.mewa;
 
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.AsyncConfigurer;
 import org.springframework.scheduling.annotation.EnableAsync;
@@ -14,9 +15,15 @@ public class AppConfig implements AsyncConfigurer {
 
     @Override
     public Executor getAsyncExecutor() {
+        return taskExecutor();
+    }
+
+    @Bean
+    public ThreadPoolTaskExecutor taskExecutor() {
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
-        executor.setCorePoolSize(200);
-        executor.setMaxPoolSize(500);
+        executor.setCorePoolSize(20000);
+        //maxPoolSize defines the maximum number of threads that can ever be created
+        executor.setMaxPoolSize(50000);
         executor.setQueueCapacity(500);
         executor.setThreadNamePrefix("MyExecutor-");
         executor.initialize();
