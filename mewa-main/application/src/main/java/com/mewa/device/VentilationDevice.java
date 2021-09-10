@@ -23,23 +23,17 @@ public class VentilationDevice implements Device{
     private double contamination;
     private double puncture;
 
+    private int moxaId;
     private TypeE type;
 
     private SerialPort serialPort;
 
-    public VentilationDevice(String portName, TypeE type) {
+    public VentilationDevice(String portName, int moxaId, TypeE type) {
         this.serialPort = new SerialPort(portName);
-        try {
-            this.type = type;
-            id = 1;
-            if(type.equals(TypeE.SYM)){
-                return;
-            }
-            serialPort.openPort();
-            serialPort.setParams(SerialEnum.VENTILATION.getBaudRate(), SerialEnum.VENTILATION.getDataBits(), SerialEnum.VENTILATION.getStopBits(), SerialEnum.VENTILATION.getParityBits());
-        } catch (SerialPortException e) {
-            log.error(e.getMessage(), e);
-        }
+        this.type = type;
+        this.id = 1;
+        this.moxaId = moxaId;
+
     }
 
     public void setBypass(int bypass) {

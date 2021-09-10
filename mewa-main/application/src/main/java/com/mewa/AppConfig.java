@@ -21,9 +21,9 @@ public class AppConfig implements AsyncConfigurer {
     @Bean
     public ThreadPoolTaskExecutor taskExecutor() {
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
-        executor.setCorePoolSize(20000);
+        executor.setCorePoolSize(200);
         //maxPoolSize defines the maximum number of threads that can ever be created
-        executor.setMaxPoolSize(50000);
+        executor.setMaxPoolSize(500);
         executor.setQueueCapacity(500);
         executor.setThreadNamePrefix("MyExecutor-");
         executor.initialize();

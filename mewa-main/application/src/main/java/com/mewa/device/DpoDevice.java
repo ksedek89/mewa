@@ -17,22 +17,16 @@ public class DpoDevice implements Device{
     private int errorCode;
     private TypeE type;
 
+    private int moxaId;
+
 
     private SerialPort serialPort;
 
-    public DpoDevice(String portName, int id, TypeE typeE) {
+    public DpoDevice(String portName, int id, int moxaId, TypeE typeE) {
         this.type = typeE;
+        this.moxaId = moxaId;
         this.id = id;
         this.serialPort = new SerialPort(portName);
-        if(type.equals(TypeE.SYM)){
-            return;
-        }
-        try {
-            serialPort.openPort();
-            serialPort.setParams(SerialEnum.DPO.getBaudRate(), SerialEnum.DPO.getDataBits(), SerialEnum.DPO.getStopBits(), SerialEnum.PRESSURE.getParityBits());
-        } catch (SerialPortException e) {
-            log.error(e.getMessage(), e);
-        }
     }
 
     @Override

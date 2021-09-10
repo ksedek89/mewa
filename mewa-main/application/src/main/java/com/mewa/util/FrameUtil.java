@@ -12,6 +12,7 @@ import com.mewa.model.entity.ThresholdValue;
 import com.mewa.service.ThresholdValuesService;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 import static com.mewa.util.Utils.calculateCheckSumForSiu;
@@ -80,15 +81,16 @@ public class FrameUtil {
 
     //filtrowentylacja
     public static String getVentilationFrameForSiu(VentilationDevice ventilationDevice) {
+        DecimalFormat df = new DecimalFormat("###.##");
         StringBuilder frame = new StringBuilder();
         frame.append("$PCARFS,");
         frame.append(getCurrentDateForSiu());
 
         frame.append(ventilationDevice.getMotor()+",");
         frame.append(ventilationDevice.getBypass()+",");
-        frame.append(ventilationDevice.getEfficiency()+",");
-        frame.append(ventilationDevice.getInitialResistance()+",");
-        frame.append(ventilationDevice.getResistance()+"*");
+        frame.append(df.format(ventilationDevice.getEfficiency())+",");
+        frame.append(df.format(ventilationDevice.getInitialResistance())+",");
+        frame.append(df.format(ventilationDevice.getResistance())+",*");
 
         frame.append(calculateCheckSumForSiu(frame.toString()));
         frame.append("\r\n");

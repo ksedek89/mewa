@@ -20,25 +20,17 @@ public class DirectionDevice implements Device{
     private int initNeutrons;
     private String errorCode;
 
+    private int moxaId;
     private TypeE type;
     private SerialPort serialPort;
 
 
-    public DirectionDevice(String portName, int id, Integer directionAngle, TypeE typeE) {
+    public DirectionDevice(String portName, int id, int moxaId, Integer directionAngle, TypeE typeE) {
         this.type = typeE;
-
+        this.moxaId = moxaId;
         this.id = id;
         this.directionAngle = directionAngle;
         this.totalDosagePrefix = "N";
         this.serialPort = new SerialPort(portName);
-        if(type.equals(TypeE.SYM)){
-            return;
-        }
-        try {
-            serialPort.openPort();
-            serialPort.setParams(SerialEnum.DIRECTION.getBaudRate(), SerialEnum.DIRECTION.getDataBits(), SerialEnum.DIRECTION.getStopBits(), SerialEnum.DIRECTION.getParityBits());
-        } catch (SerialPortException e) {
-            log.error(e.getMessage(), e);
-        }
     }
 }

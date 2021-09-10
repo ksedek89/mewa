@@ -1,6 +1,7 @@
 package com.mewa.service.device;
 
 import com.mewa.device.DpoDevice;
+import com.mewa.device.MoxaDevice;
 import com.mewa.enums.SerialEnum;
 import com.mewa.enums.TypeE;
 import com.mewa.service.ThresholdValuesService;
@@ -38,8 +39,12 @@ public class DpoService {
     UdpClientService udpClientService;
 
     @Async
-    public void handleDpoDevice(List<DpoDevice> dpoDeviceList) throws Exception{
+    public void handleDpoDevice(List<DpoDevice> dpoDeviceList, List<MoxaDevice> moxaDeviceList) throws Exception{
         if(dpoDeviceList.size()==0 || dpoDeviceList.get(0) == null){
+            return;
+        }
+        MoxaDevice moxaDevice = moxaDeviceList.stream().filter(e -> e.getId() == dpoDeviceList.get(0).getMoxaId()).findFirst().get();
+        if(!"A".equals(moxaDevice.getStatus())){
             return;
         }
 
@@ -126,6 +131,8 @@ public class DpoService {
     private void setDataToDevice(DpoDevice dpoDevice,  byte[] dosageFrameFromDpo, byte[] powerFrameFromDpo){
         if(dosageFrameFromDpo == null || powerFrameFromDpo == null || dosageFrameFromDpo.length == 1 || powerFrameFromDpo.length == 1){
             dpoDevice.setErrorCode(1);
+            dpoDevice.setDosage("0");
+            dpoDevice.setPower("0");
             return;
         }
         dpoDevice.setErrorCode(0);

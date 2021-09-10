@@ -1,5 +1,6 @@
 package com.mewa.service.device;
 
+import com.mewa.device.MoxaDevice;
 import com.mewa.device.PressureDevice;
 import com.mewa.enums.SerialEnum;
 import com.mewa.enums.TypeE;
@@ -7,10 +8,13 @@ import com.mewa.service.UdpClientService;
 import jssc.SerialPort;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Service;
 
 import java.nio.ByteBuffer;
+import java.util.List;
 
 import static com.mewa.util.FrameUtil.getPressureFrameForSiu;
 import static com.mewa.util.Utils.ModRtuCrc;
@@ -22,9 +26,17 @@ public class PressureService {
 
     @Autowired
     UdpClientService udpClientService;
+    @Qualifier("taskExecutor")
+    @Autowired
+    ThreadPoolTaskExecutor taskExecutor;
+
 
     @Async
-    public void handlePressureDevice(PressureDevice pressureDevice) throws Exception{
+    public void handlePressureDevice(PressureDevice pressureDevice, List<MoxaDevice> moxaDeviceList) throws Exception{
+        MoxaDevice moxaDevice = moxaDeviceList.stream().filter(e -> e.getId() == pressureDevice.getMoxaId()).findFirst().get();
+        if(!"A".equals(moxaDevice.getStatus())){
+            return;
+        }
         if(pressureDevice.getType().equals(TypeE.SYM)){
             prepareSymData(pressureDevice);
         }else {

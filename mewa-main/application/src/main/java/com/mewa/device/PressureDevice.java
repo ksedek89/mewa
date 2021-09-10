@@ -17,24 +17,15 @@ public class PressureDevice implements Device{
     private int threshold;
     private TypeE type;
 
-
-
+    private int moxaId;
     private SerialPort serialPort;
 
-    public PressureDevice(String portName, int id, Integer threshold, TypeE type) {
+    public PressureDevice(String portName, int id, int moxaId, Integer threshold, TypeE type) {
         this.id = id;
         this.threshold = threshold;
         this.serialPort = new SerialPort(portName);
         this.type = type;
-        if(type.equals(TypeE.SYM)){
-            return;
-        }
-        try {
-            serialPort.openPort();
-            serialPort.setParams(SerialEnum.PRESSURE.getBaudRate(), SerialEnum.PRESSURE.getDataBits(), SerialEnum.PRESSURE.getStopBits(), SerialEnum.PRESSURE.getParityBits());
-        } catch (SerialPortException e) {
-            log.error(e.getMessage(), e);
-        }
+        this.moxaId = moxaId;
     }
 
     @Override

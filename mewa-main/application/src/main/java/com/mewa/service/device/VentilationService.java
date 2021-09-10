@@ -1,15 +1,19 @@
 package com.mewa.service.device;
 
+import com.mewa.device.MoxaDevice;
 import com.mewa.device.VentilationDevice;
 import com.mewa.enums.TypeE;
 import com.mewa.service.UdpClientService;
 import jssc.SerialPort;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.nio.ByteBuffer;
+import java.util.List;
 
+import static com.mewa.enums.SerialEnum.VENTILATION;
 import static com.mewa.util.FrameUtil.getVentilationFrameForSiu;
 import static com.mewa.util.Utils.ModRtuCrc;
 
@@ -39,6 +43,8 @@ public class VentilationService {
     private static final byte[] PUNCTURE_ON =      new byte[] { 2, 5, 0, 9, (byte)255, 0};
     private static final byte[] PUNCTURE_OFF =     new byte[] {2, 5, 0, 9 , 0, 0};
     private static final byte[] CHECK_PUNCTURE =    new byte[] {2, 1, 0, 9, 0, 1};
+
+    int counter = 0;
 
     public void turnOnEngine() throws Exception {
         log.info("Turning on");
@@ -132,38 +138,96 @@ public class VentilationService {
         }else if(mode.equalsIgnoreCase("W")){
             turnOnFilter();
         }
-        handleSiu();
+        handleSiu(true);
+    }
+    @Async
+    public void handleSiuAsync(List<MoxaDevice> moxaDeviceList) throws Exception{
+        if(ventilationDevice == null){
+            return;
+        }
+        if(ventilationDevice.getType().equals(TypeE.SYM)){
+            String frame = getVentilationFrameForSiu(ventilationDevice);
+            log.info(ventilationDevice.toString());
+            udpClientService.sendDatagram(frame);
+            return;
+        }
+
+        MoxaDevice moxaDevice = moxaDeviceList.stream().filter(e -> e.getId() == ventilationDevice.getMoxaId()).findFirst().get();
+        if(!"A".equals(moxaDevice.getStatus())){
+            return;
+        }
+        //every 5 second
+        if(counter++ >= 5 ) {
+            counter = 0;
+            handleSiu(true);
+        }else{
+            handleSiu(false);
+
+        }
     }
 
-    public VentilationDevice handleSiu() throws Exception {
-        sendFrameToDevice(CHECK_MOTOR);
-        byte[] motor = readFrameFromDevice();
-        ventilationDevice.setMotor((int) motor[3]);
+    public VentilationDevice handleSiu(boolean requestDevice) throws Exception {
+        if(requestDevice) {
+            log.info("Request for ventilation data");
+            //motor
+            sendFrameToDevice(CHECK_MOTOR);
+            byte[] motor = readFrameFromDevice();
+            if (motor == null || motor.length < 3) {
+                log.error("No data motor");
+            } else {
+                ventilationDevice.setMotor((int) motor[3]);
+            }
 
-        sendFrameToDevice(CHECK_BYPASS);
-        byte[] bypass = readFrameFromDevice();
-        ventilationDevice.setBypass((int) bypass[3]);
+            //bypass
+            sendFrameToDevice(CHECK_BYPASS);
+            byte[] bypass = readFrameFromDevice();
+            if (bypass == null || bypass.length < 3) {
+                log.error("No data bypass");
+            } else {
+                ventilationDevice.setBypass((int) bypass[3]);
+            }
 
-        sendFrameToDevice(CHECK_PRESSURE);
-        byte[] pressure = readFrameFromDevice();
-        ventilationDevice.setInitialResistance(calculateResistance(pressure));
+            //pressure
+            sendFrameToDevice(CHECK_PRESSURE);
+            byte[] pressure = readFrameFromDevice();
+            if (pressure == null || pressure.length < 4) {
+                log.error("No data pressure");
+            } else {
+                ventilationDevice.setInitialResistance(calculateResistance(pressure));
+            }
 
-        sendFrameToDevice(CHECK_EFFICIENCY);
-        byte[] efficiency = readFrameFromDevice();
-        if(ventilationDevice.getBypass().equals("W")){
-            ventilationDevice.setResistance(0);
-        }else {
-            ventilationDevice.setResistance(calculateResistance(efficiency));
+            //efficiency
+            sendFrameToDevice(CHECK_EFFICIENCY);
+            byte[] efficiency = readFrameFromDevice();
+            if (efficiency == null || efficiency.length < 4) {
+                log.error("No data efficiency");
+            } else {
+                if ("W".equals(ventilationDevice.getBypass())) {
+                    ventilationDevice.setResistance(0);
+                } else {
+                    ventilationDevice.setResistance(calculateResistance(efficiency));
+                }
+                ventilationDevice.setEfficiency(calculateEfficiency(efficiency));
+            }
+
+            //contamination
+            sendFrameToDevice(CHECK_CONTAMINATION);
+            byte[] contamination = readFrameFromDevice();
+            if (contamination == null || contamination.length < 3) {
+                log.error("No data contamination");
+            } else {
+                ventilationDevice.setContamination((int) contamination[3]);
+            }
+
+            //puncture
+            sendFrameToDevice(CHECK_PUNCTURE);
+            byte[] puncture = readFrameFromDevice();
+            if (puncture == null || puncture.length < 3) {
+                log.error("No data puncture");
+            } else {
+                ventilationDevice.setPuncture((int) puncture[3]);
+            }
         }
-        ventilationDevice.setEfficiency(calculateEfficiency(efficiency));
-
-        sendFrameToDevice(CHECK_CONTAMINATION);
-        byte[] contamination = readFrameFromDevice();
-        ventilationDevice.setContamination((int) contamination[3]);
-
-        sendFrameToDevice(CHECK_PUNCTURE);
-        byte[] puncture = readFrameFromDevice();
-        ventilationDevice.setPuncture((int) puncture[3]);
 
         String frame = getVentilationFrameForSiu(ventilationDevice);
         log.info(ventilationDevice.toString());
@@ -197,7 +261,7 @@ public class VentilationService {
         SerialPort serialPort = ventilationDevice.getSerialPort();
         if(!serialPort.isOpened()){
             serialPort.openPort();
-            serialPort.setParams(SerialPort.BAUDRATE_9600, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
+            serialPort.setParams(VENTILATION.getBaudRate(), VENTILATION.getDataBits(), VENTILATION.getStopBits(), VENTILATION.getParityBits());
         }
         byte[] crc = ModRtuCrc(frame, frame.length);
         ByteBuffer bb = ByteBuffer.allocate(frame.length + crc.length);
@@ -212,13 +276,13 @@ public class VentilationService {
         SerialPort serialPort = ventilationDevice.getSerialPort();
         if(!serialPort.isOpened()){
             serialPort.openPort();
-            serialPort.setParams(SerialPort.BAUDRATE_9600, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
+            serialPort.setParams(VENTILATION.getBaudRate(), VENTILATION.getDataBits(), VENTILATION.getStopBits(), VENTILATION.getParityBits());
         }
         byte[] receivedBytes = serialPort.readBytes();
         if(receivedBytes == null){
             return null;
         }
-        System.out.print("Received bytes: ");
+        System.out.print("Received bytes from ventilation: ");
         for(int i = 0;i<receivedBytes.length;i++){
             System.out.print(String.format("0x%02X",receivedBytes[i])+" ");
         }

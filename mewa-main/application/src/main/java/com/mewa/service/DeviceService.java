@@ -5,11 +5,13 @@ import com.mewa.device.DpoDevice;
 import com.mewa.device.MoxaDevice;
 import com.mewa.device.OxygenDevice;
 import com.mewa.device.PressureDevice;
+import com.mewa.device.VentilationDevice;
 import com.mewa.service.device.DirectionHandlerService;
 import com.mewa.service.device.DpoService;
 import com.mewa.service.device.MoxaHandlerService;
 import com.mewa.service.device.OxygenService;
 import com.mewa.service.device.PressureService;
+import com.mewa.service.device.VentilationService;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +45,9 @@ public class DeviceService {
     @Autowired
     private MoxaHandlerService moxaHandlerService;
 
+    @Autowired
+    private VentilationService ventilationService;
+
 
     private List<PressureDevice> pressureDeviceList = new ArrayList<>();
     private List<OxygenDevice> oxygenDeviceList = new ArrayList<>();
@@ -50,6 +55,7 @@ public class DeviceService {
     private List<MoxaDevice> moxaDeviceList = new ArrayList<>();
     private List<DpoDevice> dpoDeviceList = new ArrayList<>();
     private DpoDevice singleDpoDevice;
+    private VentilationDevice ventilationDevice;
 
     @Scheduled(cron = "${cron.request-frequency}")
     public void handleDevices() throws Exception {
@@ -57,7 +63,7 @@ public class DeviceService {
             return;
         }
         for(PressureDevice pressureDevice: pressureDeviceList){
-            pressureService.handlePressureDevice(pressureDevice);
+            pressureService.handlePressureDevice(pressureDevice, moxaDeviceList);
         }
 
         for(OxygenDevice oxygenDevice: oxygenDeviceList){
@@ -65,11 +71,13 @@ public class DeviceService {
         }
 
 
-        dpoService.handleDpoDevice(dpoDeviceList);
-        dpoService.handleDpoDevice(Arrays.asList(singleDpoDevice));
+        dpoService.handleDpoDevice(dpoDeviceList, moxaDeviceList);
+        dpoService.handleDpoDevice(Arrays.asList(singleDpoDevice), moxaDeviceList);
 
         directionHandlerService.handleDirectionDevice(directionDeviceList);
         moxaHandlerService.handleMoxaDevice(moxaDeviceList);
+
+        ventilationService.handleSiuAsync(moxaDeviceList);
 
     }
 

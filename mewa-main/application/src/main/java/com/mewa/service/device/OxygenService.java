@@ -34,7 +34,7 @@ public class OxygenService {
         client = HttpClient.newBuilder().build();
         request = HttpRequest.newBuilder()
             .uri(URI.create(oxygenUrl))
-            .timeout(Duration.ofSeconds(1))
+            .timeout(Duration.ofSeconds(10))
             .header("Content-Type", "application/json")
             .GET()
             .build();
