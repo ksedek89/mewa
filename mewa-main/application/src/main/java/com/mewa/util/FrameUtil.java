@@ -90,7 +90,7 @@ public class FrameUtil {
         frame.append(ventilationDevice.getBypass()+",");
         frame.append(df.format(ventilationDevice.getEfficiency())+",");
         frame.append(df.format(ventilationDevice.getInitialResistance())+",");
-        frame.append(df.format(ventilationDevice.getResistance())+",*");
+        frame.append(df.format(ventilationDevice.getResistance())+"*");
 
         frame.append(calculateCheckSumForSiu(frame.toString()));
         frame.append("\r\n");

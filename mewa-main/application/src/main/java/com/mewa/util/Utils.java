@@ -36,8 +36,8 @@ public class Utils {
         return 1;
     }
 
-    public static int getNumericValueFromByte(byte[] bytes){
-        return Character.getNumericValue((char)bytes[2]);
+    public static int getNumericValueFromByte(byte[] bytes, int noOfByte){
+        return Character.getNumericValue((char)bytes[noOfByte]);
     }
 
    public static String getCurrentDateForSiu(){

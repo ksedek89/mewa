@@ -135,12 +135,18 @@ public class DpoService {
             dpoDevice.setPower("0");
             return;
         }
-        dpoDevice.setErrorCode(0);
+            dpoDevice.setErrorCode(0);
         int intexL = 7;
         int indexH = 11;
-        if(getNumericValueFromByte(dosageFrameFromDpo) == 2 && dpoDevice.getId() == 1){
+        if(getNumericValueFromByte(dosageFrameFromDpo, 2) == 2 && dpoDevice.getId() == 1){
             intexL = 17;
             indexH = 21;
+        }else if(getNumericValueFromByte(dosageFrameFromDpo, 2) == 1 && (dpoDevice.getId() == 1 || dpoDevice.getId() == 2)){
+            if((getNumericValueFromByte(dosageFrameFromDpo, 4) == 0 && dpoDevice.getId() == 2) ||
+                getNumericValueFromByte(dosageFrameFromDpo, 4) == 1 && dpoDevice.getId() == 1 ){
+                dpoDevice.setErrorCode(1);
+                return;
+            }
         }
 
         try {
