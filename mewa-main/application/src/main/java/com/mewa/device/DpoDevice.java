@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class DpoDevice implements Device{
     private int id;
+    private int siuId;
     private String dosage;
     private String power;
     private int alarm;
@@ -23,6 +24,13 @@ public class DpoDevice implements Device{
     private SerialPort serialPort;
 
     public DpoDevice(String portName, int id, int moxaId, TypeE typeE) {
+        if(id == 1){
+            siuId = 3;
+        }else if(id == 3){
+            siuId = 1;
+        }else{
+            siuId = 2;
+        }
         this.type = typeE;
         this.moxaId = moxaId;
         this.id = id;

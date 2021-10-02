@@ -15,8 +15,8 @@ public class VentilationDevice implements Device{
     // Bypass off oznacza wentylacje
 
     private int id;
-    private String bypass;
-    private String motor;
+    private String bypass = "F";
+    private String motor ="F";
     private double efficiency;
     private double initialResistance;
     private double resistance;
@@ -37,7 +37,7 @@ public class VentilationDevice implements Device{
     }
 
     public void setBypass(int bypass) {
-        this.bypass = bypass == 1 ? "F" : "W";
+        this.bypass = bypass == 1 ? "F" : "V";
     }
 
     public void setMotor(int motor) {

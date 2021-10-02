@@ -133,7 +133,7 @@ public class FrameUtil {
         frame.append("$PCARRC,");
         frame.append(getCurrentDateForSiu());
 
-        frame.append(dpoDevice.getId()+",");
+        frame.append(dpoDevice.getSiuId()+",");
         frame.append(dpoDevice.getDosage()+",");
         frame.append(ThresholdE.N + ",");
         frame.append(dpoDevice.getPower()+",");
