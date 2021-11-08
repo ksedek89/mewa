@@ -33,12 +33,15 @@ public class DirectionService {
 
     @Async
     public Future<DirectionDevice> handleDirectionDevice(DirectionDevice directionDevice) throws Exception {
-        sendFrameToDevice(directionDevice);
-        byte[] bytes = readFrameFromDevice(directionDevice);
-        setDataToDevice(directionDevice, bytes);
+        try {
+            sendFrameToDevice(directionDevice);
+            byte[] bytes = readFrameFromDevice(directionDevice);
+            setDataToDevice(directionDevice, bytes);
+        }catch(Exception e){
+            log.error(e.getMessage(), e);
+        }
         return new AsyncResult(directionDevice);
     }
-
     @Async
     public void handleSiuFrame(List<DirectionDevice> directionDeviceList){
         DirectionDevice maxDosageDirectionDevice = directionDeviceList.stream().max(Comparator.comparing(DirectionDevice::getTotalDosage)).get();
@@ -66,35 +69,35 @@ public class DirectionService {
         return serialPort.readBytes();
     }
 
-    private void setDataToDevice(DirectionDevice directionDevice, byte[] data){
-        if(data==null) {
-            directionDevice.setErrorCode(String.valueOf(1 << (directionDevice.getId() - 1)));
-            directionDevice.setTotalDosage(0);
-            return;
-        }
-//        System.out.println("Dir sensor:"+" ");
-//        for(int i = 0;i<data.length;i++){
-//            System.out.print(String.format("0x%02X",data[i])+" ");
-//
-//        }
-//        System.out.println();
-        for(int i = 0;i<data.length-12;i++){
-            if((0xFF&data[i]) ==0x01&& ((0xFF&data[i+1]) == 0x1f|| (0xFF&data[i+1])  == 0xaa)){
-                String value = String.valueOf((char)data[i+4]).concat(String.valueOf((char)data[i+5])).
-                    concat(String.valueOf((char)data[i+6])).concat(String.valueOf((char)data[i+7])).
-                    concat(String.valueOf((char)data[i+8])).concat(String.valueOf((char)data[i+9])).
-                    concat(String.valueOf((char)data[i+10])).concat(String.valueOf((char)data[i+11]));
-                value = value.replaceAll("\\s", "0");
-                directionDevice.setTotalDosage((int)(Double.valueOf(value)*1000));
-                directionDevice.setTotalDosagePrefix("N");
-                directionDevice.setRadAlarm(isAlarm(directionDevice));
-                directionDevice.setErrorCode("0");
-                directionDevice.setNeutrons(data[i+25]);
-                if(directionDevice.getInitNeutrons() == 0){
-                    directionDevice.setInitNeutrons(directionDevice.getNeutrons());
-                }
-                break;
+    private void setDataToDevice(DirectionDevice directionDevice, byte[] bytes){
+        if (bytes != null) {
+/*            System.out.println("Data from sensor: " + +directionDevice.getId());
+            for (int i = 0; i < bytes.length; i++) {
+                System.out.print(String.format("0x%02X", bytes[i]) + " ");
+            }*/
+            StringBuilder sb = new StringBuilder();
+            for (int i = 11; i >= 4; i--) {
+                sb.append(String.format("%02X", bytes[i]));
             }
+            long totalDosageInNano = Long.parseLong(sb.toString(), 16) / 10000;
+            sb = new StringBuilder();
+            for (int i = 3; i >= 2; i--) {
+                sb.append(String.format("%02X", bytes[i]));
+            }
+            long currentNeutrons = Long.parseLong(sb.toString(), 16);
+
+            sb = new StringBuilder();
+            for (int i = 1; i >= 0; i--) {
+                sb.append(String.format("%02X", bytes[i]));
+            }
+            long initNeutrons = Long.parseLong(sb.toString(), 16)               ;
+            directionDevice.setErrorCode("0");
+            directionDevice.setInitNeutrons(initNeutrons);
+            directionDevice.setNeutrons(currentNeutrons);
+            directionDevice.setTotalDosage(totalDosageInNano);
+            directionDevice.setRadAlarm(isAlarm(directionDevice));
+        }else{
+            directionDevice.setErrorCode("1");
         }
     }
 

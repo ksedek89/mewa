@@ -13,11 +13,11 @@ public class DirectionDevice implements Device{
 
     private int id;
     private int directionAngle;
-    private double totalDosage;
+    private long totalDosage;
     private String totalDosagePrefix;
     private int radAlarm;
-    private int neutrons;
-    private int initNeutrons;
+    private long neutrons;
+    private long initNeutrons;
     private String errorCode;
 
     private int moxaId;

@@ -250,11 +250,15 @@ public class VentilationService {
         byte firstByte = efficiency[3];
         byte secondByte = efficiency[4];
         double b = (firstByte << 8 &0xFF00) | (secondByte & 0x00ff);
+        log.info("First byte: " + firstByte + ", second byte: " + secondByte);
+        log.info("raw value: " + b);
         double c = (b/2764.7 - 5);
-        if(c<0){
-            return 0;
-        }
-        return ((0.0154 * Math.sqrt(2*(c*1000/1.21)))*3600);
+        log.info("raw value c: " + c);
+//        if(c<0){
+//            return 0;
+//        }
+//        return ((0.0154 * Math.sqrt(2*(c*1000/1.21)))*3600);
+        return 3600 * 0.082 * 0.082 * 3.14 * 1.291 * Math.sqrt(c*1000);
     }
 
     private void sendFrameToDevice(byte[] frame) throws Exception{
