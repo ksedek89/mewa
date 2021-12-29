@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController(value = "/")
+@RestController(value = "/test")
 public class VentilationController {
 
     @Autowired
@@ -39,6 +39,20 @@ public class VentilationController {
     @PostMapping(value = "/turn-on-ventilation")
     public VentilationDevice turnOnVentilation() throws Exception {
         ventilationService.turnOnVentilation();
+        return ventilationService.handleSiu(true);
+    }
+
+
+    @PostMapping(value = "/turn-on-eight")
+    public VentilationDevice turnOnEightEngine() throws Exception {
+        ventilationService.turnOnEightEngine();
+        return ventilationService.handleSiu(true);
+    }
+
+
+    @PostMapping(value = "/turn-off-eight")
+    public VentilationDevice turnOffEightEngine() throws Exception {
+        ventilationService.turnOffEightEngine();
         return ventilationService.handleSiu(true);
     }
 

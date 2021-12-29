@@ -30,6 +30,8 @@ public class VentilationService {
     private static final byte[] MOTOR_OFF =         new byte[] {2, 5, 0, 0, 0, 0};
     private static final byte[] BYPASS_ON =         new byte[] { 2, 5, 0, 5, (byte)255, 0};
     private static final byte[] BYPASS_OFF=         new byte[] {2, 5, 0, 5, 0, 0};
+    private static final byte[] EIGHT_OUT_ON =         new byte[] { 2, 5, 0, 8, (byte)255, 0};
+    private static final byte[] EIGHT_OUT_OFF =         new byte[] { 2, 5, 0, 8, 0, 0};
 
     private static final byte[] CHECK_MOTOR=    new byte[] {2, 2, 0, 0, 0, 1};
     private static final byte[] CHECK_BYPASS=   new byte[] {2, 1, 0, 5, 0, 1};
@@ -49,6 +51,19 @@ public class VentilationService {
     public void turnOnEngine() throws Exception {
         log.info("Turning on");
         sendFrameToDevice(MOTOR_ON);
+        readFrameFromDevice();
+    }
+
+
+    public void turnOnEightEngine() throws Exception {
+        log.info("Turning on eight");
+        sendFrameToDevice(EIGHT_OUT_ON);
+        readFrameFromDevice();
+    }
+
+    public void turnOffEightEngine() throws Exception {
+        log.info("Turning on eight");
+        sendFrameToDevice(EIGHT_OUT_OFF);
         readFrameFromDevice();
     }
 

@@ -6,7 +6,7 @@ import com.mewa.device.MoxaDevice;
 import com.mewa.device.OxygenDevice;
 import com.mewa.device.PressureDevice;
 import com.mewa.device.VentilationDevice;
-import com.mewa.service.device.DirectionHandlerService;
+import com.mewa.service.device.DirectionService;
 import com.mewa.service.device.DpoService;
 import com.mewa.service.device.MoxaHandlerService;
 import com.mewa.service.device.OxygenService;
@@ -40,7 +40,7 @@ public class DeviceService {
     private DpoService dpoService;
 
     @Autowired
-    private DirectionHandlerService directionHandlerService;
+    private DirectionService directionService;
 
     @Autowired
     private MoxaHandlerService moxaHandlerService;
@@ -74,7 +74,10 @@ public class DeviceService {
         dpoService.handleDpoDevice(dpoDeviceList, moxaDeviceList);
         dpoService.handleDpoDevice(Arrays.asList(singleDpoDevice), moxaDeviceList);
 
-        directionHandlerService.handleDirectionDevice(directionDeviceList);
+        for(DirectionDevice a: directionDeviceList){
+            directionService.handleDirectionDevice(a);
+        }
+
         moxaHandlerService.handleMoxaDevice(moxaDeviceList);
 
         ventilationService.handleSiuAsync(moxaDeviceList);

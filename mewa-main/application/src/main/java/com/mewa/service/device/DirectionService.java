@@ -2,6 +2,7 @@ package com.mewa.service.device;
 
 import com.mewa.device.DirectionDevice;
 import com.mewa.enums.SerialEnum;
+import com.mewa.enums.TypeE;
 import com.mewa.service.ThresholdValuesService;
 import com.mewa.service.UdpClientService;
 import com.mewa.service.UdpService;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 import java.nio.ByteBuffer;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.Future;
 
 
@@ -32,21 +34,45 @@ public class DirectionService {
     private ThresholdValuesService thresholdValuesService;
 
     @Async
-    public Future<DirectionDevice> handleDirectionDevice(DirectionDevice directionDevice) throws Exception {
+    public void handleDirectionDevice(DirectionDevice directionDevice){
         try {
-            sendFrameToDevice(directionDevice);
-            byte[] bytes = readFrameFromDevice(directionDevice);
-            setDataToDevice(directionDevice, bytes);
+            if(directionDevice.getType().equals(TypeE.SYM)) {
+                prepareSymData(directionDevice);
+            }else{
+                sendFrameToDevice(directionDevice);
+                byte[] bytes = readFrameFromDevice(directionDevice);
+                setDataToDevice(directionDevice, bytes);
+            }
+
+            String frameForSiu = getDirectionFrameForSiu(directionDevice, thresholdValuesService);
+            udpClientService.sendDatagram(frameForSiu);
         }catch(Exception e){
             log.error(e.getMessage(), e);
         }
-        return new AsyncResult(directionDevice);
     }
-    @Async
-    public void handleSiuFrame(List<DirectionDevice> directionDeviceList){
-        DirectionDevice maxDosageDirectionDevice = directionDeviceList.stream().max(Comparator.comparing(DirectionDevice::getTotalDosage)).get();
-        String frameForSiu = getDirectionFrameForSiu(maxDosageDirectionDevice, thresholdValuesService);
-        udpClientService.sendDatagram(frameForSiu);
+
+
+    private void prepareSymData(DirectionDevice directionDevice) {
+        if(directionDevice.getSymCounter() > 6 || directionDevice.getSymCounter() == 0){
+            directionDevice.setSymCounter(1);
+            Random random = new Random();
+            int i = random.nextInt(2);
+            directionDevice.setErrorCode(i == 1? directionDevice.getId(): 0);
+            if(directionDevice.getErrorCode()!= 1){
+                directionDevice.setTotalDosage(random.nextInt(100000));
+                directionDevice.setNeutrons(random.nextInt(500));
+                directionDevice.setInitNeutrons(random.nextInt(100));
+                directionDevice.setRadAlarm(isAlarm(directionDevice));
+            }else{
+                directionDevice.setTotalDosage(0);
+                directionDevice.setNeutrons(0);
+                directionDevice.setInitNeutrons(0);
+                directionDevice.setRadAlarm(0);
+            }
+        }else{
+            directionDevice.setSymCounter(directionDevice.getSymCounter() + 1);
+        }
+
     }
 
     private void sendFrameToDevice(DirectionDevice directionDevice) throws Exception {
@@ -91,13 +117,13 @@ public class DirectionService {
                 sb.append(String.format("%02X", bytes[i]));
             }
             long initNeutrons = Long.parseLong(sb.toString(), 16)               ;
-            directionDevice.setErrorCode("0");
+            directionDevice.setErrorCode(directionDevice.getId());
             directionDevice.setInitNeutrons(initNeutrons);
             directionDevice.setNeutrons(currentNeutrons);
             directionDevice.setTotalDosage(totalDosageInNano);
             directionDevice.setRadAlarm(isAlarm(directionDevice));
         }else{
-            directionDevice.setErrorCode("1");
+            directionDevice.setErrorCode(1);
         }
     }
 

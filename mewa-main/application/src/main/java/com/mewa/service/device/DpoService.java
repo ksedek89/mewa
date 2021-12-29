@@ -79,6 +79,7 @@ public class DpoService {
         }
     }
 
+
     private void prepareSymData(DpoDevice dpoDevice) {
         if(dpoDevice.getPower() == null){
             dpoDevice.setPower("0");
@@ -116,7 +117,7 @@ public class DpoService {
             return null;
         }
         byte[] receivedBytes = serialPort.readBytes();
-/*        if(receivedBytes != null) {
+        if(receivedBytes != null) {
             System.out.println("Received data:" + " ");
             for (int i = 0; i < receivedBytes.length; i++) {
                 System.out.print(String.format("0x%02X", receivedBytes[i]) + " ");
@@ -124,7 +125,7 @@ public class DpoService {
             }
             System.out.println();
             System.out.println(new String(receivedBytes));
-        }*/
+        }
         return receivedBytes;
     }
 

@@ -61,6 +61,7 @@ public class FrameUtil {
         StringBuilder frame = new StringBuilder();
         frame.append("$PCARDS,");
         frame.append(getCurrentDateForSiu());
+        frame.append(directionDevice.getId() + ",");
         frame.append(directionDevice.getDirectionAngle() + ",");
         frame.append(directionDevice.getTotalDosage() + ",");
         frame.append(directionDevice.getTotalDosagePrefix() + ",");

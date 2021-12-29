@@ -18,11 +18,13 @@ public class DirectionDevice implements Device{
     private int radAlarm;
     private long neutrons;
     private long initNeutrons;
-    private String errorCode;
+    private long errorCode;
 
     private int moxaId;
     private TypeE type;
     private SerialPort serialPort;
+
+    private int symCounter;
 
 
     public DirectionDevice(String portName, int id, int moxaId, Integer directionAngle, TypeE typeE) {
