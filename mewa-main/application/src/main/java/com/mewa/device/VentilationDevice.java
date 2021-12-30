@@ -59,21 +59,21 @@ public class VentilationDevice implements Device{
     }
 
     public void setEfficiency(double efficiency) {
-        if(efficiency > 2000|| efficiency < 0){
+        if(efficiency > 2000|| efficiency < 0 || Double.isNaN(efficiency)){
             return;
         }
         this.efficiency = efficiency;
     }
 
     public void setInitialResistance(double initialResistance) {
-        if(initialResistance > 6000 || initialResistance < 0){
+        if(initialResistance > 6000 || initialResistance < 0 || Double.isNaN(initialResistance)){
             return;
         }
         this.initialResistance = initialResistance;
     }
 
     public void setResistance(double resistance) {
-        if(resistance > 6000|| resistance < 0){
+        if(resistance > 6000 || resistance < 0 || Double.isNaN(resistance)){
             return;
         }
         this.resistance = resistance;
