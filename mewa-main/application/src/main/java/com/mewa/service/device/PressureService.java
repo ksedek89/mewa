@@ -2,6 +2,7 @@ package com.mewa.service.device;
 
 import com.mewa.device.MoxaDevice;
 import com.mewa.device.PressureDevice;
+import com.mewa.device.VentilationDevice;
 import com.mewa.enums.SerialEnum;
 import com.mewa.enums.TypeE;
 import com.mewa.service.UdpClientService;
@@ -29,6 +30,8 @@ public class PressureService {
     @Qualifier("taskExecutor")
     @Autowired
     ThreadPoolTaskExecutor taskExecutor;
+    @Autowired
+    VentilationService ventilationService;
 
 
     @Async
@@ -49,7 +52,7 @@ public class PressureService {
     }
 
     private void prepareSymData(PressureDevice pressureDevice) {
-        pressureDevice.setAlarm(pressureDevice.getPressure() > pressureDevice.getThreshold() ? 1 : 0);
+        pressureDevice.setAlarm(pressureDevice.getPressure() > pressureDevice.getThreshold() ? 0 : 1);
     }
 
     private void sendFrameToDevice(PressureDevice pressureDevice) throws Exception{
@@ -85,7 +88,15 @@ public class PressureService {
             } else {
                 pressureDevice.setPressure(c);
             }
-            pressureDevice.setAlarm(pressureDevice.getPressure() > pressureDevice.getThreshold() ? 1 : 0);
+            VentilationDevice ventilationDevice = ventilationService.getVentilationDevice();
+            if(pressureDevice.getPressure() < pressureDevice.getThreshold()
+                && ventilationDevice !=null
+                && ventilationDevice.getBypass().equals("F")
+                && ventilationDevice.getMotor().equals("A")){
+                pressureDevice.setAlarm(1);
+            }else{
+                pressureDevice.setAlarm(0);
+            }
         }else{
             pressureDevice.setErrorCode(1);
         }

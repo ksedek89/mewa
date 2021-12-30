@@ -34,7 +34,7 @@ public class DirectionService {
     private ThresholdValuesService thresholdValuesService;
 
     @Async
-    public Future<DirectionDevice> handleDirectionDevice(DirectionDevice directionDevice){
+    public void handleDirectionDevice(DirectionDevice directionDevice){
         try {
             if(directionDevice.getType().equals(TypeE.SYM)) {
                 prepareSymData(directionDevice);
@@ -49,8 +49,6 @@ public class DirectionService {
         }catch(Exception e){
             log.error(e.getMessage(), e);
         }
-        return new AsyncResult(directionDevice);
-
     }
 
 
@@ -104,6 +102,12 @@ public class DirectionService {
                 System.out.print(String.format("0x%02X", bytes[i]) + " ");
             }*/
             StringBuilder sb = new StringBuilder();
+            for (int i = 19; i >=12; i--) {
+                sb.append(String.format("%02X", bytes[i]));
+            }
+            long dosageInNano = Long.parseLong(sb.toString(), 16) / 10000;
+
+            sb = new StringBuilder();
             for (int i = 11; i >= 4; i--) {
                 sb.append(String.format("%02X", bytes[i]));
             }
@@ -119,10 +123,10 @@ public class DirectionService {
                 sb.append(String.format("%02X", bytes[i]));
             }
             long initNeutrons = Long.parseLong(sb.toString(), 16)               ;
-            directionDevice.setErrorCode(directionDevice.getId());
+            directionDevice.setErrorCode(0);
             directionDevice.setInitNeutrons(initNeutrons);
             directionDevice.setNeutrons(currentNeutrons);
-            directionDevice.setTotalDosage(totalDosageInNano);
+            directionDevice.setTotalDosage(dosageInNano);
             directionDevice.setRadAlarm(isAlarm(directionDevice));
         }else{
             directionDevice.setErrorCode(1);

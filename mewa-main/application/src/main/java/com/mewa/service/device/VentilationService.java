@@ -38,6 +38,7 @@ public class VentilationService {
 
     private static final byte[] CHECK_MOTOR=    new byte[] {2, 2, 0, 0, 0, 1};
     private static final byte[] CHECK_BYPASS=   new byte[] {2, 1, 0, 5, 0, 1};
+    private static final byte[] CHECK_BYPASS_MANUAL =   new byte[] {2, 2, 0, 5, 0, 1};
     private static final byte[] CHECK_PRESSURE= new byte[] {2, 4, 0, 49, 0, 1};
     private static final byte[] CHECK_EFFICIENCY= new byte[] {2, 4, 0, 48, 0, 1};
 
@@ -205,10 +206,14 @@ public class VentilationService {
             //bypass
             sendFrameToDevice(CHECK_BYPASS);
             byte[] bypass = readFrameFromDevice();
-            if (bypass == null || bypass.length < 3) {
+
+            //bypass manual
+            sendFrameToDevice(CHECK_BYPASS_MANUAL);
+            byte[] bypassManual = readFrameFromDevice();
+            if (bypass == null || bypass.length < 3 || bypassManual == null || bypassManual.length < 3) {
                 log.error("No data bypass");
             } else {
-                ventilationDevice.setBypass((int) bypass[3]);
+                ventilationDevice.setBypass((int) bypass[3] | (int) bypassManual[3]);
             }
 
             //pressure

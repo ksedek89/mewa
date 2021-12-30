@@ -17,8 +17,11 @@ public class VentilationDevice implements Device{
     private int id;
     private String bypass = "F";
     private String motor ="F";
+    //wydajność
     private double efficiency;
+    //opoery filtro pochłaniczy
     private double initialResistance;
+    //opory wstępne
     private double resistance;
     private double contamination;
     private double puncture;
@@ -37,7 +40,7 @@ public class VentilationDevice implements Device{
     }
 
     public void setBypass(int bypass) {
-        this.bypass = bypass == 1 ? "F" : "V";
+        this.bypass = bypass >= 1 ? "F" : "V";
     }
 
     public void setMotor(int motor) {
@@ -53,5 +56,26 @@ public class VentilationDevice implements Device{
             ", initialResistance=" + initialResistance +
             ", resistance=" + resistance +
             '}';
+    }
+
+    public void setEfficiency(double efficiency) {
+        if(efficiency > 2000|| efficiency < 0){
+            return;
+        }
+        this.efficiency = efficiency;
+    }
+
+    public void setInitialResistance(double initialResistance) {
+        if(initialResistance > 6000 || initialResistance < 0){
+            return;
+        }
+        this.initialResistance = initialResistance;
+    }
+
+    public void setResistance(double resistance) {
+        if(resistance > 6000|| resistance < 0){
+            return;
+        }
+        this.resistance = resistance;
     }
 }
