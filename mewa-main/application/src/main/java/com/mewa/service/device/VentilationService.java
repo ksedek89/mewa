@@ -20,6 +20,9 @@ import static com.mewa.util.Utils.ModRtuCrc;
 @Service
 @Slf4j
 public class VentilationService {
+    boolean eightTurnedOn;
+
+
     @Autowired
     private UdpClientService udpClientService;
 
@@ -56,15 +59,21 @@ public class VentilationService {
 
 
     public void turnOnEightEngine() throws Exception {
-        log.info("Turning on eight");
-        sendFrameToDevice(EIGHT_OUT_ON);
-        readFrameFromDevice();
+        if(!eightTurnedOn){
+            eightTurnedOn = true;
+            log.info("Turning on eight");
+            sendFrameToDevice(EIGHT_OUT_ON);
+            readFrameFromDevice();
+        }
     }
 
     public void turnOffEightEngine() throws Exception {
-        log.info("Turning on eight");
-        sendFrameToDevice(EIGHT_OUT_OFF);
-        readFrameFromDevice();
+        if(eightTurnedOn) {
+            eightTurnedOn = false;
+            log.info("Turning on eight");
+            sendFrameToDevice(EIGHT_OUT_OFF);
+            readFrameFromDevice();
+        }
     }
 
     public void turnOffEngine() throws Exception {

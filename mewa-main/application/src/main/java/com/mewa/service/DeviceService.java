@@ -6,12 +6,7 @@ import com.mewa.device.MoxaDevice;
 import com.mewa.device.OxygenDevice;
 import com.mewa.device.PressureDevice;
 import com.mewa.device.VentilationDevice;
-import com.mewa.service.device.DirectionService;
-import com.mewa.service.device.DpoService;
-import com.mewa.service.device.MoxaHandlerService;
-import com.mewa.service.device.OxygenService;
-import com.mewa.service.device.PressureService;
-import com.mewa.service.device.VentilationService;
+import com.mewa.service.device.*;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +43,11 @@ public class DeviceService {
     @Autowired
     private VentilationService ventilationService;
 
+    @Autowired
+    private DirectionHandlerService directionHandlerService;
+
+
+
 
     private List<PressureDevice> pressureDeviceList = new ArrayList<>();
     private List<OxygenDevice> oxygenDeviceList = new ArrayList<>();
@@ -77,6 +77,8 @@ public class DeviceService {
         for(DirectionDevice a: directionDeviceList){
             directionService.handleDirectionDevice(a);
         }
+
+        directionHandlerService.handleDirectionDevice(directionDeviceList, ventilationDevice);
 
         moxaHandlerService.handleMoxaDevice(moxaDeviceList);
 

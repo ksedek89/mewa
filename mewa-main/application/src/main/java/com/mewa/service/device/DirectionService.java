@@ -34,7 +34,7 @@ public class DirectionService {
     private ThresholdValuesService thresholdValuesService;
 
     @Async
-    public void handleDirectionDevice(DirectionDevice directionDevice){
+    public Future<DirectionDevice> handleDirectionDevice(DirectionDevice directionDevice){
         try {
             if(directionDevice.getType().equals(TypeE.SYM)) {
                 prepareSymData(directionDevice);
@@ -49,6 +49,8 @@ public class DirectionService {
         }catch(Exception e){
             log.error(e.getMessage(), e);
         }
+        return new AsyncResult(directionDevice);
+
     }
 
 
