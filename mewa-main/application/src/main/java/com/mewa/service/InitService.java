@@ -116,6 +116,7 @@ public class InitService {
                     }
                     if (deviceDto.getDeviceType().equals("VENT")) {
                         ventilationService.setVentilationDevice(new VentilationDevice(entry.getValue(), deviceDto.getMoxaNumber(), deviceDto.getType()));
+                        deviceService.setVentilationDevice(ventilationService.getVentilationDevice());
                     }
                     if (deviceDto.getDeviceType().equals("OXY")) {
                         deviceService.getOxygenDeviceList().add((new OxygenDevice(deviceDto.getDeviceId(), deviceDto.getType())));

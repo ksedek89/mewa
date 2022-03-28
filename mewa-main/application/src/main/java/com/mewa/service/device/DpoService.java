@@ -131,12 +131,19 @@ public class DpoService {
 
     private void setDataToDevice(DpoDevice dpoDevice,  byte[] dosageFrameFromDpo, byte[] powerFrameFromDpo){
         if(dosageFrameFromDpo == null || powerFrameFromDpo == null || dosageFrameFromDpo.length == 1 || powerFrameFromDpo.length == 1){
-            dpoDevice.setErrorCode(1);
-            dpoDevice.setDosage("0");
-            dpoDevice.setPower("0");
-            return;
+           if(dpoDevice.getErrorCounter() > 5) {
+               dpoDevice.setErrorCode(1);
+               dpoDevice.setDosage("0");
+               dpoDevice.setPower("0");
+               return;
+           }else{
+               // nie nadpisujemy wartosci w tej iteracji
+               dpoDevice.setErrorCounter(dpoDevice.getErrorCounter()+1);
+               return;
+           }
         }
-            dpoDevice.setErrorCode(0);
+        dpoDevice.setErrorCounter(0);
+        dpoDevice.setErrorCode(0);
         int intexL = 7;
         int indexH = 11;
         if(getNumericValueFromByte(dosageFrameFromDpo, 2) == 2 && dpoDevice.getId() == 1){
