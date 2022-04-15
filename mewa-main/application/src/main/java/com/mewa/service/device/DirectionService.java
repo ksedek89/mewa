@@ -5,19 +5,14 @@ import com.mewa.enums.SerialEnum;
 import com.mewa.enums.TypeE;
 import com.mewa.service.ThresholdValuesService;
 import com.mewa.service.UdpClientService;
-import com.mewa.service.UdpService;
 import jssc.SerialPort;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
-import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Service;
 
 import java.nio.ByteBuffer;
-import java.util.Comparator;
-import java.util.List;
 import java.util.Random;
-import java.util.concurrent.Future;
 
 
 import static com.mewa.util.FrameUtil.getDirectionFrameForSiu;
@@ -53,26 +48,24 @@ public class DirectionService {
 
 
     private void prepareSymData(DirectionDevice directionDevice) {
-        if(directionDevice.getSymCounter() > 6 || directionDevice.getSymCounter() == 0){
-            directionDevice.setSymCounter(1);
-            Random random = new Random();
-            int i = random.nextInt(2);
-            directionDevice.setErrorCode(i == 1? directionDevice.getId(): 0);
-            if(directionDevice.getErrorCode()!= 1){
-                directionDevice.setTotalDosage(random.nextInt(100000));
-                directionDevice.setNeutrons(random.nextInt(500));
-                directionDevice.setInitNeutrons(random.nextInt(100));
-                directionDevice.setRadAlarm(isAlarm(directionDevice));
-            }else{
-                directionDevice.setTotalDosage(0);
-                directionDevice.setNeutrons(0);
-                directionDevice.setInitNeutrons(0);
-                directionDevice.setRadAlarm(0);
-            }
-        }else{
-            directionDevice.setSymCounter(directionDevice.getSymCounter() + 1);
+        int symIteration = directionDevice.getSymIteration();
+        if(symIteration > 30){
+            symIteration = 1;
         }
+        if(symIteration <=20){
+            directionDevice.setTotalDosage(getRandomIntBetween(1000, 2500));
+        }else if(symIteration <= 30){
+            directionDevice.setTotalDosage(getRandomIntBetween(25000, 30000));
+        }
+        directionDevice.setRadAlarm(isAlarm(directionDevice));
+        directionDevice.setNeutrons(0);
+        directionDevice.setInitNeutrons(0);
+        directionDevice.setRadAlarm(isAlarm(directionDevice));
+        directionDevice.setSymIteration(++symIteration);
+    }
 
+    private int getRandomIntBetween(int lower, int higher){
+        return new Random().nextInt(higher-lower) + lower;
     }
 
     private void sendFrameToDevice(DirectionDevice directionDevice) throws Exception {

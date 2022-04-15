@@ -18,6 +18,6 @@ public class HealthCheckService {
 
     @Scheduled(cron = "0 * * * * *")
     public void healthCheck(){
-        log.info("All thread active count thread:" + Thread.activeCount());
+        log.debug("All thread active count thread:" + Thread.activeCount());
     }
 }

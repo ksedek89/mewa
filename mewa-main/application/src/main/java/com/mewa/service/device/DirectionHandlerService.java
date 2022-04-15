@@ -1,19 +1,14 @@
 package com.mewa.service.device;
 
 import com.mewa.device.DirectionDevice;
-import com.mewa.device.OxygenDevice;
+import com.mewa.device.DpoDevice;
 import com.mewa.device.VentilationDevice;
-import com.mewa.enums.TypeE;
-import jssc.SerialPort;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
-import java.nio.ByteBuffer;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Future;
 
 @Service
 @Slf4j
@@ -28,12 +23,14 @@ public class DirectionHandlerService{
     private final static Long thresholdInNano = 25000l;
 
     @Async
-    public void handleDirectionDevice(List<DirectionDevice> directionDeviceList, VentilationDevice ventilationDevice){
-        if(directionDeviceList == null || directionDeviceList.size() == 0 || ventilationDevice == null){
+    public void handleDirectionDevice(List<DirectionDevice> directionDeviceList, List<DpoDevice> dpoDeviceList, DpoDevice singleDpoDevice, VentilationDevice ventilationDevice){
+        if((dpoDeviceList.size() == 0 && dpoDeviceList.size() == 0 && singleDpoDevice == null) || ventilationDevice == null){
             return;
         }
         try {
-            if(directionDeviceList.stream().anyMatch(e->e.getTotalDosage() > thresholdInNano)){
+            if(directionDeviceList.stream().anyMatch(e->e.getTotalDosage() > thresholdInNano)
+            || dpoDeviceList.stream().filter(e->e.getPower() != null).anyMatch(e->Integer.valueOf(e.getPower()) > thresholdInNano)
+            || Integer.valueOf(singleDpoDevice.getPower()) > thresholdInNano){
                 ventilationService.turnOnEightEngine();
             }else{
                 ventilationService.turnOffEightEngine();

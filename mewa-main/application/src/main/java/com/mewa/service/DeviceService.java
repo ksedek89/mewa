@@ -46,8 +46,6 @@ public class DeviceService {
     @Autowired
     private DirectionHandlerService directionHandlerService;
 
-    @Autowired
-    private DpoHandlerService dpoHandlerService;
 
 
 
@@ -80,8 +78,7 @@ public class DeviceService {
             directionService.handleDirectionDevice(a);
         }
 
-        directionHandlerService.handleDirectionDevice(directionDeviceList, ventilationDevice);
-        dpoHandlerService.handleDirectionDevice(dpoDeviceList, singleDpoDevice, ventilationDevice);
+        directionHandlerService.handleDirectionDevice(directionDeviceList, dpoDeviceList, singleDpoDevice, ventilationDevice);
 
         moxaHandlerService.handleMoxaDevice(moxaDeviceList);
 

@@ -71,7 +71,7 @@ public class VentilationService {
     public void turnOffEightEngine() throws Exception {
         if(eightTurnedOn) {
             eightTurnedOn = false;
-            log.info("Turning on eight");
+            log.info("Turning off eight");
             sendFrameToDevice(EIGHT_OUT_OFF);
             readFrameFromDevice();
         }
@@ -172,7 +172,7 @@ public class VentilationService {
         }
         if(ventilationDevice.getType().equals(TypeE.SYM)){
             String frame = getVentilationFrameForSiu(ventilationDevice);
-            log.info(ventilationDevice.toString());
+            log.debug(ventilationDevice.toString());
             udpClientService.sendDatagram(frame);
             return;
         }

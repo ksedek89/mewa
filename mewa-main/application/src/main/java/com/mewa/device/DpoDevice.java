@@ -37,6 +37,8 @@ public class DpoDevice implements Device{
         this.moxaId = moxaId;
         this.id = id;
         this.serialPort = new SerialPort(portName);
+        this.dosage = "0";
+        this.power = "0";
     }
 
     @Override

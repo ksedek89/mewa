@@ -37,7 +37,6 @@ public class InitService {
     private VentilationService ventilationService;
 
     @Autowired
-    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     private MoxaProperties moxaProperties;
 
     @Autowired
@@ -81,6 +80,7 @@ public class InitService {
                 }
                 if (deviceDto.getDeviceType().equals("VENT")) {
                     ventilationService.setVentilationDevice(new VentilationDevice(null,deviceDto.getMoxaNumber(), deviceDto.getType()));
+                    deviceService.setVentilationDevice(ventilationService.getVentilationDevice());
                 }
             }
             if (actDevicesList.size() == 0) {

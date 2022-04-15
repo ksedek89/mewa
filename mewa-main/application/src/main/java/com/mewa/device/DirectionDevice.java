@@ -24,7 +24,8 @@ public class DirectionDevice implements Device{
     private TypeE type;
     private SerialPort serialPort;
 
-    private int symCounter;
+
+    private int symIteration = 1;
 
 
     public DirectionDevice(String portName, int id, int moxaId, Integer directionAngle, TypeE typeE) {
