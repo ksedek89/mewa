@@ -21,6 +21,7 @@ public class DpoDevice implements Device{
     private int moxaId;
 
     private int errorCounter;
+    private int symIteration = 1;
 
 
     private SerialPort serialPort;

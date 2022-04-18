@@ -17,10 +17,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static com.mewa.util.FrameUtil.getDpoFrameForSiu;
-import static com.mewa.util.Utils.NANO;
-import static com.mewa.util.Utils.getFactorCompareToNano;
-import static com.mewa.util.Utils.getNumericValueFromByte;
-import static com.mewa.util.Utils.ieee32Format;
+import static com.mewa.util.Utils.*;
 
 
 @Service
@@ -86,6 +83,19 @@ public class DpoService {
             dpoDevice.setDosage("0");
             return;
         }
+
+        int symIteration = dpoDevice.getSymIteration();
+        if(symIteration > 30){
+            symIteration = 1;
+        }
+        if(symIteration <=20){
+            dpoDevice.setPower(getRandomStringBetween(1000, 2500));
+        }else if(symIteration <= 30){
+            dpoDevice.setPower(getRandomStringBetween(25000, 30000));
+        }
+        dpoDevice.setSymIteration(++symIteration);
+
+
         Double power = Double.valueOf(dpoDevice.getPower());
         if (power > thresholdValuesService.getThresholdValue().getValue3() * getFactorCompareToNano(thresholdValuesService.getThresholdValue().getUnit3())) {
             dpoDevice.setAlarm(3);

@@ -12,10 +12,10 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.nio.ByteBuffer;
-import java.util.Random;
 
 
 import static com.mewa.util.FrameUtil.getDirectionFrameForSiu;
+import static com.mewa.util.Utils.getRandomIntBetween;
 
 @Service
 @Slf4j
@@ -64,9 +64,6 @@ public class DirectionService {
         directionDevice.setSymIteration(++symIteration);
     }
 
-    private int getRandomIntBetween(int lower, int higher){
-        return new Random().nextInt(higher-lower) + lower;
-    }
 
     private void sendFrameToDevice(DirectionDevice directionDevice) throws Exception {
         ByteBuffer bb = ByteBuffer.allocate(DIRECTION_DEVICE_REQUEST_FRAME.length());

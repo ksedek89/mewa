@@ -5,6 +5,7 @@ import com.mewa.enums.ThresholdE;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Random;
 
 public class Utils {
     public static final long NANO = 1000000000;
@@ -85,4 +86,13 @@ public class Utils {
         }
         return checksum;
     }
+
+    public static int getRandomIntBetween(int lower, int higher){
+        return new Random().nextInt(higher-lower) + lower;
+    }
+
+    public static String getRandomStringBetween(int lower, int higher){
+        return String.valueOf(getRandomIntBetween(lower, higher));
+    }
+
 }
