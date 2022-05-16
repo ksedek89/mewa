@@ -24,16 +24,18 @@ public class DirectionHandlerService{
 
     @Async
     public void handleDirectionDevice(List<DirectionDevice> directionDeviceList, List<DpoDevice> dpoDeviceList, DpoDevice singleDpoDevice, VentilationDevice ventilationDevice){
-        if((dpoDeviceList.size() == 0 && dpoDeviceList.size() == 0 && singleDpoDevice == null) || ventilationDevice == null){
+        if((directionDeviceList.size() == 0 && dpoDeviceList.size() == 0 && singleDpoDevice == null) || ventilationDevice == null){
             return;
         }
         try {
             if(directionDeviceList.stream().anyMatch(e->e.getTotalDosage() > thresholdInNano)
             || dpoDeviceList.stream().filter(e->e.getPower() != null).anyMatch(e->Integer.valueOf(e.getPower()) > thresholdInNano)
-            || Integer.valueOf(singleDpoDevice.getPower()) > thresholdInNano){
-                ventilationService.turnOnEightEngine();
+            || (singleDpoDevice != null && Integer.valueOf(singleDpoDevice.getPower()) > thresholdInNano)){
+                log.info("Turn on eight");
+                ventilationDevice.setTurnOnEight(true);
             }else{
-                ventilationService.turnOffEightEngine();
+                log.info("Turn off eight");
+                ventilationDevice.setTurnOnEight(false);
             }
         }catch (Exception e){
             log.error(e.getMessage(), e);

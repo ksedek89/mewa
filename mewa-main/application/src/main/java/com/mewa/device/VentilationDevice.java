@@ -1,9 +1,7 @@
 package com.mewa.device;
 
-import com.mewa.enums.SerialEnum;
 import com.mewa.enums.TypeE;
 import jssc.SerialPort;
-import jssc.SerialPortException;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
@@ -28,6 +26,8 @@ public class VentilationDevice implements Device{
 
     private int moxaId;
     private TypeE type;
+
+    private boolean turnOnEight = false;
 
     private SerialPort serialPort;
 

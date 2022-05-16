@@ -239,6 +239,14 @@ public class VentilationService {
                 ventilationDevice.setEfficiency(calculateEfficiency(efficiency));
             }
 
+            if(ventilationDevice.isTurnOnEight()){
+                sendFrameToDevice(EIGHT_OUT_ON);
+                byte[] frameEightTurnOn = readFrameFromDevice();
+            }else{
+                sendFrameToDevice(EIGHT_OUT_OFF);
+                byte[] frameEightTurnOff = readFrameFromDevice();
+            }
+
             //contamination
             sendFrameToDevice(CHECK_CONTAMINATION);
             byte[] contamination = readFrameFromDevice();
