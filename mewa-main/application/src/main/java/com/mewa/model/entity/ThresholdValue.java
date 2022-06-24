@@ -15,9 +15,9 @@ public class ThresholdValue{
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
-    private double value1;
-    private double value2;
-    private double value3;
+    private long value1;
+    private long value2;
+    private long value3;
     private String unit1;
     private String unit2;
     private String unit3;

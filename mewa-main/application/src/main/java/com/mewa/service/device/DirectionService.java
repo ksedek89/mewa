@@ -60,7 +60,6 @@ public class DirectionService {
         directionDevice.setRadAlarm(isAlarm(directionDevice));
         directionDevice.setNeutrons(0);
         directionDevice.setInitNeutrons(0);
-        directionDevice.setRadAlarm(isAlarm(directionDevice));
         directionDevice.setSymIteration(++symIteration);
     }
 
@@ -124,26 +123,19 @@ public class DirectionService {
     }
 
     public int isAlarm(DirectionDevice directionDevice){
-        double total = directionDevice.getTotalDosage() * getFactor(directionDevice.getTotalDosagePrefix());
-        if(total>thresholdValuesService.getThresholdValue().getValue3() * getFactor(thresholdValuesService.getThresholdValue().getUnit3())){
+        double total = directionDevice.getTotalDosage();
+        if(total>thresholdValuesService.getThresholdValue().getValue3() * 1000){
+            log.error(String.valueOf(total));
             return 3;
-        }else if(total>thresholdValuesService.getThresholdValue().getValue2() * getFactor(thresholdValuesService.getThresholdValue().getUnit2())){
+        }else if(total>thresholdValuesService.getThresholdValue().getValue2() * 1000){
+            log.error(String.valueOf(total));
             return 2;
-        }else if(total>thresholdValuesService.getThresholdValue().getValue1() * getFactor(thresholdValuesService.getThresholdValue().getUnit1())){
+        }else if(total>thresholdValuesService.getThresholdValue().getValue1() * 1000){
+            log.error(String.valueOf(total));
             return 1;
         }else{
             return 0;
         }
     }
 
-    private static int getFactor(String unit){
-         if(unit.equalsIgnoreCase("m")){
-            return 1000000;
-        }else if(unit.equalsIgnoreCase("u")){
-            return  1000;
-        }else if(unit.equalsIgnoreCase("n")){
-            return 1;
-        }
-        return 1;
-    }
 }

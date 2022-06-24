@@ -39,9 +39,9 @@ public class ThresholdValuesService {
             return;
         }
 
-        thresholdValue.setValue1(Double.parseDouble(data[2]));
-        thresholdValue.setValue2(Double.parseDouble(data[4]));
-        thresholdValue.setValue3(Double.parseDouble(data[6]));
+        thresholdValue.setValue1((int)Double.parseDouble(data[2]));
+        thresholdValue.setValue2((int)Double.parseDouble(data[4]));
+        thresholdValue.setValue3((int)Double.parseDouble(data[6]));
         thresholdValue.setUnit1(data[3]);
         thresholdValue.setUnit2(data[5]);
         thresholdValue.setUnit3(data[7]);

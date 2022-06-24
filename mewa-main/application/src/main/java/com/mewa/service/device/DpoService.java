@@ -177,15 +177,25 @@ public class DpoService {
             }
 
             int alarm = 0;
-            if (ieee32Format(power) * NANO >
-                thresholdValuesService.getThresholdValue().getValue3() * getFactorCompareToNano(thresholdValuesService.getThresholdValue().getUnit3())) {
-                alarm = 3;
-            } else if (ieee32Format(power) * NANO >
-                thresholdValuesService.getThresholdValue().getValue2() * getFactorCompareToNano(thresholdValuesService.getThresholdValue().getUnit2())) {
-                alarm = 2;
-            } else if (ieee32Format(power) * NANO >
-                thresholdValuesService.getThresholdValue().getValue1() * getFactorCompareToNano(thresholdValuesService.getThresholdValue().getUnit1())) {
-                alarm = 1;
+            try {
+                if (Integer.valueOf(dpoDevice.getPower()) > thresholdValuesService.getThresholdValue().getValue3() * 1000){
+                    log.error(String.valueOf(Integer.valueOf(dpoDevice.getPower())));
+                    log.error(String.valueOf(thresholdValuesService.getThresholdValue().getValue3() * 1000));
+                    log.error(String.valueOf(Integer.valueOf(dpoDevice.getPower()) > thresholdValuesService.getThresholdValue().getValue3() * 1000));
+                    alarm = 3;
+                } else if (Integer.valueOf(dpoDevice.getPower()) > thresholdValuesService.getThresholdValue().getValue2() * 1000){
+                    log.error(String.valueOf(Integer.valueOf(dpoDevice.getPower())));
+                    log.error(String.valueOf(thresholdValuesService.getThresholdValue().getValue2() * 1000));
+                    log.error(String.valueOf(Integer.valueOf(dpoDevice.getPower()) > thresholdValuesService.getThresholdValue().getValue2() * 1000));
+                    alarm = 2;
+                } else if (Integer.valueOf(dpoDevice.getPower()) > thresholdValuesService.getThresholdValue().getValue1() * 1000){
+                    log.error(String.valueOf(Integer.valueOf(dpoDevice.getPower())));
+                    log.error(String.valueOf(thresholdValuesService.getThresholdValue().getValue1() * 1000));
+                    log.error(String.valueOf(Integer.valueOf(dpoDevice.getPower()) > thresholdValuesService.getThresholdValue().getValue1() * 1000));
+                    alarm = 1;
+                }
+            }catch (Exception e){
+                log.error(e.getMessage(), e);
             }
             dpoDevice.setAlarm(alarm);
         }catch (Exception e){
