@@ -20,7 +20,7 @@ import static com.mewa.util.Utils.getRandomIntBetween;
 @Service
 @Slf4j
 public class DirectionService {
-    private final String DIRECTION_DEVICE_REQUEST_FRAME = "Sk?";
+    private final static String DIRECTION_DEVICE_REQUEST_FRAME = "Sk?";
 
     @Autowired
     private UdpClientService udpClientService;

@@ -28,7 +28,7 @@ import java.util.stream.Collectors;
 
 @Data
 public class ActionHandler {
-    private final static String MEWA_URL = "http://localhost:8085/mewa/pressure";
+    private static final String MEWA_URL = "http://localhost:8085/mewa/pressure";
 
     private ObjectMapper objectMapper;
     private HttpClient client;
@@ -103,7 +103,6 @@ public class ActionHandler {
             .moxaDevices(moxaDeviceList.stream().map(e-> MoxaDto.builder().enabled(e.getEnabledCheckbox().isSelected()).id(e.getId()).build()).collect(Collectors.toList()))
             .build();
         String requestBody = objectMapper.writeValueAsString(requestObject);
-        System.out.println(requestBody);
         HttpRequest request = HttpRequest.newBuilder()
             .uri(URI.create(MEWA_URL))
             .timeout(Duration.ofSeconds(5))
@@ -140,9 +139,9 @@ public class ActionHandler {
             e.getPowerValue().setText("0");
             e.getPowerValueUnit().setText("n");
         });
-        moxaDeviceList.stream().forEach(e->{
-            e.getEnabledCheckbox().setSelected(true);
-        });
+        moxaDeviceList.stream().forEach(e->
+            e.getEnabledCheckbox().setSelected(true)
+        );
         filterDeviceList.stream().forEach(e->{
             e.getFilterEfficiency().setText("0");
             e.getFilterResistance().setText("0");

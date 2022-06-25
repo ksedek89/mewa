@@ -323,11 +323,13 @@ public class VentilationService {
         if(receivedBytes == null){
             return null;
         }
-        System.out.print("Received bytes from ventilation: ");
-        for(int i = 0;i<receivedBytes.length;i++){
-            System.out.print(String.format("0x%02X",receivedBytes[i])+" ");
+
+        StringBuilder builderLogger = new StringBuilder();
+        builderLogger.append("Ventilation Sensor: ");
+        for (int i = 0; i < receivedBytes.length; i++) {
+            builderLogger.append(String.format("0x%02X", receivedBytes[i]) + " ");
         }
-        System.out.println();
+        log.info(builderLogger.toString());
         return receivedBytes;
     }
 

@@ -56,7 +56,7 @@ public class DpoDevice implements Device{
     public void setDosage(String dosage) {
         try {
             Double value = Double.valueOf(dosage);
-            if(value > 10000000 || ((dosage.equals("0") &&  errorCode != 1))){
+            if(value > 10000000 || (dosage.equals("0") &&  errorCode != 1)){
                 return;
             }
         } catch (NumberFormatException e) {
@@ -68,7 +68,7 @@ public class DpoDevice implements Device{
     public void setPower(String power) {
         try {
             Double value = Double.valueOf(power);
-            if(value > 10000000 || ((power.equals("0") &&  errorCode != 1))){
+            if(value > 10000000 || (power.equals("0") &&  errorCode != 1)){
                 return;
             }
         } catch (NumberFormatException e) {
