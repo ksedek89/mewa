@@ -63,7 +63,7 @@ public class OxygenService {
             oxygenDevice.setOxygenAlarm(oxygenDevice.getOxygen() < oxygenDevice.getOxygenThreshold() ? "1" : "0");
             oxygenDevice.setErrorCode("0");
         }catch (Exception e){
-            log.error(e.getMessage(), e);
+            log.debug(e.getMessage(), e);
             oxygenDevice.setErrorCode("1");
         }
     }
