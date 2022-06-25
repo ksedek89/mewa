@@ -59,15 +59,15 @@ public class DpoService {
         if(counter++ > 30){
             counter = 0;
             sendFrameToDevice(dpoDeviceList.get(0), REQUEST_STATUS_FRAME);
-            byte[] statusFrameFromDpo = readFrameFromDevice(dpoDeviceList.get(0));
+            byte[] statusFrameFromDpo = readFrameFromDevice(dpoDeviceList.get(0), "status");
             log.info("30 seconds");
             return;
         }
 
         sendFrameToDevice(dpoDeviceList.get(0), REQUEST_DOSAGE_FRAME);
-        byte[] dosageFrameFromDpo = readFrameFromDevice(dpoDeviceList.get(0));
+        byte[] dosageFrameFromDpo = readFrameFromDevice(dpoDeviceList.get(0), "dosage");
         sendFrameToDevice(dpoDeviceList.get(0), REQUEST_POWER_FRAME);
-        byte[] powerFrameFromDpo = readFrameFromDevice(dpoDeviceList.get(0));
+        byte[] powerFrameFromDpo = readFrameFromDevice(dpoDeviceList.get(0), "power");
 
         for(DpoDevice dpoDevice: dpoDeviceList) {
             setDataToDevice(dpoDevice, dosageFrameFromDpo, powerFrameFromDpo);
@@ -121,21 +121,22 @@ public class DpoService {
             Thread.sleep(500);
     }
 
-    private byte[] readFrameFromDevice(DpoDevice dpoDevice) throws Exception{
+    private byte[] readFrameFromDevice(DpoDevice dpoDevice, String frameType) throws Exception{
         SerialPort serialPort = dpoDevice.getSerialPort();
         if(!serialPort.isOpened()){
             return null;
         }
         byte[] receivedBytes = serialPort.readBytes();
         if(receivedBytes != null) {
-            System.out.println("Received data:" + " ");
+            //ramka
+            StringBuilder builderLogger = new StringBuilder();
+            builderLogger.append("Dpo Sensor: " + dpoDevice.getId() + ", frame type: " + frameType + ": ");
             for (int i = 0; i < receivedBytes.length; i++) {
-                System.out.print(String.format("0x%02X", receivedBytes[i]) + " ");
-
+                builderLogger.append(String.format("0x%02X", receivedBytes[i]) + " ");
             }
-            System.out.println();
-            System.out.println(new String(receivedBytes));
+            log.info(builderLogger.toString());
         }
+
         return receivedBytes;
     }
 
@@ -148,6 +149,7 @@ public class DpoService {
                return;
            }else{
                // nie nadpisujemy wartosci w tej iteracji
+               log.info("Dpo " + dpoDevice.getId() + " nodata" );
                dpoDevice.setErrorCounter(dpoDevice.getErrorCounter()+1);
                return;
            }
@@ -156,9 +158,11 @@ public class DpoService {
         dpoDevice.setErrorCode(0);
         int intexL = 7;
         int indexH = 11;
+        //jeśli są dwie sondy w odpowiedzi i id sondy jest 1 to pobierz dane z drugiej części ramki
         if(getNumericValueFromByte(dosageFrameFromDpo, 2) == 2 && dpoDevice.getId() == 1){
             intexL = 17;
             indexH = 21;
+            //sonda nr 3 jest pojedyncza
         }else if(getNumericValueFromByte(dosageFrameFromDpo, 2) == 1 && (dpoDevice.getId() == 1 || dpoDevice.getId() == 2)){
             if((getNumericValueFromByte(dosageFrameFromDpo, 4) == 0 && dpoDevice.getId() == 2) ||
                 getNumericValueFromByte(dosageFrameFromDpo, 4) == 1 && dpoDevice.getId() == 1 ){

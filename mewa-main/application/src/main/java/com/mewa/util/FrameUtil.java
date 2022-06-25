@@ -10,6 +10,7 @@ import com.mewa.device.VentilationDevice;
 import com.mewa.enums.ThresholdE;
 import com.mewa.model.entity.ThresholdValue;
 import com.mewa.service.ThresholdValuesService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.text.DecimalFormat;
@@ -19,6 +20,7 @@ import static com.mewa.util.Utils.calculateCheckSumForSiu;
 import static com.mewa.util.Utils.calculateToMicro;
 import static com.mewa.util.Utils.getCurrentDateForSiu;
 
+@Slf4j
 public class FrameUtil {
     @Autowired
     ThresholdValuesService thresholdValuesService;
@@ -75,6 +77,10 @@ public class FrameUtil {
 
         frame.append(directionDevice.getErrorCode() + "*");
         frame.append(calculateCheckSumForSiu(frame.toString()));
+        log.info(frame.toString());
+        if(directionDevice.getRadAlarm() > 0){
+            log.info("Alarm for: " + directionDevice.getRadAlarm());
+        }
         frame.append("\r\n");
         return frame.toString();
     }
@@ -145,6 +151,10 @@ public class FrameUtil {
         frame.append(dpoDevice.getAlarm()+",");
         frame.append(dpoDevice.getErrorCode()+"*");
         frame.append(calculateCheckSumForSiu(frame.toString()));
+        log.info(frame.toString());
+        if(dpoDevice.getAlarm() > 0){
+            log.info("Alarm for: " + dpoDevice.getAlarm());
+        }
         frame.append("\r");
         frame.append("\n");
         return frame.toString();

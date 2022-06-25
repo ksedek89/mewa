@@ -86,10 +86,15 @@ public class DirectionService {
 
     private void setDataToDevice(DirectionDevice directionDevice, byte[] bytes){
         if (bytes != null) {
-/*            System.out.println("Data from sensor: " + +directionDevice.getId());
+
+            //ramka
+            StringBuilder builderLogger = new StringBuilder();
+            builderLogger.append("Dir Sensor: " + directionDevice.getId() + ": ");
             for (int i = 0; i < bytes.length; i++) {
-                System.out.print(String.format("0x%02X", bytes[i]) + " ");
-            }*/
+                builderLogger.append(String.format("0x%02X", bytes[i]) + " ");
+            }
+            log.info(builderLogger.toString());
+
             StringBuilder sb = new StringBuilder();
             for (int i = 19; i >=12; i--) {
                 sb.append(String.format("%02X", bytes[i]));
@@ -125,13 +130,10 @@ public class DirectionService {
     public int isAlarm(DirectionDevice directionDevice){
         double total = directionDevice.getTotalDosage();
         if(total>thresholdValuesService.getThresholdValue().getValue3() * 1000){
-            log.error(String.valueOf(total));
             return 3;
         }else if(total>thresholdValuesService.getThresholdValue().getValue2() * 1000){
-            log.error(String.valueOf(total));
             return 2;
         }else if(total>thresholdValuesService.getThresholdValue().getValue1() * 1000){
-            log.error(String.valueOf(total));
             return 1;
         }else{
             return 0;
