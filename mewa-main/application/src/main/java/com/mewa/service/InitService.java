@@ -53,44 +53,59 @@ public class InitService {
 
         //inicjacja wartości progowych z tabeli threshol_value do obiektu, z którym później będzie porównywanie
         thresholdValuesService.init();
+        //pobiera aktywne urządzenia
         List<Device> activeDevices = deviceRepository.findAllByActiveEquals("T");
+        //filtruje tylko urządzenia sym
         List<Device> symDevicesList = activeDevices.stream().filter(e->e.getType().equals(TypeE.SYM)).collect(Collectors.toList());
+        //filtruje tylko urządzenia real
         List<Device> actDevicesList = activeDevices.stream().filter(e->e.getType().equals(TypeE.REAL)).collect(Collectors.toList());
         List<MoxaDevice> moxaDevices = null;
         //SIMULATION
+        //jeśli jest więcej niż 0 urządzenia sym
         if(symDevicesList.size()>0) {
+            //ustaw tryb symulacji na true
             deviceService.setSymulation(true);
             for (Device deviceDto : symDevicesList) {
                 if (deviceDto.getDeviceType().equals("PRESS")) {
+                    //dodaj urząedzenie sym do listy czujników ciśnienia
                     deviceService.getPressureDeviceList()
                         .add((new PressureDevice(null, deviceDto.getDeviceId(), deviceDto.getMoxaNumber(), deviceDto.getThresholdPressure(), deviceDto.getType())));
                 }
+                //dodaj urząedzenie sym do listy czujników tlenu
                 if (deviceDto.getDeviceType().equals("OXY")) {
                     deviceService.getOxygenDeviceList().add((new OxygenDevice(deviceDto.getDeviceId(), deviceDto.getType())));
                 }
+                //dodaj urząedzenie sym do listy czujników kierunkowych
                 if (deviceDto.getDeviceType().equals("DIR")) {
                     deviceService.getDirectionDeviceList()
                         .add((new DirectionDevice(null, deviceDto.getDeviceId(), deviceDto.getMoxaNumber(), deviceDto.getDirectionAngle(), deviceDto.getType())));
                 }
+                //dodaj urząedzenie sym do listy czujników dpo lub pojedynczego dpo
                 if (deviceDto.getDeviceType().equals("DPO")) {
+                    //konfiguracja jest tak zrobiona że sonda o id=3 jest podłączone do pojedynczego elementu
                     if (deviceDto.getDeviceId() == 3) {
                         deviceService.setSingleDpoDevice(new DpoDevice(null, deviceDto.getDeviceId(), deviceDto.getMoxaNumber(), deviceDto.getType()));
                     } else {
+                        //konfiguracja jest tak zrobiona że sondy o id=2 lub id=1 są podłączone we dwie
                         deviceService.getDpoDeviceList().add(new DpoDevice(null, deviceDto.getDeviceId(), deviceDto.getMoxaNumber(), deviceDto.getType()));
                     }
                 }
+                //zainicuje urządzenie vent wg. konfiguracji (na razie jest jedno)
                 if (deviceDto.getDeviceType().equals("VENT")) {
                     ventilationService.setVentilationDevice(new VentilationDevice(null,deviceDto.getMoxaNumber(), deviceDto.getType()));
                     deviceService.setVentilationDevice(ventilationService.getVentilationDevice());
                 }
             }
+            //jeśli nie ma żadnego rzeczywistego urządzenia to ustaw MoxaDevice na tryb sym i wysyłaj A czyli Avalible.
             if (actDevicesList.size() == 0) {
                 moxaDevices = moxaProperties.getConfiguration().stream().map(e -> MoxaDevice.builder().status("A").type(TypeE.SYM).id(e.getId()).ip(e.getIp()).build()).collect(Collectors.toList());
             }
         }
 
+        //ustawienie prawdziwych urządzeń
         if(actDevicesList.size()>0) {
             //REAL DEVICES
+            //pobranie konfiguracji z pliku konfiguracyjnego  /usr/lib/npreal2/driver/npreal2d.cf do mapy
             Map<Integer, String> moxaConfigurationMap = moxaService.initMoxa();
             for (Device device : actDevicesList) {
                 log.info("Device from properties: " + device.toString());
@@ -105,6 +120,7 @@ public class InitService {
                 if (deviceList.size() == 0) {
                     continue;
                 }
+                //ustawienie odpowiednich konfiguracji analogicznie jak dla sym tylko tym razem z przekazaniem danych portu szeregoweego
                 for (Device deviceDto : deviceList) {
                     log.info("For element: " + entry.getKey() + ", port: " + entry.getValue() + ",  Found device:" + deviceDto.toString());
                     if (deviceDto.getDeviceType().equals("PRESS")) {
@@ -131,11 +147,13 @@ public class InitService {
                     }
                 }
             }
+            //jeśli jest conajmniej jedno urządzenie to ustaw moxę na real i wysyłaj to co dostaniesz z pinga
             moxaDevices = moxaProperties.getConfiguration().stream().map(e -> MoxaDevice.builder().type(TypeE.REAL).id(e.getId()).ip(e.getIp()).build()).collect(Collectors.toList());
         }
 
-
+//        ustawienie urządzeń typu moxa
         deviceService.setMoxaDeviceList(moxaDevices);
+        //koniec konfiguracji, od tego czasu wątki które są oznaczone @scheduled mogą działać
         deviceService.setConfigurationFinished(true);
     }
 

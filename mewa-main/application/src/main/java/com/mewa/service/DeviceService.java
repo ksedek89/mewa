@@ -20,6 +20,7 @@ import java.util.List;
 @Service
 @Slf4j
 @Data
+//klasa która uruchamia scheduler uruchamiający się co 1sekundę (zmienna cron.request-frequency)
 public class DeviceService {
     private boolean symulation;
 
@@ -46,9 +47,6 @@ public class DeviceService {
     @Autowired
     private DirectionHandlerService directionHandlerService;
 
-
-
-
     private List<PressureDevice> pressureDeviceList = new ArrayList<>();
     private List<OxygenDevice> oxygenDeviceList = new ArrayList<>();
     private List<DirectionDevice> directionDeviceList = new ArrayList<>();
@@ -57,15 +55,19 @@ public class DeviceService {
     private DpoDevice singleDpoDevice;
     private VentilationDevice ventilationDevice;
 
+    //wątek który uruchamia pomiary kolejnych urządzeń
     @Scheduled(cron = "${cron.request-frequency}")
     public void handleDevices() throws Exception {
+        //trzeba czekać aż konfiguracja się zakończy
         if(!configurationFinished){
             return;
         }
+        //uruchamiaj pomiary wszysktich skonfiguranych czujników ciśnienia asynchornicznie (@Async)
         for(PressureDevice pressureDevice: pressureDeviceList){
             pressureService.handlePressureDevice(pressureDevice, moxaDeviceList);
         }
 
+        //kolejne urządzenia analogicznie
         for(OxygenDevice oxygenDevice: oxygenDeviceList){
             oxygenService.handlOxygenDevice(oxygenDevice);
         }

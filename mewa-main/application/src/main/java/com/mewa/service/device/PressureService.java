@@ -41,13 +41,19 @@ public class PressureService {
             return;
         }
         if(pressureDevice.getType().equals(TypeE.SYM)){
+            //jesli urządzenie jest symulowane to zamiast pobrania ramki trzeba sobie taką wygenerować
             prepareSymData(pressureDevice);
         }else {
+            //jeśli jest urządzenie rzeczywiste wyślij ramkę odpytującą do urządzenia
             sendFrameToDevice(pressureDevice);
+            //pobierz dane z urządzenia
             byte[] frameFromPressure = readFrameFromDevice(pressureDevice);
+            //ustaw dane do obiektu urządzenia danymi otrzymanymi z ramki
             setDataToDevice(pressureDevice, frameFromPressure);
         }
+        //przygotuj ramkę
         String frameForSiu =  preprareFrameForSiu(pressureDevice);
+        //wyślij ramkę do siu po udp (datagram)
         udpClientService.sendDatagram(frameForSiu);
     }
 
