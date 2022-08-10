@@ -60,7 +60,7 @@ public class DpoService {
             counter = 0;
             sendFrameToDevice(dpoDeviceList.get(0), REQUEST_STATUS_FRAME);
             byte[] statusFrameFromDpo = readFrameFromDevice(dpoDeviceList.get(0), "status");
-            log.info("30 seconds");
+            log.debug("30 seconds");
             return;
         }
 

@@ -31,10 +31,10 @@ public class DirectionHandlerService{
             if(directionDeviceList.stream().anyMatch(e->e.getTotalDosage() > thresholdInNano)
             || dpoDeviceList.stream().filter(e->e.getPower() != null).anyMatch(e->Integer.valueOf(e.getPower()) > thresholdInNano)
             || (singleDpoDevice != null && Integer.valueOf(singleDpoDevice.getPower()) > thresholdInNano)){
-                log.info("Turn on eight");
+                log.debug("Turn on eight");
                 ventilationDevice.setTurnOnEight(true);
             }else{
-                log.info("Turn off eight");
+                log.debug("Turn off eight");
                 ventilationDevice.setTurnOnEight(false);
             }
         }catch (Exception e){

@@ -51,6 +51,7 @@ public class InitService {
     @Async
     public void init() throws Exception {
 
+        //inicjacja wartości progowych z tabeli threshol_value do obiektu, z którym później będzie porównywanie
         thresholdValuesService.init();
         List<Device> activeDevices = deviceRepository.findAllByActiveEquals("T");
         List<Device> symDevicesList = activeDevices.stream().filter(e->e.getType().equals(TypeE.SYM)).collect(Collectors.toList());

@@ -13,6 +13,9 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableScheduling
 @EnableConfigurationProperties({MoxaProperties.class})
 @EnableAsync
+/*
+Główna klasa uruchomieniowa. Spring inicjuje wiele rzeczy m.in tworzy controllery, serwisy i repozytoria,
+*/
 public class Application {
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);

@@ -11,6 +11,7 @@ import javax.annotation.PostConstruct;
 
 @Component
 @Slf4j
+//klasa która uruchamia metodę init() inicujującą wszysktie urządzenia
 class AppInitializator {
 
     @Autowired
@@ -19,6 +20,7 @@ class AppInitializator {
     @PostConstruct
     private void init() throws Exception {
         log.info("Starting init services");
+        //inicjacja wszystkich urządzeń
         initService.init();
     }
 }

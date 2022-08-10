@@ -287,10 +287,7 @@ public class VentilationService {
         byte firstByte = efficiency[3];
         byte secondByte = efficiency[4];
         double b = (firstByte << 8 &0xFF00) | (secondByte & 0x00ff);
-        log.info("First byte: " + firstByte + ", second byte: " + secondByte);
-        log.info("raw value: " + b);
         double c = (b/2764.7 - 5);
-        log.info("raw value c: " + c);
 //        if(c<0){
 //            return 0;
 //        }
