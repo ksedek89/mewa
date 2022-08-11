@@ -94,11 +94,20 @@ public class PressureService {
             } else {
                 pressureDevice.setPressure(c);
             }
-            VentilationDevice ventilationDevice = ventilationService.getVentilationDevice();
+            boolean aux = false;
+
+            for(VentilationDevice a: ventilationService.getVentDeviceList())
+            {
+                if(a.getBypass().equals("F") && a.getMotor().equals("A"))
+                {
+                    aux = true;
+                }
+
+
+            }
             if(pressureDevice.getPressure() < pressureDevice.getThreshold()
-                && ventilationDevice !=null
-                && ventilationDevice.getBypass().equals("F")
-                && ventilationDevice.getMotor().equals("A")){
+              && aux)
+               {
                 pressureDevice.setAlarm(1);
             }else{
                 pressureDevice.setAlarm(0);

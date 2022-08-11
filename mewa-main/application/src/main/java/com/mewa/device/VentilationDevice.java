@@ -31,10 +31,10 @@ public class VentilationDevice implements Device{
 
     private SerialPort serialPort;
 
-    public VentilationDevice(String portName, int moxaId, TypeE type) {
+    public VentilationDevice(String portName, int moxaId, TypeE type, int id) {
         this.serialPort = new SerialPort(portName);
         this.type = type;
-        this.id = 1;
+        this.id = id;
         this.moxaId = moxaId;
 
     }

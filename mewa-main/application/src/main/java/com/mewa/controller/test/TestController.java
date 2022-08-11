@@ -96,10 +96,11 @@ public class TestController {
         requestDto.getFilterDevices()
             .stream()
             .forEach(e-> {
-                VentilationDevice ventilationDevice = ventilationService.getVentilationDevice();
-                ventilationDevice.setResistance(Double.valueOf(e.getResistance()));
-                ventilationDevice.setInitialResistance(Double.valueOf(e.getInitialResistance()));
-                ventilationDevice.setEfficiency(Double.valueOf(e.getEfficiency()));
+                for (VentilationDevice ventilationDevice: ventilationService.getVentDeviceList() ) {
+                    ventilationDevice.setResistance(Double.valueOf(e.getResistance()));
+                    ventilationDevice.setInitialResistance(Double.valueOf(e.getInitialResistance()));
+                    ventilationDevice.setEfficiency(Double.valueOf(e.getEfficiency()));
+                }
             });
 
     }

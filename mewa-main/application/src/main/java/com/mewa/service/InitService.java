@@ -92,7 +92,7 @@ public class InitService {
                 }
                 //zainicuje urządzenie vent wg. konfiguracji (na razie jest jedno)
                 if (deviceDto.getDeviceType().equals("VENT")) {
-                    ventilationService.getVentDeviceList().add( new VentilationDevice(null,deviceDto.getMoxaNumber(), deviceDto.getType()));
+                    ventilationService.getVentDeviceList().add( new VentilationDevice(null,deviceDto.getMoxaNumber(), deviceDto.getType(), deviceDto.getDeviceId()));
                     deviceService.setVentilationDeviceList(ventilationService.getVentDeviceList());
                 }
             }
@@ -132,8 +132,8 @@ public class InitService {
                             .add((new DirectionDevice(entry.getValue(), deviceDto.getDeviceId(), deviceDto.getMoxaNumber(), deviceDto.getDirectionAngle(), deviceDto.getType())));
                     }
                     if (deviceDto.getDeviceType().equals("VENT")) {
-                        ventilationService.setVentilationDevice(new VentilationDevice(entry.getValue(), deviceDto.getMoxaNumber(), deviceDto.getType()));
-                        deviceService.setVentilationDevice(ventilationService.getVentilationDevice());
+                        ventilationService.getVentDeviceList().add(new VentilationDevice(entry.getValue(), deviceDto.getMoxaNumber(), deviceDto.getType(), deviceDto.getDeviceId()));
+                        deviceService.setVentilationDeviceList(ventilationService.getVentDeviceList());
                     }
                     if (deviceDto.getDeviceType().equals("OXY")) {
                         deviceService.getOxygenDeviceList().add((new OxygenDevice(deviceDto.getDeviceId(), deviceDto.getType())));

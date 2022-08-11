@@ -92,7 +92,7 @@ public class FrameUtil {
         StringBuilder frame = new StringBuilder();
         frame.append("$PCARFS,");
         frame.append(getCurrentDateForSiu());
-
+        frame.append(ventilationDevice.getId()+",");
         frame.append(ventilationDevice.getMotor()+",");
         frame.append(ventilationDevice.getBypass()+",");
         frame.append(df.format(ventilationDevice.getEfficiency())+",");
