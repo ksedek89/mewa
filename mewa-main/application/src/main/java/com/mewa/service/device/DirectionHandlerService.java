@@ -23,8 +23,8 @@ public class DirectionHandlerService{
     private final static Long thresholdInNano = 25000l;
 
     @Async
-    public void handleDirectionDevice(List<DirectionDevice> directionDeviceList, List<DpoDevice> dpoDeviceList, DpoDevice singleDpoDevice, VentilationDevice ventilationDevice){
-        if((directionDeviceList.size() == 0 && dpoDeviceList.size() == 0 && singleDpoDevice == null) || ventilationDevice == null){
+    public void handleDirectionDevice(List<DirectionDevice> directionDeviceList, List<DpoDevice> dpoDeviceList, DpoDevice singleDpoDevice, List<VentilationDevice> ventilationDeviceList){
+        if((directionDeviceList.size() == 0 && dpoDeviceList.size() == 0 && singleDpoDevice == null) || ventilationDeviceList == null && ventilationDeviceList.size() == 0){
             return;
         }
         try {
@@ -32,10 +32,14 @@ public class DirectionHandlerService{
             || dpoDeviceList.stream().filter(e->e.getPower() != null).anyMatch(e->Integer.valueOf(e.getPower()) > thresholdInNano)
             || (singleDpoDevice != null && Integer.valueOf(singleDpoDevice.getPower()) > thresholdInNano)){
                 log.debug("Turn on eight");
-                ventilationDevice.setTurnOnEight(true);
+                for (VentilationDevice a : ventilationDeviceList) {
+                    a.setTurnOnEight(true);
+                }
             }else{
                 log.debug("Turn off eight");
-                ventilationDevice.setTurnOnEight(false);
+                for (VentilationDevice a : ventilationDeviceList) {
+                    a.setTurnOnEight(false);
+                }
             }
         }catch (Exception e){
             log.error(e.getMessage(), e);

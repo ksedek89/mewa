@@ -53,7 +53,7 @@ public class DeviceService {
     private List<MoxaDevice> moxaDeviceList = new ArrayList<>();
     private List<DpoDevice> dpoDeviceList = new ArrayList<>();
     private DpoDevice singleDpoDevice;
-    private VentilationDevice ventilationDevice;
+    private List <VentilationDevice> ventilationDeviceList;
 
     //wątek który uruchamia pomiary kolejnych urządzeń
     @Scheduled(cron = "${cron.request-frequency}")
@@ -80,7 +80,7 @@ public class DeviceService {
             directionService.handleDirectionDevice(a);
         }
 
-        directionHandlerService.handleDirectionDevice(directionDeviceList, dpoDeviceList, singleDpoDevice, ventilationDevice);
+        directionHandlerService.handleDirectionDevice(directionDeviceList, dpoDeviceList, singleDpoDevice, ventilationDeviceList);
 
         moxaHandlerService.handleMoxaDevice(moxaDeviceList);
 

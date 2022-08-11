@@ -26,7 +26,7 @@ public class VentilationService {
     @Autowired
     private UdpClientService udpClientService;
 
-    private VentilationDevice ventilationDevice;
+    private List<VentilationDevice> ventDeviceList;
 
     //silnik - flag, bypass - bypass
     private static final byte[] MOTOR_ON =          new byte[] { 2, 5, 0, 0, (byte)255, 0};
@@ -178,7 +178,7 @@ public class VentilationService {
         }
 
         MoxaDevice moxaDevice = moxaDeviceList.stream().filter(e -> e.getId() == ventilationDevice.getMoxaId()).findFirst().get();
-        if(!"A".equals(moxaDevice.getStatus())){
+        if(!"F".equals(moxaDevice.getStatus())){
             return;
         }
         //every 5 second
@@ -272,8 +272,8 @@ public class VentilationService {
         return ventilationDevice;
     }
 
-    public void setVentilationDevice(VentilationDevice ventilationDevice) {
-        this.ventilationDevice = ventilationDevice;
+    public void setVentDeviceList(List<VentilationDevice> ventDeviceList) {
+        this.ventDeviceList = ventDeviceList;
     }
 
     private double calculateResistance(byte[] pressure){
@@ -330,7 +330,12 @@ public class VentilationService {
         return receivedBytes;
     }
 
-    public VentilationDevice getVentilationDevice() {
-        return ventilationDevice;
+    public List<VentilationDevice> getVentDeviceList() {
+        if (ventDeviceList == null) {
+            return ventDeviceList;
+        }
+        else {
+            return ventDeviceList;
+        }
     }
 }

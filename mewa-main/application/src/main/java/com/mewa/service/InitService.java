@@ -92,8 +92,8 @@ public class InitService {
                 }
                 //zainicuje urządzenie vent wg. konfiguracji (na razie jest jedno)
                 if (deviceDto.getDeviceType().equals("VENT")) {
-                    ventilationService.setVentilationDevice(new VentilationDevice(null,deviceDto.getMoxaNumber(), deviceDto.getType()));
-                    deviceService.setVentilationDevice(ventilationService.getVentilationDevice());
+                    ventilationService.getVentDeviceList().add( new VentilationDevice(null,deviceDto.getMoxaNumber(), deviceDto.getType()));
+                    deviceService.setVentilationDeviceList(ventilationService.getVentDeviceList());
                 }
             }
             //jeśli nie ma żadnego rzeczywistego urządzenia to ustaw MoxaDevice na tryb sym i wysyłaj A czyli Avalible.
