@@ -118,7 +118,7 @@ public class FrameUtil {
         return frame.toString();
     }
 
-
+// ptowierdzenie zmiany progów
     public static String getThresholdsFrameForSiu(ThresholdValue thresholdValue) {
         StringBuilder frame = new StringBuilder();
         frame.append("$PCARCA,");
@@ -134,7 +134,7 @@ public class FrameUtil {
         frame.append("\n");
         return frame.toString();
     }
-
+//dpo
     public static String getDpoFrameForSiu(DpoDevice dpoDevice, ThresholdValuesService thresholdValuesService){
         StringBuilder frame = new StringBuilder();
         frame.append("$PCARRC,");

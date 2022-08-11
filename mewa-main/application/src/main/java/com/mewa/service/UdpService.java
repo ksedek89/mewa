@@ -18,7 +18,7 @@ public class UdpService {
     @Autowired
     private VentilationService ventilationService;
 
-    //przetwarzanie ramek przychodzących
+    //przetwarzanie ramek przychodzących (zmiana stanu filtrowentylacji oraz zmiana stanu wartości progowych)
     public void receive(Message message) throws Exception {
         String data = new String((byte[]) message.getPayload()).replace("\n", "").replace("\r", "");
         log.info("Received data: " + data);
