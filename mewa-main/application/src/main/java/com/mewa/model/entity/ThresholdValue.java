@@ -11,6 +11,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "THRESHOLD_VALUE")
 @Data
+//endcja do bazy, zwiera te samo pola co tabela bazodanowa
 public class ThresholdValue{
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)

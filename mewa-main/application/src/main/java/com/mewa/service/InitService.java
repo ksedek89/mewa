@@ -25,6 +25,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 @Service
 @Slf4j
+//serwis inicujący wszystkie urządzenia na podstawie konfiguracji z bazy danych i ustawień portów szeregowych moxy
 public class InitService {
 
     @Autowired

@@ -9,6 +9,7 @@ import java.util.Arrays;
 
 @Data
 @Slf4j
+//czujnik kierunkowy
 public class DirectionDevice implements Device{
 
     private int id;

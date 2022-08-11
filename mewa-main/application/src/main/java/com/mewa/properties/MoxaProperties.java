@@ -8,6 +8,7 @@ import java.util.List;
 
 @Data
 @ConfigurationProperties(value = "moxa.init")
+//klasa z propertisami, pobiera wartosci z moxa.init z application.yaml
 public class MoxaProperties {
     private List<MoxaDto> configuration;
 }

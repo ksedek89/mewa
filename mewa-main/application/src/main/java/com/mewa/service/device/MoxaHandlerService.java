@@ -14,6 +14,7 @@ import java.util.concurrent.Future;
 
 @Service
 @Slf4j
+//serwis obsługujący logikę całego pobrania dostępności moxy i przesłania ramki do siu
 public class MoxaHandlerService {
 
     @Autowired

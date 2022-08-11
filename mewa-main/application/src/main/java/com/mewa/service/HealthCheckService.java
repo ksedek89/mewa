@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 @Service
 @Slf4j
 @Data
+//sprawdzenie dostępnych wątków, monitoring
 public class HealthCheckService {
     @Qualifier("taskExecutor")
     @Autowired

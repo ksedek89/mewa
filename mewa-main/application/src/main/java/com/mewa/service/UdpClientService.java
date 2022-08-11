@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 @Slf4j
 @Service
+//klient udp
 public class UdpClientService {
     @Autowired
     private UnicastSendingMessageHandler handler;

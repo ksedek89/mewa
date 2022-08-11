@@ -19,6 +19,7 @@ import static com.mewa.util.Utils.getRandomIntBetween;
 
 @Service
 @Slf4j
+//serwis obsługujący logikę całego pobrania danych z urządzenia kierunkowego i przesłania ramki do siu
 public class DirectionService {
     private final static String DIRECTION_DEVICE_REQUEST_FRAME = "Sk?";
 

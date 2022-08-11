@@ -14,6 +14,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "DEVICE")
 @Data
+//endcja do bazy, zwiera te samo pola co tabela bazodanowa
 public class Device{
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)

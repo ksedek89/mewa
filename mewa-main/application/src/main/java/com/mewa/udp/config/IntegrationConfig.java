@@ -9,6 +9,7 @@ import org.springframework.integration.ip.udp.UnicastReceivingChannelAdapter;
 import org.springframework.integration.ip.udp.UnicastSendingMessageHandler;
 
 @Configuration
+//konfiguracje klienta i serwera udp
 public class IntegrationConfig {
 
     @Value(value = "${server.incoming-port}")

@@ -6,6 +6,7 @@ import lombok.Data;
 
 @Data
 @Builder
+//urządzenie moxy
 public class MoxaDevice {
     private int id;
     private String ip;

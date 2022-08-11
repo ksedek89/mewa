@@ -22,6 +22,7 @@ import static com.mewa.util.Utils.*;
 
 @Service
 @Slf4j
+//serwis obsługujący logikę całego pobrania danych z urządzenia dpo i przesłania ramki do siu
 public class DpoService {
     private static final byte[] REQUEST_STATUS_FRAME = "#1@".getBytes();
     private static final byte[] REQUEST_POWER_FRAME = "#2@".getBytes();

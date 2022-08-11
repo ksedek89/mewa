@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 @Slf4j
 @Service
+//serwer udp
 public class UdpService {
 
     @Autowired
@@ -17,6 +18,7 @@ public class UdpService {
     @Autowired
     private VentilationService ventilationService;
 
+    //przetwarzanie ramek przychodzących
     public void receive(Message message) throws Exception {
         String data = new String((byte[]) message.getPayload()).replace("\n", "").replace("\r", "");
         log.info("Received data: " + data);

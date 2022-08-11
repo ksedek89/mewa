@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Data
 @Slf4j
+//czujnik ciśnienia
 public class PressureDevice implements Device{
     private int id;
     private int pressure;

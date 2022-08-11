@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Data
 @Slf4j
+//filtrowentylacja
 public class VentilationDevice implements Device{
     //bypass mowi czy jest wlaczona filtrowentylacja czy wentylacja, motor czy jest wlaczony silnik.
     // Zeby dzialala w jakimkolwiek trybie silnik musi byc wlaczony. Bypass on mowi ze pracuje w trybie filtrowentylacji.

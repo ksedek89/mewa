@@ -2,6 +2,7 @@ package com.mewa.enums;
 
 import jssc.SerialPort;
 
+//enum do pobierania parametrów serial portu dla komunikacji szeregowej
 public enum SerialEnum {
     DIRECTION(SerialPort.BAUDRATE_9600, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE),
     VENTILATION(SerialPort.BAUDRATE_9600, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE),

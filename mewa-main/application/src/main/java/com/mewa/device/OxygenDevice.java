@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Data
 @Slf4j
+//czujnik tlenu
 public class OxygenDevice implements Device{
     private int id;
     private double oxygen;

@@ -11,6 +11,7 @@ import java.util.concurrent.Executor;
 
 @Configuration
 @EnableAsync
+//konfiguracja liczby wątków
 public class AppConfig implements AsyncConfigurer {
 
     @Override

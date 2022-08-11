@@ -22,6 +22,7 @@ import static com.mewa.util.Utils.ModRtuCrc;
 
 @Service
 @Slf4j
+//serwis obsługujący logikę całego pobrania danych z czujnika ciśnienia i przesłania ramki do siu
 public class PressureService {
     private static final byte[] PRESSURE_DEVICE_REQUEST_FRAME = new byte[] { 1, 4, 0, 1, 0, 1};
 

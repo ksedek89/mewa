@@ -12,6 +12,7 @@ import java.util.List;
 
 @Service
 @Slf4j
+//handler do uruchamiania wejścia 8 filtrowentylacji na podstawie pomiarów z urządzeń dpo
 public class DirectionHandlerService{
 
     @Autowired

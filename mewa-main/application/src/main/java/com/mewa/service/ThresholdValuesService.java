@@ -13,6 +13,7 @@ import static com.mewa.util.Utils.calculateCheckSum;
 
 @Service
 @Slf4j
+//serwis do obsługi wartości progowych
 public class ThresholdValuesService {
     private  ThresholdValue thresholdValue;
 

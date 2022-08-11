@@ -20,7 +20,7 @@ import java.util.List;
 @Service
 @Slf4j
 @Data
-//klasa która uruchamia scheduler uruchamiający się co 1sekundę (zmienna cron.request-frequency)
+//klasa która uruchamia scheduler uruchamiający się co 1sekundę (zmienna cron.request-frequency). Odpowiada za uruchomienie pomiarów wszysktich urządzeń
 public class DeviceService {
     private boolean symulation;
 

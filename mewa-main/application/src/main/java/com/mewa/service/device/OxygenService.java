@@ -21,6 +21,7 @@ import static com.mewa.util.FrameUtil.getOxygenFrameForSiu;
 
 @Service
 @Slf4j
+//serwis obsługujący logikę całego pobrania danych z czujnika tlenu i przesłania ramki do siu
 public class OxygenService {
     @Autowired
     UdpClientService udpClientService;

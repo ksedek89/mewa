@@ -19,6 +19,7 @@ import static com.mewa.util.Utils.ModRtuCrc;
 
 @Service
 @Slf4j
+//serwis obsługujący logikę całego pobrania danych z urządzenia kierunkowego i przesłania ramki do siu
 public class VentilationService {
     boolean eightTurnedOn;
 
@@ -52,6 +53,7 @@ public class VentilationService {
 
     int counter = 0;
 
+    //włączenie enginu
     public void turnOnEngine() throws Exception {
         log.info("Turning on");
         sendFrameToDevice(MOTOR_ON);
@@ -59,6 +61,7 @@ public class VentilationService {
     }
 
 
+    //włączenie werjścia 8
     public void turnOnEightEngine() throws Exception {
         if(!eightTurnedOn){
             eightTurnedOn = true;
@@ -67,6 +70,7 @@ public class VentilationService {
             readFrameFromDevice();
         }
     }
+
 
     public void turnOffEightEngine() throws Exception {
         if(eightTurnedOn) {
@@ -191,6 +195,7 @@ public class VentilationService {
         }
     }
 
+//    logika odpowiedzialna za całą komunikację z filtrowentylacją
     public VentilationDevice handleSiu(boolean requestDevice) throws Exception {
         if(requestDevice) {
             log.info("Request for ventilation data");

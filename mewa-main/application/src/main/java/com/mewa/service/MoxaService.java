@@ -21,6 +21,7 @@ import static com.mewa.util.FrameUtil.getMoxaFrameForSiu;
 
 @Service
 @Slf4j
+//obsługa urzązdeń moxy
 public class MoxaService {
     @Value(value = "${moxa.config-file-path}")
     private String moxaConfigFilePath;
