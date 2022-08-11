@@ -1,13 +1,6 @@
 allprojects {
     repositories {
         mavenLocal()
-        maven {
-            url pruMavenUrl
-            credentials {
-                username pruMavenUser
-                password pruMavenPassword
-            }
-        }
         mavenCentral()
         maven {
           url "https://plugins.gradle.org/m2/"
@@ -20,13 +13,7 @@ allprojects {
     buildscript {
         repositories {
             mavenLocal()
-            maven {
-                url pruMavenUrl
-                credentials {
-                    username pruMavenUser
-                    password pruMavenPassword
-                }
-            }
+
             mavenCentral()
             maven {
               url "https://plugins.gradle.org/m2/"
