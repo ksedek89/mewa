@@ -63,7 +63,7 @@ public class DirectionDevice implements Device{
     }
 
     private boolean normalDosageValue(long newDosage) {
-        if(newDosage > totalDosage + 10000){
+        if(newDosage > totalDosage + 2000){
             if(totalDosageSubnormalCount < 5){
                 totalDosageSubnormalCount++;
                return false;

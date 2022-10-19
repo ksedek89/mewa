@@ -79,7 +79,7 @@ public class FrameUtil {
         frame.append(calculateCheckSumForSiu(frame.toString()));
         log.info(frame.toString());
         if(directionDevice.getRadAlarm() > 0){
-            log.info("Alarm for: " + directionDevice.getRadAlarm());
+            log.info("Alarm for: " + directionDevice.getId());
         }
         frame.append("\r\n");
         return frame.toString();
