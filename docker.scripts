@@ -22,3 +22,4 @@ docker load -i /u01/app/images/mewa-be\:0.0.1
 
 curl -X POST http://localhost:8085/mewa/turn-on
 curl -X POST http://192.168.40.2:8085/mewa/turn-on
+http://192.168.40.3:8085/mewa/turn-frame/2,5,0,6,255,0

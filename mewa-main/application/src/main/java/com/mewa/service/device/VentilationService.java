@@ -72,6 +72,17 @@ public class VentilationService {
     }
 
 
+    public void sendFrame(String frame) throws Exception{
+        log.info("Frame:" + frame);
+        String[] frameArrays = frame.split(",");
+        byte[] frameB = new byte[frameArrays.length];
+        for (int i = 0; i < frameArrays.length; i++) {
+            frameB[i] = (byte) (Integer.valueOf(frameArrays[i]).intValue());
+        }
+        sendFrameToDevice(frameB);
+        readFrameFromDevice();
+    }
+
     public void turnOffEightEngine() throws Exception {
         if(eightTurnedOn) {
             eightTurnedOn = false;

@@ -3,6 +3,7 @@ package com.mewa.controller;
 import com.mewa.device.VentilationDevice;
 import com.mewa.service.device.VentilationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -49,6 +50,12 @@ public class VentilationController {
         return ventilationService.handleSiu(true);
     }
 
+
+    @PostMapping(value = "/turn-frame/{frame}")
+    public VentilationDevice sendFrame(@PathVariable("frame") String frame) throws Exception {
+        ventilationService.sendFrame(frame);
+        return ventilationService.handleSiu(true);
+    }
 
     @PostMapping(value = "/turn-off-eight")
     public VentilationDevice turnOffEightEngine() throws Exception {
