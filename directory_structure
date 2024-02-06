@@ -1,0 +1,276 @@
+.
+ |-app
+ | |-mysql
+ | | |-aria_log_control
+ | | |-multi-master.info
+ | | |-performance_schema
+ | | | |-db.opt
+ | | |-sys
+ | | | |-io_by_thread_by_latency.frm
+ | | | |-host_summary_by_statement_latency.frm
+ | | | |-x@0024memory_by_host_by_current_bytes.frm
+ | | | |-sys_config.MAD
+ | | | |-x@0024latest_file_io.frm
+ | | | |-schema_unused_indexes.frm
+ | | | |-statements_with_errors_or_warnings.frm
+ | | | |-schema_object_overview.frm
+ | | | |-host_summary_by_statement_type.frm
+ | | | |-x@0024user_summary_by_file_io.frm
+ | | | |-x@0024user_summary_by_stages.frm
+ | | | |-io_global_by_wait_by_latency.frm
+ | | | |-schema_table_lock_waits.frm
+ | | | |-x@0024statements_with_temp_tables.frm
+ | | | |-memory_by_user_by_current_bytes.frm
+ | | | |-x@0024schema_flattened_keys.frm
+ | | | |-version.frm
+ | | | |-latest_file_io.frm
+ | | | |-x@0024io_global_by_wait_by_bytes.frm
+ | | | |-x@0024wait_classes_global_by_avg_latency.frm
+ | | | |-user_summary_by_file_io_type.frm
+ | | | |-x@0024statements_with_runtimes_in_95th_percentile.frm
+ | | | |-x@0024processlist.frm
+ | | | |-x@0024host_summary_by_file_io.frm
+ | | | |-wait_classes_global_by_latency.frm
+ | | | |-x@0024user_summary_by_file_io_type.frm
+ | | | |-memory_global_total.frm
+ | | | |-schema_redundant_indexes.frm
+ | | | |-x@0024waits_global_by_latency.frm
+ | | | |-x@0024io_global_by_file_by_bytes.frm
+ | | | |-x@0024schema_table_lock_waits.frm
+ | | | |-x@0024user_summary.frm
+ | | | |-processlist.frm
+ | | | |-x@0024ps_digest_95th_percentile_by_avg_us.frm
+ | | | |-schema_table_statistics.frm
+ | | | |-statements_with_temp_tables.frm
+ | | | |-io_global_by_file_by_bytes.frm
+ | | | |-host_summary.frm
+ | | | |-sys_config_insert_set_user.TRN
+ | | | |-x@0024schema_table_statistics.frm
+ | | | |-statement_analysis.frm
+ | | | |-sys_config.MAI
+ | | | |-sys_config_update_set_user.TRN
+ | | | |-user_summary_by_statement_type.frm
+ | | | |-x@0024session.frm
+ | | | |-waits_global_by_latency.frm
+ | | | |-x@0024host_summary_by_stages.frm
+ | | | |-memory_by_host_by_current_bytes.frm
+ | | | |-x@0024schema_tables_with_full_table_scans.frm
+ | | | |-host_summary_by_stages.frm
+ | | | |-schema_index_statistics.frm
+ | | | |-memory_global_by_current_bytes.frm
+ | | | |-x@0024statement_analysis.frm
+ | | | |-io_global_by_wait_by_bytes.frm
+ | | | |-innodb_buffer_stats_by_table.frm
+ | | | |-x@0024statements_with_errors_or_warnings.frm
+ | | | |-schema_table_statistics_with_buffer.frm
+ | | | |-x@0024innodb_buffer_stats_by_schema.frm
+ | | | |-session.frm
+ | | | |-x@0024user_summary_by_statement_latency.frm
+ | | | |-x@0024host_summary_by_statement_latency.frm
+ | | | |-statements_with_sorting.frm
+ | | | |-schema_tables_with_full_table_scans.frm
+ | | | |-x@0024memory_global_by_current_bytes.frm
+ | | | |-x@0024user_summary_by_statement_type.frm
+ | | | |-statements_with_full_table_scans.frm
+ | | | |-host_summary_by_file_io_type.frm
+ | | | |-sys_config.frm
+ | | | |-x@0024io_global_by_wait_by_latency.frm
+ | | | |-x@0024waits_by_host_by_latency.frm
+ | | | |-x@0024memory_by_user_by_current_bytes.frm
+ | | | |-x@0024io_global_by_file_by_latency.frm
+ | | | |-x@0024waits_by_user_by_latency.frm
+ | | | |-innodb_lock_waits.frm
+ | | | |-memory_by_thread_by_current_bytes.frm
+ | | | |-sys_config.TRG
+ | | | |-x@0024innodb_buffer_stats_by_table.frm
+ | | | |-x@0024innodb_lock_waits.frm
+ | | | |-x@0024host_summary_by_statement_type.frm
+ | | | |-x@0024ps_schema_table_statistics_io.frm
+ | | | |-x@0024host_summary.frm
+ | | | |-x@0024statements_with_sorting.frm
+ | | | |-x@0024wait_classes_global_by_latency.frm
+ | | | |-user_summary_by_stages.frm
+ | | | |-metrics.frm
+ | | | |-db.opt
+ | | | |-x@0024schema_index_statistics.frm
+ | | | |-x@0024statements_with_full_table_scans.frm
+ | | | |-session_ssl_status.frm
+ | | | |-statements_with_runtimes_in_95th_percentile.frm
+ | | | |-x@0024memory_by_thread_by_current_bytes.frm
+ | | | |-user_summary.frm
+ | | | |-schema_auto_increment_columns.frm
+ | | | |-io_global_by_file_by_latency.frm
+ | | | |-x@0024schema_table_statistics_with_buffer.frm
+ | | | |-host_summary_by_file_io.frm
+ | | | |-user_summary_by_statement_latency.frm
+ | | | |-ps_check_lost_instrumentation.frm
+ | | | |-innodb_buffer_stats_by_schema.frm
+ | | | |-user_summary_by_file_io.frm
+ | | | |-x@0024memory_global_total.frm
+ | | | |-waits_by_user_by_latency.frm
+ | | | |-x@0024io_by_thread_by_latency.frm
+ | | | |-x@0024ps_digest_avg_latency_distribution.frm
+ | | | |-waits_by_host_by_latency.frm
+ | | | |-x@0024host_summary_by_file_io_type.frm
+ | | | |-wait_classes_global_by_avg_latency.frm
+ | | |-mewa
+ | | | |-device.ibd
+ | | | |-device.frm
+ | | | |-threshold_value.frm
+ | | | |-db.opt
+ | | | |-threshold_value.ibd
+ | | |-mysql
+ | | | |-general_log.CSV
+ | | | |-db.MAI
+ | | | |-tables_priv.frm
+ | | | |-help_category.MAD
+ | | | |-servers.MAD
+ | | | |-column_stats.frm
+ | | | |-procs_priv.frm
+ | | | |-help_topic.MAI
+ | | | |-time_zone_transition_type.frm
+ | | | |-transaction_registry.frm
+ | | | |-table_stats.MAI
+ | | | |-func.frm
+ | | | |-innodb_index_stats.frm
+ | | | |-time_zone_transition.MAI
+ | | | |-table_stats.frm
+ | | | |-servers.frm
+ | | | |-columns_priv.MAD
+ | | | |-time_zone_name.frm
+ | | | |-tables_priv.MAI
+ | | | |-roles_mapping.MAD
+ | | | |-help_category.MAI
+ | | | |-global_priv.frm
+ | | | |-global_priv.MAI
+ | | | |-help_relation.MAD
+ | | | |-tables_priv.MAD
+ | | | |-proc.frm
+ | | | |-roles_mapping.frm
+ | | | |-innodb_table_stats.frm
+ | | | |-roles_mapping.MAI
+ | | | |-procs_priv.MAI
+ | | | |-db.frm
+ | | | |-time_zone.MAI
+ | | | |-innodb_table_stats.ibd
+ | | | |-func.MAI
+ | | | |-help_keyword.MAD
+ | | | |-help_topic.frm
+ | | | |-columns_priv.frm
+ | | | |-plugin.MAI
+ | | | |-time_zone_leap_second.MAD
+ | | | |-time_zone.MAD
+ | | | |-time_zone_transition.MAD
+ | | | |-event.MAD
+ | | | |-proxies_priv.MAD
+ | | | |-gtid_slave_pos.frm
+ | | | |-plugin.MAD
+ | | | |-func.MAD
+ | | | |-index_stats.frm
+ | | | |-slow_log.CSV
+ | | | |-proxies_priv.frm
+ | | | |-column_stats.MAI
+ | | | |-general_log.CSM
+ | | | |-time_zone_leap_second.frm
+ | | | |-index_stats.MAI
+ | | | |-columns_priv.MAI
+ | | | |-plugin.frm
+ | | | |-general_log.frm
+ | | | |-gtid_slave_pos.ibd
+ | | | |-innodb_index_stats.ibd
+ | | | |-help_relation.MAI
+ | | | |-help_keyword.MAI
+ | | | |-procs_priv.MAD
+ | | | |-servers.MAI
+ | | | |-proc.MAD
+ | | | |-event.MAI
+ | | | |-time_zone_transition_type.MAD
+ | | | |-user.frm
+ | | | |-proc.MAI
+ | | | |-time_zone_name.MAI
+ | | | |-time_zone_name.MAD
+ | | | |-time_zone_transition.frm
+ | | | |-slow_log.CSM
+ | | | |-column_stats.MAD
+ | | | |-db.opt
+ | | | |-slow_log.frm
+ | | | |-proxies_priv.MAI
+ | | | |-help_topic.MAD
+ | | | |-transaction_registry.ibd
+ | | | |-time_zone_leap_second.MAI
+ | | | |-global_priv.MAD
+ | | | |-help_keyword.frm
+ | | | |-index_stats.MAD
+ | | | |-help_category.frm
+ | | | |-time_zone_transition_type.MAI
+ | | | |-table_stats.MAD
+ | | | |-event.frm
+ | | | |-db.MAD
+ | | | |-time_zone.frm
+ | | | |-help_relation.frm
+ | | |-ibdata1
+ | | |-aria_log.00000001
+ | | |-ib_buffer_pool
+ | | |-ibtmp1
+ | | |-ib_logfile0
+ | |-images
+ | | |-mewa-bc
+ | | |-mewa-be:0.0.1
+ | |-logs
+ | | |-all
+ | | | |-mewa.log
+ | | |-error
+ | | | |-mewa.log
+ | | |-info
+ | | | |-mewa.log
+ | |-docker-compose.yml
+ | |-moxa
+ | | |-mxuninst
+ | | |-npreal2d.c
+ | | |-.npreal2.ko.cmd
+ | | |-mxcfmat
+ | | |-misc.c
+ | | |-npreal2.c
+ | | |-npreal2d.cf
+ | | |-mxsetsec.c
+ | | |-Makefile
+ | | |-mxsetsec
+ | | |-redund_main.c
+ | | |-mxrmnod
+ | | |-redund.h
+ | | |-.npreal2.mod.o.cmd
+ | | |-npreal2.ko
+ | | |-redund_main.o
+ | | |-misc.h
+ | | |-killp
+ | | |-mxloadsvr.c
+ | | |-mxdelsvr.c
+ | | |-npreal2d.o
+ | | |-np_ver.h
+ | | |-modules.order
+ | | |-redund.c
+ | | |-mxaddsvr
+ | | |-mxdelsvr
+ | | |-npreal2.mod
+ | | |-npreal2d.h
+ | | |-npreal2.o
+ | | |-README.TXT
+ | | |-mxloadsvr
+ | | |-mxinst
+ | | |-.npreal2.o.cmd
+ | | |-npreal2d_redund
+ | | |-redund.o
+ | | |-mxaddsvr.c
+ | | |-nport.h
+ | | |-.npreal2.mod.cmd
+ | | |-npreal2.mod.o
+ | | |-init.sh
+ | | |-npreal2d
+ | | |-Module.symvers
+ | | |-mxcfmat.c
+ | | |-SUPPORT.TXT
+ | | |-VERSION.TXT
+ | | |-mxmknod
+ | | |-npreal2.mod.c
+ | | |-npreal2.h
+ |-test.log

@@ -2,6 +2,9 @@ version: "3.0"
 services:
   mewa-db:
     image: mariadb:10.6.0
+    logging:
+      options:
+        max-size: 1m
     restart: always
     network_mode: host
     environment:
@@ -15,6 +18,9 @@ services:
     network_mode: host
     privileged: true
     container_name: mewa-be
+    logging:
+      options:
+        max-size: 1m
     depends_on:
       - mewa-db
     volumes:
@@ -23,7 +29,7 @@ services:
       - /u01/app:/u01/app
     environment:
       SPRING_APPLICATION_JSON: '{
-            "siu.ip": "localhost",
-            "siu.port": "8000",
+            "siu.ip": "192.168.40.40",
+            "siu.port": "10014",
             "spring.datasource.password": "F71mGr"
         }'

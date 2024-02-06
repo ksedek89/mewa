@@ -1,0 +1,17 @@
+1. ściągamy linuksa
+Linux opbmr01 5.4.0-72-generic #80-Ubuntu SMP Mon Apr 12 17:35:00 UTC 2021 x86_64 x86_64 x86_64 GNU/Linux
+2. instalujemy docker + docker-compose. Dodajemy grupę docker do aktualnie używanego użytkownika, żeby można było wykonywać polecenie docker bez roota
+3. tworzymy katalogi:
+/u01
+/u01/app
+/u01/app/moxa
+/u01/app/logs
+/u01/app/sql
+/u01/app/images
+zgodnie z strukturą katalogów w pliku directory_structure
+4.ściągamy sterowniki do moxy i wrzucamy je do folderu /u01/app/moxa
+5 przenosimy docker-compose z tego repo
+6.tworzymy obraz backendu mewa-be (to repo) i przenosimy na serwer zgodnie z komendami w docker-scripts
+7. uruchamiamy na bazie mewa-db skrypty sql: scripts.sql
+8. cd /u01/app/
+    docker-compose up -d
