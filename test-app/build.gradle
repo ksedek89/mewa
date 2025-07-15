@@ -6,7 +6,8 @@ plugins {
 }
 
 dependencies {
-    compile project(':mewa-main:utils')
+    implementation project(':utils')
+
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.12.4'
 
 }

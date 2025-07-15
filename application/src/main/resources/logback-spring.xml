@@ -9,14 +9,14 @@
     </appender>
 
     <appender name="FILE-ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file> /u01/app/logs/error/mewa.log</file>
+        <file> /Users/ksedek/u01/app/logs/error/mewa.log</file>
     <filter class="ch.qos.logback.classic.filter.LevelFilter">
         <level>ERROR</level>
         <onMatch>ACCEPT</onMatch>
         <onMismatch>DENY</onMismatch>
     </filter>
         <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-            <fileNamePattern>/u01/app/logs/error/mewa-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <fileNamePattern>/Users/ksedek/u01/app/logs/error/mewa-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
             <maxFileSize>50MB</maxFileSize>
             <maxHistory>200</maxHistory>
             <totalSizeCap>10GB</totalSizeCap>
@@ -27,14 +27,14 @@
     </appender>
 
     <appender name="FILE-INFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file> /u01/app/logs/info/mewa.log</file>
+        <file> /Users/ksedek/u01/app/logs/info/mewa.log</file>
         <filter class="ch.qos.logback.classic.filter.LevelFilter">
             <level>INFO</level>
             <onMatch>ACCEPT</onMatch>
             <onMismatch>DENY</onMismatch>
         </filter>
         <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-            <fileNamePattern>/u01/app/logs/info/mewa-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <fileNamePattern>/Users/ksedek/u01/app/logs/info/mewa-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
             <maxFileSize>50MB</maxFileSize>
             <maxHistory>200</maxHistory>
             <totalSizeCap>10GB</totalSizeCap>
@@ -46,9 +46,9 @@
     </appender>
 
     <appender name="FILE-ALL" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file> /u01/app/logs/all/mewa.log</file>
+        <file> /Users/ksedek/u01/app/logs/all/mewa.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-            <fileNamePattern>/u01/app/logs/all/mewa-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <fileNamePattern>/Users/ksedek/u01/app/logs/all/mewa-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
             <maxFileSize>50MB</maxFileSize>
             <maxHistory>200</maxHistory>
             <totalSizeCap>10GB</totalSizeCap>

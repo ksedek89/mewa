@@ -1,43 +1,193 @@
-allprojects {
-    repositories {
-        mavenLocal()
-        mavenCentral()
-        maven {
-          url "https://plugins.gradle.org/m2/"
-        }
-    }
+import org.gradle.api.tasks.testing.logging.TestExceptionFormat
+import org.gradle.api.tasks.testing.logging.TestLogEvent
 
-    version = rootProject.file('version').text.trim()
-    group = 'com.mewa'
+plugins {
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE' apply false
+    id 'org.springframework.boot' version '2.6.6' apply false
+    id 'io.freefair.lombok' version '6.4.2' apply false
+    id 'org.owasp.dependencycheck' version '7.4.4'
+    id 'ua.eshepelyuk.ManifestClasspath' version '1.0.0'
+    id 'com.diffplug.spotless' version '6.4.2'
+    id 'groovy'
+    id 'java'
+    id 'idea'
+}
 
-    buildscript {
+ext {
+    gradlePluginDir = "${rootProject.projectDir}/gradle"
+}
+
+configure(allprojects) { project ->
+    apply plugin: "io.spring.dependency-management"
+    apply plugin: "io.freefair.lombok"
+    apply plugin: "org.springframework.boot"
+    apply plugin: "java"
+
+    dependencyManagement {
         repositories {
             mavenLocal()
-
-            mavenCentral()
             maven {
-              url "https://plugins.gradle.org/m2/"
+                url project.property('pruMavenUrl')
+                allowInsecureProtocol true
+                credentials {
+                    username project.property('pruMavenUser')
+                    password project.property('pruMavenPassword')
+                }
+            }
+            mavenCentral()
+            gradlePluginPortal()
+            maven {
+                url 'https://repo.spring.io/release'
             }
         }
 
+        imports {
+            mavenBom "org.spockframework:spock-bom:2.1-groovy-3.0"
+            mavenBom "org.springframework.cloud:spring-cloud-dependencies:2021.0.1"
+        }
+
         dependencies {
-            classpath("io.freefair.gradle:lombok-plugin:${versionLombok}")
+            dependency "com.oracle:ojdbc7:12.1.0.2"
+            dependency "com.pru.file-repository:file-repository-library:86.0.1"
+            dependency 'org.apache.commons:commons-csv:1.13.0'
+            dependency "com.google.guava:guava:31.1-jre"
+            dependency "com.sun.xml.bind:jaxb-impl:2.3.3"
+            dependency 'org.mapstruct:mapstruct:1.5.1.Final'
+            dependency "org.mapstruct:mapstruct-processor:1.3.1.Final"
+            dependency "javax.jws:javax.jws-api:1.1"
+            dependency "javax.xml.bind:jaxb-api:2.3.1"
+            dependency "javax.ws.rs:javax.ws.rs-api:2.3.1"
+            dependency "org.glassfish.jaxb:jaxb-runtime:2.3.1"
+            dependency "com.github.ben-manes.caffeine:caffeine:3.0.6"
+            dependency "javax.cache:cache-api:1.1.1"
+            dependency "net.logstash.logback:logstash-logback-encoder:7.1.1"
+            dependency "org.apache.commons:commons-lang3:3.12.0"
+            dependency "org.codehaus.groovy:groovy-all:3.0.10"
+            dependency 'org.springframework.ws:spring-ws-core:2.2.0.RELEASE'
+            dependency "org.slf4j:log4j-over-slf4j:1.7.36"
+            dependency "net.bytebuddy:byte-buddy-agent:1.12.9"
+            dependency "co.elastic.apm:apm-agent-attach:1.30.1"
+            dependency "com.googlecode.owasp-java-html-sanitizer:owasp-java-html-sanitizer:20240325.1"
+            dependency 'org.jsoup:jsoup:1.18.1'
+            dependency "co.elastic.logging:logback-ecs-encoder:1.3.2"
+            dependency "org.springdoc:springdoc-openapi-ui:1.6.7"
+            dependency "org.codehaus.janino:janino:3.1.6"
+            dependency "com.j2html:j2html:1.3.0"
+            dependency "javax.validation:validation-api:2.0.1.Final"
+            dependency "org.hibernate:hibernate-validator:7.0.4.Final"
+            dependency "org.apache.pdfbox:pdfbox:2.0.18"
+            dependency 'org.simplejavamail:simple-java-mail:6.7.6'
+            dependency 'org.bouncycastle:bcprov-jdk18on:1.80'
+            dependency 'org.bouncycastle:bcpg-jdk18on:1.80'
+
+            dependencySet(group: 'io.github.openfeign', version: '11.8') {
+                entry 'feign-httpclient'
+                entry 'feign-okhttp'
+            }
+
+            dependencySet(group: 'com.squareup.retrofit2', version: '2.9.0') {
+                entry 'converter-jackson'
+                entry 'retrofit'
+            }
+
+            dependencySet(group: 'com.squareup.retrofit2', version: '2.9.0') {
+                entry 'converter-jackson'
+                entry 'retrofit'
+            }
+
+            dependency "com.github.tomakehurst:wiremock-jre8-standalone:2.33.1"
+        }
+
+        resolutionStrategy {
+            cacheChangingModulesFor 0, "seconds"
         }
     }
 
-    apply plugin: 'java'
-    apply plugin: 'java-library'
-    apply plugin: 'groovy'
-    apply plugin: 'idea'
+    configurations.all {
+        resolutionStrategy {
+            cacheChangingModulesFor 0, "seconds"
+            cacheDynamicVersionsFor 0, "seconds"
+        }
+    }
 
     idea {
         module {
             inheritOutputDirs = true
+            downloadSources = true
         }
     }
 
+    bootJar {
+        enabled = false
+    }
+
+    bootRun {
+        enabled false
+    }
+}
+
+configure(subprojects) { project ->
+    group = 'com.mewa'
+    version = rootProject.file('version').text.trim()
+    sourceCompatibility = JavaVersion.VERSION_17
+
+    apply plugin: 'groovy'
+    testClasses.dependsOn compileGroovy
+
     dependencies {
-        implementation('org.slf4j:log4j-over-slf4j:1.7.26')
+        implementation "org.slf4j:log4j-over-slf4j"
+
+        testImplementation "org.springframework.boot:spring-boot-starter-test"
+        testImplementation "org.codehaus.groovy:groovy-all"
+        testImplementation "org.spockframework:spock-core"
+        testImplementation "org.spockframework:spock-spring"
+
+        testImplementation "org.junit.jupiter:junit-jupiter-api"
+        testImplementation "org.junit.jupiter:junit-jupiter-params"
+        testImplementation "org.junit.platform:junit-platform-suite-api"
+        testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine"
+        testRuntimeOnly "org.junit.platform:junit-platform-launcher"
+        testRuntimeOnly "org.junit.platform:junit-platform-suite-engine"
+    }
+
+    test {
+        useJUnitPlatform()
+    }
+
+    tasks.withType(Test) {
+        testLogging {
+            // set options for log level LIFECYCLE
+            events TestLogEvent.FAILED,
+                    TestLogEvent.PASSED,
+                    TestLogEvent.SKIPPED,
+                    TestLogEvent.STANDARD_OUT
+            exceptionFormat TestExceptionFormat.FULL
+            showExceptions true
+            showCauses true
+            showStackTraces true
+
+            // set options for log level DEBUG and INFO
+            debug {
+                events TestLogEvent.STARTED,
+                        TestLogEvent.FAILED,
+                        TestLogEvent.PASSED,
+                        TestLogEvent.SKIPPED,
+                        TestLogEvent.STANDARD_ERROR,
+                        TestLogEvent.STANDARD_OUT
+                exceptionFormat TestExceptionFormat.FULL
+            }
+            info.events = debug.events
+            info.exceptionFormat = debug.exceptionFormat
+
+            afterSuite { desc, result ->
+                if (!desc.parent) { // will match the outermost suite
+                    def output = "Results: ${result.resultType} (${result.testCount} tests, ${result.successfulTestCount} passed, ${result.failedTestCount} failed, ${result.skippedTestCount} skipped)"
+                    def startItem = '|  ', endItem = '  |'
+                    def repeatLength = startItem.length() + output.length() + endItem.length()
+                    println('\n' + ('-' * repeatLength) + '\n' + startItem + output + endItem + '\n' + ('-' * repeatLength))
+                }
+            }
+        }
     }
 
     configurations.all {
@@ -48,44 +198,37 @@ allprojects {
     }
 }
 
-buildscript {
-    ext {
-        pruSsoLibVersion = "39.0.1"
-        pruTranslationsLibVersion = "30.0.2"
-        ehCacheVersion = "3.6.1"
-        cacheApiVersion = "1.1.1"
-        versionJaxb = "2.3.1"
-        jacksonVersion = "2.9.8"
-        jacksonDatatypeJsr310 = "2.10.1"
-        jacksonAnnotationsVersion = "2.9.0"
-        junitJupiterVersion = "5.4.1"
-        springVersion = "5.1.6.RELEASE"
-        springBootVersion = "2.1.4.RELEASE"
-        springCloudVersion = '2.1.1.RELEASE'
-        feignHttpClientVersion = '10.1.0'
-        springSessionVersion = '2.1.6.RELEASE'
-        groovyAllVersion = "2.5.6"
-        springDependencyVersion = "1.0.6.RELEASE"
-        springDataCommonsVersion = "2.1.6.RELEASE"
-        spockVersion = "1.2-groovy-2.5"
-        jvmTarget = JavaVersion.VERSION_11
-        gradlePluginDir = "${rootProject.projectDir}/gradle"
-        logstashEncoderVersion = '5.2'
-        janinoVersion = '3.0.11'
-        hibernateVersion = '5.3.7.Final'
-        hibernateValidatorVersion = '6.0.10.Final'
-        h2Version = '1.4.197'
-        apacheCommonsVersion = '2.5'
-        servlertApiVersion = '4.0.1'
-        javaxValidationApiVersion = '2.0.1.Final'
-        springfoxSwagger = '2.9.2'
-        versionLombok = '3.7.5'
-        versionGson = '2.8.5'
-        versionGuava = '27.1-jre'
-        versionCommonsIo = '2.6'
-        versionCommonsText = '1.6'
-        orikaVersion = "1.5.4"
-        versionDockerPlugin = '3.6.1'
-        localImagePrefix = 'mewa'
+spotless {
+    format 'misc', {
+        // define the files to apply `misc` to
+        target '*.gradle', '*.md', '.gitignore'
+
+        // define the steps to apply to those files
+        trimTrailingWhitespace()
+        indentWithSpaces() // Takes an integer argument if you don't like 4
+        endWithNewline()
+    }
+
+    java {
+        target '**/src/*/java/**/*.java'
+
+        prettier(['prettier': '2.6.2', 'prettier-plugin-java': '1.6.1']).config(['parser': 'java', 'tabWidth': 4, 'printWidth': 160])
+
+        importOrder('java', 'javax', 'org', 'com', 'com.pru', '', '\\#com.pru', '\\#')
+        removeUnusedImports()
+    }
+
+    groovyGradle {
+        target '**/src/*/groovy/**/*.groovy'
+        importOrder('java', 'javax', 'org', 'com', 'com.pru', '', '\\#com.pru', '\\#')
+        greclipse("4.21.0").configFile "$rootDir/greclipse.properties"
     }
 }
+
+task installLocalGitHook(type: Copy) {
+    from new File(rootProject.rootDir, 'scripts/pre-commit')
+    into { new File(rootProject.rootDir, '.git/hooks')}
+    fileMode 0775
+}
+
+assemble.dependsOn installLocalGitHook
