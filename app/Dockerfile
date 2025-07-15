@@ -1,4 +1,4 @@
-FROM openjdk:11
+FROM eclipse-temurin:17-jre-ubi9-minimal
 WORKDIR /app
 ARG JAR_NAME
 ARG JAVA_OPTIONS
@@ -11,3 +11,4 @@ COPY $JAR_NAME /app/app.jar
 
 ARG VERSION
 LABEL version="${VERSION}"
+ENV APP_VERSION ${VERSION}

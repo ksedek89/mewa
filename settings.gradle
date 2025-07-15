@@ -1,6 +1,23 @@
+pluginManagement {
+    repositories {
+        mavenLocal()
+        maven {
+            url pruMavenUrl
+            allowInsecureProtocol true
+            credentials {
+                username pruMavenUser
+                password pruMavenPassword
+            }
+        }
+        gradlePluginPortal()
+        mavenCentral()
+    }
+}
+
+
 rootProject.name = 'mewa'
 
 include ':mewa-main',
-        ':application',
+        ':app',
         ':test-app',
         ':utils'

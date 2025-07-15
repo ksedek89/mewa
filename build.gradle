@@ -7,7 +7,6 @@ plugins {
     id 'io.freefair.lombok' version '6.4.2' apply false
     id 'org.owasp.dependencycheck' version '7.4.4'
     id 'ua.eshepelyuk.ManifestClasspath' version '1.0.0'
-    id 'com.diffplug.spotless' version '6.4.2'
     id 'groovy'
     id 'java'
     id 'idea'
@@ -198,32 +197,6 @@ configure(subprojects) { project ->
     }
 }
 
-spotless {
-    format 'misc', {
-        // define the files to apply `misc` to
-        target '*.gradle', '*.md', '.gitignore'
-
-        // define the steps to apply to those files
-        trimTrailingWhitespace()
-        indentWithSpaces() // Takes an integer argument if you don't like 4
-        endWithNewline()
-    }
-
-    java {
-        target '**/src/*/java/**/*.java'
-
-        prettier(['prettier': '2.6.2', 'prettier-plugin-java': '1.6.1']).config(['parser': 'java', 'tabWidth': 4, 'printWidth': 160])
-
-        importOrder('java', 'javax', 'org', 'com', 'com.pru', '', '\\#com.pru', '\\#')
-        removeUnusedImports()
-    }
-
-    groovyGradle {
-        target '**/src/*/groovy/**/*.groovy'
-        importOrder('java', 'javax', 'org', 'com', 'com.pru', '', '\\#com.pru', '\\#')
-        greclipse("4.21.0").configFile "$rootDir/greclipse.properties"
-    }
-}
 
 task installLocalGitHook(type: Copy) {
     from new File(rootProject.rootDir, 'scripts/pre-commit')
